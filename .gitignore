@@ -1,0 +1,48 @@
+# Python / ML
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data & models (keep large artifacts out of git by default)
+data/raw/
+data/processed/
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+wandb/
+runs/
+outputs/
+results/raw/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env.*
+!.env.example
+credentials.json
+**/secrets*
+
+# Cursor / local agent caches (if ever copied into repo)
+.agent-tools/
+agent-tools/
