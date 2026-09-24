@@ -5,6 +5,8 @@
 | Experiment | Script | Logs | Status |
 |------------|--------|------|--------|
 | **w2_fs** GMM DDPM | `scripts/run_w2_false_stability.py` | `logs/w2_fs.jsonl` | KEEP support |
+| w2_fs_hd (8D) | `scripts/run_w2_fs_hd.py` | `logs/w2_fs_hd.jsonl` | transfer support |
+| w2_fs_alpha / kfrac | same runner, `--log-name` | `logs/w2_fs_alpha.jsonl`, `w2_fs_kfrac.jsonl` | sensitivity |
 | w2_fs_digits | `scripts/run_w2_fs_digits.py` | `logs/w2_fs_digits.jsonl` | inconclusive |
 | analyze / figures | `analyze_w2_fs.py`, `make_w2_figures.py` | `analysis/` | — |
 
