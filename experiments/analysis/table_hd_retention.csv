@@ -1,0 +1,1 @@
+dim,policy,mean_retention,std,n,order_holds_n\n8,bottom_k,0.5505,0.1997,3,3\n8,rand_k,0.2691,0.0609,3,3\n8,top_k,0.0751,0.0266,3,3\n

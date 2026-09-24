@@ -61,3 +61,11 @@
 - **Decision:** **KEEP** with scoped α limitation; add `paper/main.tex`, `refs.bib`
 - **Experiment ID:** `w2_fs_alpha`
 - **Conclusion:** Submission package extended
+
+## 2026-09-24 — 8D transfer + k_frac ablation
+
+- **Hypothesis:** Ordering transfers beyond 2D; sensitive to selection pool size
+- **Evidence:** HD `w2_fs_hd`: 3/3 seeds order holds, retention 0.55/0.27/0.08; k_frac 0.25≡0.5 under n_syn binding; at 0.75 top still worst
+- **Decision:** **KEEP**; update paper with transfer + pool-size notes
+- **Experiment ID:** `w2_fs_hd`, `w2_fs_kfrac`
+- **Conclusion:** Stronger robustness section

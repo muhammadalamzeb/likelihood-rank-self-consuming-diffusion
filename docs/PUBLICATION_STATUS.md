@@ -17,8 +17,9 @@
 | Claim | Result |
 |-------|--------|
 | top_k improves W₂ while hurting minorities | **FALSIFIED** |
-| bottom_k > rand_k > top_k minority retention | **SUPPORTED** (GMM; 5/5 seeds at ρ=5; Wilcoxon p≈0.04 vs rand) |
+| bottom_k > rand_k > top_k minority retention | **SUPPORTED** (2D GMM 5/5 seeds; 8D GMM 3/3; Wilcoxon p≈0.04) |
 | Digits transfer | **INCONCLUSIVE** |
+| α / k_frac sensitivity | Scoped: strongest at α≤0.5; see ablation tables |
 
 Reproduce: `scripts/reproduce_w2.ps1`
 

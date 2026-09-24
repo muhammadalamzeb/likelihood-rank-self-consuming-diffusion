@@ -81,6 +81,10 @@ Nearest-mean mode assignment on known GMM centers. Report minority-mean mass (mo
 
 At low-to-moderate real mix, top-\(k\) remains the worst for minority retention. At high real mix (\(\alpha{=}0.75\)), the top-\(k\) penalty vs random weakens/reverses while bottom-\(k\) still yields the highest mean retention—an important scope condition.
 
+**8D GMM transfer.** Same protocol in \(d{=}8\) (`w2_fs_hd.jsonl`, seeds \(\{0,1,2\}\), \(\rho{=}5\)): retention means bottom / rand / top = **0.55 / 0.27 / 0.08**; order holds on **3/3** seeds. See `paper/table_hd_retention.csv`.
+
+**Selection-pool size (\(k_{\mathrm{frac}}\)).** Under our implementation \(k=\max(n_{\mathrm{syn}},\lfloor k_{\mathrm{frac}}N\rfloor)\), \(k_{\mathrm{frac}}\in\{0.25,0.5\}\) are operationally equivalent when \(n_{\mathrm{syn}}\) binds; at \(k_{\mathrm{frac}}{=}0.75\) top-\(k\) remains worst but bottom vs random can flip (`table_kfrac_retention.csv`).
+
 ![Retention bars](figures/retention_bars.png)
 
 ![Minority vs generation](figures/minority_vs_generation_rho5.png)
@@ -91,7 +95,7 @@ Likelihood top-\(k\) preferentially retains synthetic points the current model a
 
 ## 6 Limitations
 
-- Toy 2D GMMs and tiny networks; not ImageNet-scale.
+- Toy 2D/8D GMMs and tiny networks; not ImageNet-scale.
 - Digits transfer inconclusive.
 - Effect strongest at moderate imbalance and early generations; at \(\rho{=}10\) minorities are already near floor at \(g{=}0\).
 - Real-mix \(\alpha{=}0.75\) weakens the top-\(k\) vs random gap (see alpha ablation).

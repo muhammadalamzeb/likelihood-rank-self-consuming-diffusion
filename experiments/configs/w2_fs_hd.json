@@ -1,0 +1,28 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "dim": 8,
+  "K": 4,
+  "rho": 5.0,
+  "delta": 1.5,
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k"
+  ],
+  "generations": 4,
+  "n_data": 1500,
+  "n_synth": 1500,
+  "train_steps": 700,
+  "n_steps": 30,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 128,
+  "log_name": "w2_fs_hd.jsonl",
+  "append": false,
+  "experiment": "w2_fs_hd"
+}
