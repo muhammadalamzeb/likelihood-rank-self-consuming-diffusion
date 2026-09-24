@@ -22,16 +22,14 @@ Under matched budgets in self-consuming DDPM training on imbalanced GMMs, minori
 ```powershell
 cd "D:\Machine Learning Paper"
 .\.venv\Scripts\python.exe -m pip install -r docs\requirements-freeze.txt
-# matplotlib needed for figures:
 .\.venv\Scripts\python.exe -m pip install matplotlib
-.\.venv\Scripts\python.exe experiments\scripts\run_w2_false_stability.py --out experiments --seeds 0 1 2 --rhos 5.0 10.0 --policies mix top_k rand_k replace bottom_k --generations 5 --train-steps 600
-.\.venv\Scripts\python.exe experiments\scripts\analyze_w2_fs.py
-.\.venv\Scripts\python.exe experiments\scripts\make_w2_figures.py
+powershell -File scripts\reproduce_w2.ps1
 ```
 
 Configs: `experiments/configs/w2_fs.json`  
-Logs: `experiments/logs/w2_fs.jsonl`  
+Logs: `experiments/logs/w2_fs.jsonl` (n=228; seeds 0–4)  
 Summary: `experiments/analysis/w2_fs_summary.json`  
+Stats: `paper/table_stats_retention.csv`  
 Figures: `paper/figures/`
 
 Optional Digits transfer (inconclusive): `experiments/scripts/run_w2_fs_digits.py`
