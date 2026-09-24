@@ -1,0 +1,12 @@
+{"probe": "F1", "erase": 0.0, "class_acc": 1.0, "mean_pairwise_l2": 0.3192019497988553, "std_pairwise_l2": 0.01649990819226697, "samp_mean": 0.302766352891922, "samp_std": 0.30841609835624695}
+{"probe": "F1", "erase": 0.15, "class_acc": 1.0, "mean_pairwise_l2": 0.325685734743702, "std_pairwise_l2": 0.02343683083356192, "samp_mean": 0.27390971779823303, "samp_std": 0.2804260849952698}
+{"probe": "F1", "erase": 0.35, "class_acc": 1.0, "mean_pairwise_l2": 0.34012107237488376, "std_pairwise_l2": 0.02024962210984763, "samp_mean": 0.25123241543769836, "samp_std": 0.25646036863327026}
+{"probe": "F1", "erase": 0.55, "class_acc": 1.0, "mean_pairwise_l2": 0.3368193860865873, "std_pairwise_l2": 0.019923223625844155, "samp_mean": 0.224432572722435, "samp_std": 0.23027755320072174}
+{"probe": "F2", "tau": 0.5, "class_acc": 1.0, "mean_pairwise_l2": 0.17599563826089618, "std_pairwise_l2": 0.006582111777298216, "samp_mean": 0.30033767223358154, "samp_std": 0.3127572536468506}
+{"probe": "F2", "tau": 1.0, "class_acc": 1.0, "mean_pairwise_l2": 0.32516200217022295, "std_pairwise_l2": 0.011726708854337863, "samp_mean": 0.30694860219955444, "samp_std": 0.31170666217803955}
+{"probe": "F2", "tau": 1.5, "class_acc": 1.0, "mean_pairwise_l2": 0.4834490312344727, "std_pairwise_l2": 0.014718131976738609, "samp_mean": 0.32138732075691223, "samp_std": 0.3179679811000824}
+{"probe": "F2", "tau": 2.5, "class_acc": 0.99, "mean_pairwise_l2": 0.7801330127798277, "std_pairwise_l2": 0.03010352313132841, "samp_mean": 0.36307448148727417, "samp_std": 0.3446378707885742}
+{"probe": "F3", "per_class_cap": 20, "n_train": 200, "class_acc": 0.5533333333333333, "mean_pairwise_l2": 0.6547484935323398, "std_pairwise_l2": 0.029628546579963604, "samp_mean": 0.3037772476673126, "samp_std": 0.267672598361969}
+{"probe": "F3", "per_class_cap": 50, "n_train": 500, "class_acc": 1.0, "mean_pairwise_l2": 0.5180652497349114, "std_pairwise_l2": 0.017782886591415012, "samp_mean": 0.3069067895412445, "samp_std": 0.30550217628479004}
+{"probe": "F3", "per_class_cap": 100, "n_train": 1000, "class_acc": 1.0, "mean_pairwise_l2": 0.34826909478025875, "std_pairwise_l2": 0.014592892958017635, "samp_mean": 0.31187841296195984, "samp_std": 0.31719914078712463}
+{"probe": "F3", "per_class_cap": 140, "n_train": 1347, "class_acc": 1.0, "mean_pairwise_l2": 0.3251702007993885, "std_pairwise_l2": 0.017539138751811022, "samp_mean": 0.30279740691185, "samp_std": 0.31102797389030457}

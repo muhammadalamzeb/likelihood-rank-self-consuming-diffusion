@@ -1,0 +1,10 @@
+{
+  "stack": "v7_synth_spec_cvae",
+  "seed": 1,
+  "epochs": 25,
+  "probes": [
+    "S1_snr",
+    "S2_f0_jitter",
+    "S3_time_warp"
+  ]
+}

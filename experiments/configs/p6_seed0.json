@@ -1,0 +1,98 @@
+{
+  "probe": "P6",
+  "mode": "quick",
+  "steps": 20,
+  "seed": 0,
+  "n_noise": 2,
+  "layout": "rows=class0..9, cols=fixed_noise",
+  "pairs": [
+    [
+      3,
+      5
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "pair_row_order": [
+    {
+      "cond": 3,
+      "name": "cat",
+      "pair": [
+        3,
+        5
+      ]
+    },
+    {
+      "cond": 5,
+      "name": "dog",
+      "pair": [
+        3,
+        5
+      ]
+    },
+    {
+      "cond": 1,
+      "name": "automobile",
+      "pair": [
+        1,
+        9
+      ]
+    },
+    {
+      "cond": 9,
+      "name": "truck",
+      "pair": [
+        1,
+        9
+      ]
+    },
+    {
+      "cond": 0,
+      "name": "airplane",
+      "pair": [
+        0,
+        8
+      ]
+    },
+    {
+      "cond": 8,
+      "name": "ship",
+      "pair": [
+        0,
+        8
+      ]
+    },
+    {
+      "cond": 2,
+      "name": "bird",
+      "pair": [
+        2,
+        4
+      ]
+    },
+    {
+      "cond": 4,
+      "name": "deer",
+      "pair": [
+        2,
+        4
+      ]
+    }
+  ],
+  "repo": "Ketansomewhere/cifar10_conditional_diffusion1",
+  "grid": "experiments\\grids\\p6_wrongclass_steps20_n2_seed0.png",
+  "pair_grid": "experiments\\grids\\p6_pairs_steps20_n2_seed0.png",
+  "num_class_embeds": 10,
+  "device": "cpu",
+  "note": "Same initial noise across rows; only class_labels change."
+}

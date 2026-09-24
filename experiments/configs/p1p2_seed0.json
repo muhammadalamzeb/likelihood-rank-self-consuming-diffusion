@@ -1,0 +1,41 @@
+{
+  "repo": "Ketansomewhere/cifar10_conditional_diffusion1",
+  "records": [
+    {
+      "probe": "P1+P2",
+      "mode": "quick",
+      "steps": 10,
+      "guidance_scale": 1.0,
+      "seed": 0,
+      "per_class": 2,
+      "repo": "Ketansomewhere/cifar10_conditional_diffusion1",
+      "grid": "D:\\Machine Learning Paper\\experiments\\grids\\p1p2_steps10_cfg1.0_seed0.png",
+      "num_class_embeds": 10,
+      "device": "cpu"
+    },
+    {
+      "probe": "P1+P2",
+      "mode": "quick",
+      "steps": 20,
+      "guidance_scale": 1.0,
+      "seed": 0,
+      "per_class": 2,
+      "repo": "Ketansomewhere/cifar10_conditional_diffusion1",
+      "grid": "D:\\Machine Learning Paper\\experiments\\grids\\p1p2_steps20_cfg1.0_seed0.png",
+      "num_class_embeds": 10,
+      "device": "cpu"
+    },
+    {
+      "probe": "P1+P2",
+      "mode": "quick",
+      "steps": 50,
+      "guidance_scale": 1.0,
+      "seed": 0,
+      "per_class": 2,
+      "repo": "Ketansomewhere/cifar10_conditional_diffusion1",
+      "grid": "D:\\Machine Learning Paper\\experiments\\grids\\p1p2_steps50_cfg1.0_seed0.png",
+      "num_class_embeds": 10,
+      "device": "cpu"
+    }
+  ]
+}

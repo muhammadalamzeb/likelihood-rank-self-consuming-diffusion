@@ -1,0 +1,10 @@
+{
+  "stack": "v8_sem_tab_cvae",
+  "seed": 1,
+  "epochs": 35,
+  "probes": [
+    "C1_tau",
+    "C2_zdim",
+    "C3_n"
+  ]
+}

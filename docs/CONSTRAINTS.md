@@ -1,40 +1,26 @@
-# Project constraints (frozen)
+# Project constraints (Constraint Set v4 — ownership mandate)
 
-These constraints governed the topic-search phase and remain in force unless the project owner **explicitly** changes them in writing.
+**Effective:** 2026-09-23 (owner full-ownership grant)  
+**Supersedes:** Constraint Set **v3**  
+**Historical exclusions 1–39:** remain **closed as novelty claims** (`KILL_LOG.md`).
 
-## Research profile
+## Active status
 
-- Solo first-author GenAI research
-- Public datasets only
-- Compute: Google Colab (prefer 1–3B open models; 7B only if justified)
-- No proprietary APIs required for **core** results
-- No fabricated results, citations, or conclusions
-- Text / NLP generative AI (unless constraints are revised)
+| Track | State |
+|-------|--------|
+| Path 1–4 | Historical archive |
+| **Wave-2 / W2-1** | **KEEP** (revised) — paper in `paper/PAPER.md` |
+| Publication | Workshop-scope **PUBLICATION-READY** (`PUBLICATION_STATUS.md`) |
+| Frozen stacks v0–v8 | Preserved; not novelty for this paper |
 
-## Novelty bar
+## Research profile (v4)
 
-- Prefer **Level 3–4** on the project novelty ladder:
-  - L3: new mechanism / scientific object / falsifiable relationship
-  - L4: predictive law / intervening theory with decisive experiment
-- L0–L2 (measure-only, ablation-only, framework application, cleaner replication) are **not** sufficient for topic lock
-
-## Auto-KILL classes
-
-A candidate is rejected if it is primarily:
-
-1. An **existing named object** (2025–2026 paper already owns the claim)
-2. A **framework / method application** without a new scientific object
-3. An **ablation** of a known mechanism without a new law
-4. **Future-work completion** of another paper’s suggested experiment
-5. The **same phenomenon on a cleaner synthetic task**
-6. A **renamed combination** of two titled mechanisms
-
-## Process rules
-
-- No Phase 4 / no topic lock until a defensible KEEP or strong MODIFY
-- Adversarial novelty kill-tests against closest 2025–2026 literature before any experiment claim
-- Do **not** silently relax Level 3–4 to force a topic
+- Solo GenAI; public/synthetic data; compute beyond Colab OK; APIs auxiliary only
+- No fabricated results/citations/novelty
+- L2 allowed when scientifically meaningful; prefer L3–L4
+- Adversarial kill-test before topic lock
 
 ## Topic-search status
 
-**Terminated.** See `TERMINAL_FINDING.md` and `KILL_LOG.md`.
+**Closed on KEEP W2-1** (likelihood-rank minority ordering; W₂ false-stability falsified).  
+Further work would be extensions (scale, better transfer), not required for current deliverable.

@@ -1,52 +1,45 @@
-# Machine Learning Paper — project archive
+# Machine Learning Paper
 
-## Current status
+## Status: PUBLICATION-READY (workshop / empirical L2 scope)
 
-**Topic-search phase: DONE (terminal).**
+**Active constraint set:** v4 (`docs/CONSTRAINTS.md`)  
+**Survivor:** W2-1 likelihood-rank ordering (`docs/RESEARCH_SURVIVOR.md`)  
+**Paper:** [`paper/PAPER.md`](paper/PAPER.md)  
+**Research log:** [`docs/RESEARCH_LOG.md`](docs/RESEARCH_LOG.md)
 
-Under fixed constraints (solo GenAI/text, public data, Colab-scale, Level 3–4 novelty, no framework/ablation/future-work/cleaner-synthetic “novelty”), **no research topic survived** adversarial 2025–2026 overlap testing.
+| Track | State |
+|-------|--------|
+| Paths 1–4 (historical) | Archived evidence; stacks v0–v8 frozen |
+| Wave-2 discovery | KEEP → MODIFY → empirical support for revised claim |
+| Principal experiments | `w2_fs` (GMM); `w2_fs_digits` inconclusive |
 
-This repository documents that process finding. It does **not** contain a locked paper topic, experimental results, or a scientific claim for submission.
+## Claim (one sentence)
 
-See:
+Under matched budgets in self-consuming DDPM training on imbalanced GMMs, minority-mode retention obeys **bottom‑k > random‑k > top‑k** when ranking synthetics by a denoising likelihood proxy; W₂ “false stability” for top‑k is **falsified**.
 
-- [`docs/TERMINAL_FINDING.md`](docs/TERMINAL_FINDING.md) — terminal finding  
-- [`docs/CONSTRAINTS.md`](docs/CONSTRAINTS.md) — frozen constraints  
-- [`docs/KILL_LOG.md`](docs/KILL_LOG.md) — archived kill-test record  
+## Reproduce principal results
 
-## What works today
-
-| Artifact | Purpose |
-|----------|---------|
-| `docs/` | Human-readable project memory |
-| `experiments/` | Placeholder only (intentionally empty) |
-| `notebooks/` | Placeholder only (intentionally empty) |
-| Git | Local repo initialized; **no remote** configured by default |
-
-## How to reproduce (documentation only)
-
-There are **no experiments to run**. To verify the archive:
-
-```text
-# From repo root
-dir docs
-# or
-Get-ChildItem docs
+```powershell
+cd "D:\Machine Learning Paper"
+.\.venv\Scripts\python.exe -m pip install -r docs\requirements-freeze.txt
+# matplotlib needed for figures:
+.\.venv\Scripts\python.exe -m pip install matplotlib
+.\.venv\Scripts\python.exe experiments\scripts\run_w2_false_stability.py --out experiments --seeds 0 1 2 --rhos 5.0 10.0 --policies mix top_k rand_k replace bottom_k --generations 5 --train-steps 600
+.\.venv\Scripts\python.exe experiments\scripts\analyze_w2_fs.py
+.\.venv\Scripts\python.exe experiments\scripts\make_w2_figures.py
 ```
 
-You should see `CONSTRAINTS.md`, `TERMINAL_FINDING.md`, and `KILL_LOG.md`.
+Configs: `experiments/configs/w2_fs.json`  
+Logs: `experiments/logs/w2_fs.jsonl`  
+Summary: `experiments/analysis/w2_fs_summary.json`  
+Figures: `paper/figures/`
 
-## What this project is *not*
+Optional Digits transfer (inconclusive): `experiments/scripts/run_w2_fs_digits.py`
 
-- Not a paper draft  
-- Not a novelty claim that “GenAI is exhausted” in general  
-- Not permission to restart Reboot-style topic search without changing constraints  
+## Environment
 
-## Next steps (owner decision)
+See `docs/ENVIRONMENT.md` (CPU torch 2.14 / Python 3.14). Seeded runs; no fabricated metrics.
 
-Only after an **explicit** constraint change (or an external, already-defensible direction brought into this repo) should discovery resume. Until then, treat topic search as closed.
+## Historical archive
 
-## License / authorship
-
-Owner: project researcher (Sukkur IBA University affiliation as stated in research profile).  
-No co-authors or supervisors recorded in this archive.
+Path terminals and kill log remain under `docs/` (Path 1–4). Do not repackage frozen v0–v8 kills as this paper’s novelty.

@@ -1,14 +1,16 @@
-# Terminal finding — topic-search phase
+# Terminal finding — topic-search under Constraint Set v1
 
-**Status:** COMPLETE (terminal)  
+**Status:** COMPLETE (terminal under **v1**)  
 **Date recorded:** 2026-09-23  
-**Outcome:** No defensible research topic survived.
+**Outcome:** No defensible research topic survived **under v1**.
+
+**Superseding note (same day):** Owner approved **Constraint Set v2** (see `CONSTRAINTS.md`). Discovery restarted under v2 — this is **not** a continuation reboot under v1. The v1 finding below remains historically accurate.
 
 ## Finding (factual)
 
-Under the current constraints — solo GenAI/text research, public data, Colab-scale compute, Level 3–4 novelty, and rejection of framework applications / ablations / future-work completions / cleaner synthetic replications — **no candidate established a genuinely new scientific object or falsifiable mechanism** after adversarial overlap testing against 2025–2026 literature.
+Under **Constraint Set v1** — solo GenAI/text research, public data, Colab-scale compute, Level 3–4 novelty required for lock, and rejection of framework applications / ablations / future-work completions / cleaner synthetic replications — **no candidate established a genuinely new scientific object or falsifiable mechanism** after adversarial overlap testing against 2025–2026 literature.
 
-This is a **process finding**, not a scientific paper claim. It does not assert that no novel GenAI research exists in general; it asserts that **under these constraints and this kill-test procedure**, no survivor remained.
+This is a **process finding**, not a scientific paper claim. It does not assert that no novel GenAI research exists in general; it asserts that **under v1 constraints and that kill-test procedure**, no survivor remained.
 
 ## What was tried (summary)
 
@@ -33,6 +35,6 @@ Every candidate that reached a kill-test was classified **KILL** (or abandoned a
 - **No** locked paper topic
 - **No** experimental code or results (workspace was empty at archive time)
 
-## What would be required to resume discovery
+## What was required to resume discovery
 
-An **explicit** change to the constraint set (for example: allow Level 2; non-text GenAI; larger compute; proprietary APIs; or a different novelty ladder). Until then, do not restart Reboot-style topic search from this archive alone.
+An **explicit** change to the constraint set. That change was approved 2026-09-23 as **Constraint Set v2** (Level 2 with strong empirical/practical value; non-text GenAI; larger compute when justified + reproducible core; proprietary APIs only for auxiliary validation; adversarial kill-test and no-fabrication rules kept).

@@ -1,0 +1,4 @@
+seed,top_k_minority,rand_k_minority,bottom_k_minority,top_k_majority,rand_k_majority
+0,0.0062,0.0224,0.0304,0.9813,0.9327
+1,0.0084,0.0107,0.0289,0.9747,0.9680
+2,0.0080,0.0180,0.0256,0.9760,0.9460

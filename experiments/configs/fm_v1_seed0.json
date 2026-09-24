@@ -1,0 +1,38 @@
+{
+  "repo": "FrankCCCCC/cfm-cifar10-32",
+  "records": [
+    {
+      "probe": "FM-v1-steps",
+      "stack": "v1",
+      "repo": "FrankCCCCC/cfm-cifar10-32",
+      "steps": 5,
+      "seed": 0,
+      "n": 8,
+      "grid": "experiments\\grids\\fm_v1_steps5_seed0.png",
+      "device": "cpu",
+      "scheduler": "FlowMatchEulerDiscreteScheduler"
+    },
+    {
+      "probe": "FM-v1-steps",
+      "stack": "v1",
+      "repo": "FrankCCCCC/cfm-cifar10-32",
+      "steps": 10,
+      "seed": 0,
+      "n": 8,
+      "grid": "experiments\\grids\\fm_v1_steps10_seed0.png",
+      "device": "cpu",
+      "scheduler": "FlowMatchEulerDiscreteScheduler"
+    },
+    {
+      "probe": "FM-v1-steps",
+      "stack": "v1",
+      "repo": "FrankCCCCC/cfm-cifar10-32",
+      "steps": 20,
+      "seed": 0,
+      "n": 8,
+      "grid": "experiments\\grids\\fm_v1_steps20_seed0.png",
+      "device": "cpu",
+      "scheduler": "FlowMatchEulerDiscreteScheduler"
+    }
+  ]
+}

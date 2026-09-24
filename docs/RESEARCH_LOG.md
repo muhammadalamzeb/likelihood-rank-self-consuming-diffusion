@@ -1,0 +1,47 @@
+# RESEARCH LOG
+
+## 2026-09-23 — Ownership mandate start
+
+- **Hypothesis:** N/A (process)
+- **Evidence:** Path 1–3 terminal; Path 2 v3 NO KEEP; Path 4 archive; owner grants full pipeline + Constraint Set v4
+- **Literature:** Status docs read; env verified (Python 3.14, torch 2.14 CPU)
+- **Decision:** **KEEP** project open under v4; begin Wave-2 discovery
+- **Reason:** Explicit ownership + bar change authorizes resume past Path 4
+- **Experiment ID:** —
+- **Conclusion:** Research reopened
+
+## 2026-09-23 — Wave-2 discovery + kill-tests
+
+- **Hypothesis:** Multiple (W2-1…W2-10); see `PATH2_DISCOVERY.md`
+- **Evidence:** arXiv/HTML reads of collapse, verification, LSF, temperature, TJS, exposure-bias, long-tail diffusion, recon-vs-gen
+- **Literature checked:** 2305.17493; 2404.01413; 2307.01850; 2406.07515; 2511.12742; 2607.10853; 2510.01184; 2607.06114; CVPR2025 Yao recon-vs-gen; exposure-bias line; Path-2 priors
+- **Decision:** **KILL** W2-2…W2-9; **KEEP** provisional **W2-1**
+- **Reason:** Only W2-1 clears “what is new after closest papers?” as false-stability under likelihood top‑k vs random‑k
+- **Experiment ID:** pending `w2_fs`
+- **Conclusion:** Documented in `RESEARCH_SURVIVOR.md`; proceed to implement
+
+## 2026-09-23 — Implementation start
+
+- **Hypothesis:** W2-1 false stability
+- **Decision:** **KEEP** → implement
+- **Experiment ID:** `w2_fs`
+- **Conclusion:** Coding + runs next
+
+## 2026-09-23 — Pilot quick run → MODIFY
+
+- **Hypothesis:** W2-1 (W₂ better + minority worse under top‑k)
+- **Evidence:** `w2_fs.jsonl` quick: top‑k minority_mean < rand‑k across seeds, but sliced W₂ for top‑k ≥ rand‑k (no aggregate improvement)
+- **Literature:** unchanged
+- **Decision:** **MODIFY** claim to majority-concentration / minority-extinction matched‑k effect; drop “better W₂” half
+- **Reason:** Automatic pivot rule — do not silently keep falsified dissociation
+- **Experiment ID:** `w2_fs`
+- **Conclusion:** Revise survivor; run full matrix
+
+## 2026-09-24 — Full GMM matrix + Digits transfer
+
+- **Hypothesis:** Revised W2-1 — likelihood-rank ordering of minority retention
+- **Evidence:** Retention g1/g0 means bottom 0.457 / rand 0.289 / top 0.161; ρ=5 g=1 all seeds bottom>rand>top; W₂ false stability falsified; Digits entropy weakly ordered but class-mass unreliable
+- **Literature:** MAD, Feng, LSF (as in survivor)
+- **Decision:** **KEEP** revised claim for workshop-scope paper; report Digits as inconclusive
+- **Experiment ID:** `w2_fs`, `w2_fs_digits`
+- **Conclusion:** Write `paper/PAPER.md` + repro package; PUBLICATION-READY (L2 empirical scope)

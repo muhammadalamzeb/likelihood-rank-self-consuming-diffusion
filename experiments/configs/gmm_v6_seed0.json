@@ -1,0 +1,10 @@
+{
+  "stack": "v6_gmm_2d_ddpm",
+  "seed": 0,
+  "train_steps": 400,
+  "probes": [
+    "M1_separation",
+    "M2_n_modes",
+    "M3_imbalance"
+  ]
+}

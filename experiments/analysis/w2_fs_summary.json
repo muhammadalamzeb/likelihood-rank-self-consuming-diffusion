@@ -1,0 +1,168 @@
+{
+  "experiment": "w2_fs",
+  "n_records": 180,
+  "contrasts": {
+    "top_minus_rand": [
+      {
+        "generation": 1,
+        "d_minority_mean": -0.005111111111111111,
+        "d_minority_std": 0.006016438386969282,
+        "d_majority_mean": 0.015333333333333329,
+        "d_majority_std": 0.018049315160907842,
+        "d_w2_mean": 0.07421725769239347,
+        "n": 6,
+        "n_minority_negative": 5
+      },
+      {
+        "generation": 2,
+        "d_minority_mean": -0.0021851851851851854,
+        "d_minority_std": 0.004818374752317662,
+        "d_majority_mean": 0.006555555555555574,
+        "d_majority_std": 0.014455124256952966,
+        "d_w2_mean": 0.04140593955341593,
+        "n": 6,
+        "n_minority_negative": 3
+      },
+      {
+        "generation": 3,
+        "d_minority_mean": -0.0005555555555555557,
+        "d_minority_std": 0.002007188726642849,
+        "d_majority_mean": 0.0016666666666666496,
+        "d_majority_std": 0.006021566179928525,
+        "d_w2_mean": 0.02606859794857569,
+        "n": 6,
+        "n_minority_negative": 3
+      },
+      {
+        "generation": 4,
+        "d_minority_mean": -0.0010370370370370368,
+        "d_minority_std": 0.0027537230067320156,
+        "d_majority_mean": 0.0031111111111111014,
+        "d_majority_std": 0.008261169020196028,
+        "d_w2_mean": 0.02169704762582449,
+        "n": 6,
+        "n_minority_negative": 3
+      },
+      {
+        "generation": 5,
+        "d_minority_mean": -0.0005555555555555556,
+        "d_minority_std": 0.0005844345865947962,
+        "d_majority_mean": 0.0016666666666666312,
+        "d_majority_std": 0.0017533037597843714,
+        "d_w2_mean": 0.0138155918817315,
+        "n": 6,
+        "n_minority_negative": 4
+      }
+    ],
+    "bottom_minus_rand": [
+      {
+        "generation": 1,
+        "d_minority_mean": 0.0057777777777777775,
+        "d_minority_std": 0.006553358074881393,
+        "d_majority_mean": -0.01733333333333333,
+        "d_majority_std": 0.019660074224644167,
+        "d_w2_mean": -0.0711395621045856,
+        "n": 6,
+        "n_minority_negative": 2
+      },
+      {
+        "generation": 2,
+        "d_minority_mean": 0.004148148148148147,
+        "d_minority_std": 0.00586636736984395,
+        "d_majority_mean": -0.012444444444444425,
+        "d_majority_std": 0.01759910210953185,
+        "d_w2_mean": -0.08618981585037845,
+        "n": 6,
+        "n_minority_negative": 1
+      },
+      {
+        "generation": 3,
+        "d_minority_mean": 0.0016666666666666668,
+        "d_minority_std": 0.0029972552601755832,
+        "d_majority_mean": -0.0050000000000000044,
+        "d_majority_std": 0.008991765780526729,
+        "d_w2_mean": -0.05506055539895305,
+        "n": 6,
+        "n_minority_negative": 3
+      },
+      {
+        "generation": 4,
+        "d_minority_mean": 0.0010370370370370375,
+        "d_minority_std": 0.003934999995642497,
+        "d_majority_mean": -0.00311111111111112,
+        "d_majority_std": 0.01180499998692748,
+        "d_w2_mean": -0.05177140641276166,
+        "n": 6,
+        "n_minority_negative": 2
+      },
+      {
+        "generation": 5,
+        "d_minority_mean": 0.0018518518518518521,
+        "d_minority_std": 0.002122451671391764,
+        "d_majority_mean": -0.005555555555555554,
+        "d_majority_std": 0.006367355014175302,
+        "d_w2_mean": -0.06290906751352492,
+        "n": 6,
+        "n_minority_negative": 1
+      }
+    ]
+  },
+  "retention_g1_over_g0": {
+    "top_k": {
+      "mean": 0.16093619989333935,
+      "std": 0.08518312587657821,
+      "n": 6
+    },
+    "rand_k": {
+      "mean": 0.2889493118781506,
+      "std": 0.13982855234255284,
+      "n": 6
+    },
+    "bottom_k": {
+      "mean": 0.45733829577146873,
+      "std": 0.21786970058563085,
+      "n": 6
+    },
+    "mix": {
+      "mean": 0.2975021210149862,
+      "std": 0.09610683045579557,
+      "n": 6
+    },
+    "replace": {
+      "mean": 0.3686318929857328,
+      "std": 0.4645095451000109,
+      "n": 6
+    }
+  },
+  "primary_rho5_g1": [
+    {
+      "seed": 0,
+      "top_min": 0.006222222222222222,
+      "rand_min": 0.022444444444444444,
+      "bottom_min": 0.030444444444444444,
+      "top_maj": 0.9813333333333333,
+      "rand_maj": 0.9326666666666666
+    },
+    {
+      "seed": 1,
+      "top_min": 0.008444444444444444,
+      "rand_min": 0.010666666666666666,
+      "bottom_min": 0.02888888888888889,
+      "top_maj": 0.9746666666666667,
+      "rand_maj": 0.968
+    },
+    {
+      "seed": 2,
+      "top_min": 0.008,
+      "rand_min": 0.018000000000000002,
+      "bottom_min": 0.025555555555555554,
+      "top_maj": 0.976,
+      "rand_maj": 0.946
+    }
+  ],
+  "claims": {
+    "w2_false_stability": "FALSIFIED \u2014 top_k does not improve sliced W2 vs rand_k",
+    "minority_ordering": "SUPPORTED \u2014 bottom_k > rand_k > top_k minority retention (g1/g0)",
+    "majority_concentration": "SUPPORTED at rho=5 early gens \u2014 top_k raises majority_mass vs rand_k"
+  }
+}

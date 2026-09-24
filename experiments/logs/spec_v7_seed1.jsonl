@@ -1,0 +1,12 @@
+{"probe": "S1", "snr_db": 30.0, "class_acc": 1.0, "mean_pairwise_l2": 0.4895214785848346, "samp_std": 0.2762579917907715}
+{"probe": "S1", "snr_db": 10.0, "class_acc": 1.0, "mean_pairwise_l2": 0.5302519893220493, "samp_std": 0.24449878931045532}
+{"probe": "S1", "snr_db": 0.0, "class_acc": 1.0, "mean_pairwise_l2": 0.48597898750078106, "samp_std": 0.1709870547056198}
+{"probe": "S1", "snr_db": -5.0, "class_acc": 1.0, "mean_pairwise_l2": 0.47702565188918794, "samp_std": 0.12249857187271118}
+{"probe": "S2", "f0_jitter": 0.0, "class_acc": 1.0, "mean_pairwise_l2": 0.48358144175438644, "samp_std": 0.27356573939323425}
+{"probe": "S2", "f0_jitter": 5.0, "class_acc": 1.0, "mean_pairwise_l2": 0.5311390860165869, "samp_std": 0.2571568787097931}
+{"probe": "S2", "f0_jitter": 15.0, "class_acc": 1.0, "mean_pairwise_l2": 0.6293503444677307, "samp_std": 0.20297583937644958}
+{"probe": "S2", "f0_jitter": 40.0, "class_acc": 0.725, "mean_pairwise_l2": 0.5345749290216537, "samp_std": 0.13793790340423584}
+{"probe": "S3", "warp": 0.0, "class_acc": 1.0, "mean_pairwise_l2": 0.4766934042743274, "samp_std": 0.2727563679218292}
+{"probe": "S3", "warp": 0.1, "class_acc": 1.0, "mean_pairwise_l2": 0.47044130629017245, "samp_std": 0.27301669120788574}
+{"probe": "S3", "warp": 0.25, "class_acc": 1.0, "mean_pairwise_l2": 0.4778132982197262, "samp_std": 0.27259138226509094}
+{"probe": "S3", "warp": 0.5, "class_acc": 1.0, "mean_pairwise_l2": 0.48975612667344876, "samp_std": 0.2718532383441925}

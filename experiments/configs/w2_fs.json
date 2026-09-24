@@ -1,0 +1,32 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "rhos": [
+    5.0,
+    10.0
+  ],
+  "policies": [
+    "mix",
+    "top_k",
+    "rand_k",
+    "replace",
+    "bottom_k"
+  ],
+  "generations": 5,
+  "n_data": 1500,
+  "n_synth": 1500,
+  "train_steps": 600,
+  "n_steps": 30,
+  "K": 4,
+  "delta": 1.5,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 64,
+  "n_t": 6,
+  "quick": false,
+  "experiment": "w2_fs"
+}

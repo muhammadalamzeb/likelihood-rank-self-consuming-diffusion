@@ -1,0 +1,13 @@
+{
+  "stack": "v4_sbm_graphvae",
+  "seed": 1,
+  "epochs": 40,
+  "n_nodes": 20,
+  "n_graphs": 200,
+  "n_samp": 32,
+  "probes": [
+    "G1_community_strength",
+    "G3_density",
+    "G4_label_noise_proxy"
+  ]
+}

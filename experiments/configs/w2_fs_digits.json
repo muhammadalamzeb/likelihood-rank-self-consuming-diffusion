@@ -1,0 +1,19 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k",
+    "mix"
+  ],
+  "generations": 3,
+  "train_steps": 250,
+  "n_synth": 800,
+  "alpha_real": 0.5,
+  "quick": false
+}

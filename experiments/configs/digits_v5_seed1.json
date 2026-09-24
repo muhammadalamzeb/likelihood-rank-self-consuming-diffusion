@@ -1,0 +1,12 @@
+{
+  "stack": "v5_digits_cvae_erase_tau_cap",
+  "seed": 1,
+  "epochs": 30,
+  "real_clf_acc": 0.9666666666666667,
+  "probes": [
+    "F1_random_erase",
+    "F2_prior_tau",
+    "F3_per_class_cap"
+  ],
+  "note": "FashionMNIST abandoned (download stall); same probes on offline digits"
+}
