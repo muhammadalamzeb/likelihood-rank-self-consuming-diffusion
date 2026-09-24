@@ -45,3 +45,11 @@
 - **Decision:** **KEEP** revised claim for workshop-scope paper; report Digits as inconclusive
 - **Experiment ID:** `w2_fs`, `w2_fs_digits`
 - **Conclusion:** Write `paper/PAPER.md` + repro package; PUBLICATION-READY (L2 empirical scope)
+
+## 2026-09-24 — Replication seeds 3–4 + Wilcoxon stats
+
+- **Hypothesis:** Same revised W2-1
+- **Evidence:** Merged log n=228; retention bottom/rand/top = 0.572/0.360/0.172 (n=8 pairs); order holds 5/5 seeds at ρ=5 g=1; Wilcoxon p≈0.042 for top−rand and bottom−rand retention
+- **Decision:** **KEEP**; update paper numbers + `scripts/reproduce_w2.ps1`; add `--append` to runner
+- **Experiment ID:** `w2_fs`
+- **Conclusion:** Stronger replication package committed

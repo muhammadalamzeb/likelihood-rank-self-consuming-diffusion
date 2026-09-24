@@ -8,7 +8,7 @@ Self-consuming training loops—retraining generative models on their own output
 \text{bottom-}k \;\;>\;\; \text{random-}k \;\;>\;\; \text{top-}k
 \]
 
-in first-generation minority-mass retention (means \(0.46 / 0.29 / 0.16\)). Likelihood top-\(k\) also increases majority-mode concentration relative to random-\(k\). We **falsify** a natural “false stability” hypothesis: top-\(k\) does *not* improve sliced Wasserstein-2 distance to real data while minorities die—it typically worsens both. A Digits CVAE transfer was inconclusive due to classifier-based mass estimates under severe sample degeneration. We release configs, seeds, logs, and plotting code.
+in first-generation minority-mass retention (means \(0.57 / 0.36 / 0.17\) over eight seed–imbalance pairs; five seeds at \(\rho{=}5\)). Likelihood top-\(k\) also increases majority-mode concentration relative to random-\(k\). We **falsify** a natural “false stability” hypothesis: top-\(k\) does *not* improve sliced Wasserstein-2 distance to real data while minorities die—it typically worsens both. A Digits CVAE transfer was inconclusive due to classifier-based mass estimates under severe sample degeneration. We release configs, seeds, logs, and plotting code.
 
 ## 1 Introduction
 
@@ -52,18 +52,20 @@ Nearest-mean mode assignment on known GMM centers. Report minority-mean mass (mo
 
 ## 4 Experiments
 
-**Setup.** \(K{=}4\) modes on a circle, imbalance \(\rho\in\{5,10\}\), tiny MLP denoiser, \(G{=}5\) generations, seeds \(\{0,1,2\}\), \(\alpha{=}0.5\). Config: `experiments/configs/w2_fs.json`. Logs: `experiments/logs/w2_fs.jsonl`.
+**Setup.** \(K{=}4\) modes on a circle, imbalance \(\rho\in\{5,10\}\), tiny MLP denoiser, \(G{=}5\) generations, seeds \(\{0,1,2,3,4\}\) (seeds 3–4 replicate \(\rho{=}5\)), \(\alpha{=}0.5\). Config: `experiments/configs/w2_fs.json`. Logs: `experiments/logs/w2_fs.jsonl` (\(n{=}228\) records).
 
 **Primary result (retention).** Mean minority-mass ratio \(m^{(1)}_{\min}/m^{(0)}_{\min}\):
 
-| Policy | Mean retention | Std |
-|--------|----------------|-----|
-| bottom_k | 0.457 | 0.218 |
-| mix | 0.298 | 0.096 |
-| rand_k | 0.289 | 0.140 |
-| top_k | 0.161 | 0.085 |
+| Policy | Mean retention | Std | \(n\) |
+|--------|----------------|-----|-------|
+| bottom_k | 0.572 | 0.289 | 8 |
+| rand_k | 0.360 | 0.173 | 8 |
+| mix | 0.328 | 0.100 | 8 |
+| top_k | 0.172 | 0.078 | 8 |
 
-**Ordering.** At \(\rho{=}5\), generation 1, all three seeds satisfy \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) on minority mass; top-\(k\) also raises majority mass vs random-\(k\) (Table `paper/table_primary_rho5_g1.csv`).
+**Ordering.** At \(\rho{=}5\), generation 1, **all five seeds** satisfy \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) on minority mass (`primary_rho5_g1_order_holds=true`). Top-\(k\) also raises majority mass vs random-\(k\).
+
+**Significance (paired retention).** Wilcoxon signed-rank (normal approx.) on retention differences vs random-\(k\) (\(n{=}8\) pairs): top−rand mean \(\Delta{=}{-}0.188\) (\(p{\approx}0.042\)); bottom−rand mean \(\Delta{=}{+}0.212\) (\(p{\approx}0.042\)). See `paper/table_stats_retention.csv`.
 
 **Falsified claim.** Top-\(k\) does **not** improve sliced W₂ vs random-\(k\) while minorities die (mean \(\Delta\)W₂ \(>0\) for generations 1–5). The original “false stability via better W₂” hypothesis is rejected.
 
@@ -102,8 +104,13 @@ Unlabeled likelihood ranking of synthetic data in self-consuming diffusion induc
 
 See repository `README.md`. Principal command:
 
-```bash
-python experiments/scripts/run_w2_false_stability.py --out experiments --seeds 0 1 2 --rhos 5.0 10.0
+```powershell
+# Full matrix (recommended)
+powershell -File scripts\reproduce_w2.ps1
+
+# Or step-by-step:
+python experiments/scripts/run_w2_false_stability.py --out experiments --seeds 0 1 2 --rhos 5.0 10.0 --append
+python experiments/scripts/run_w2_false_stability.py --out experiments --seeds 3 4 --rhos 5.0 --policies top_k rand_k bottom_k mix --append
 python experiments/scripts/analyze_w2_fs.py
 python experiments/scripts/make_w2_figures.py
 ```

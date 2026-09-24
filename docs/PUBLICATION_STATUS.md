@@ -17,8 +17,10 @@
 | Claim | Result |
 |-------|--------|
 | top_k improves W₂ while hurting minorities | **FALSIFIED** |
-| bottom_k > rand_k > top_k minority retention | **SUPPORTED** (GMM) |
+| bottom_k > rand_k > top_k minority retention | **SUPPORTED** (GMM; 5/5 seeds at ρ=5; Wilcoxon p≈0.04 vs rand) |
 | Digits transfer | **INCONCLUSIVE** |
+
+Reproduce: `scripts/reproduce_w2.ps1`
 
 ## Honesty limits
 

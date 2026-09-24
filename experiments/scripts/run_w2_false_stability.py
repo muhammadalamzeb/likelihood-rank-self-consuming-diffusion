@@ -279,6 +279,11 @@ def main():
     ap.add_argument("--hidden", type=int, default=64)
     ap.add_argument("--n-t", type=int, default=6)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument(
+        "--append",
+        action="store_true",
+        help="Append to existing w2_fs.jsonl instead of overwriting",
+    )
     args = ap.parse_args()
     if args.quick:
         args.train_steps = 250
@@ -304,10 +309,11 @@ def main():
                 all_recs.extend(run_one(seed, rho, policy, args))
 
     log_path = out / "logs" / "w2_fs.jsonl"
-    with open(log_path, "w", encoding="utf-8") as f:
+    mode = "a" if args.append and log_path.exists() else "w"
+    with open(log_path, mode, encoding="utf-8") as f:
         for r in all_recs:
             f.write(json.dumps(r) + "\n")
-    print(f"wrote {log_path} n={len(all_recs)}")
+    print(f"wrote {log_path} n={len(all_recs)} mode={mode}")
 
 
 if __name__ == "__main__":
