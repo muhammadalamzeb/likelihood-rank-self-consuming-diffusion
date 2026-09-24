@@ -1,0 +1,30 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1
+  ],
+  "rhos": [
+    5.0
+  ],
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k"
+  ],
+  "generations": 3,
+  "n_data": 1200,
+  "n_synth": 1200,
+  "train_steps": 500,
+  "n_steps": 30,
+  "K": 4,
+  "delta": 1.5,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 64,
+  "n_t": 6,
+  "quick": false,
+  "append": true,
+  "log_name": "w2_fs_alpha.jsonl",
+  "experiment": "w2_fs"
+}
