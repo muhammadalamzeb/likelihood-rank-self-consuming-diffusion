@@ -62,11 +62,12 @@
 - **Experiment ID:** `w2_fs_alpha`
 - **Conclusion:** Submission package extended
 
-## 2026-09-24 — Digits-PCA mode-exact transfer
+## 2026-09-24 — First-author submission package
 
-- **Hypothesis:** Ordering transfers beyond GMM when mode masses use nearest empirical class means (not a classifier on collapsed samples)
-- **Evidence:** `w2_fs_digits_pca.jsonl` (n=45): g1 bottom>rand>top on 3/3 seeds; retention means 1.49/1.11/0.68; top majority_g1 mean 0.76 vs rand 0.60
-- **Decision:** **KEEP**; Digits CVAE remains inconclusive/superseded for claims
-- **Experiment ID:** `w2_fs_digits_pca`
-- **Conclusion:** Non-GMM transfer supported; update paper
+- **Hypothesis:** N/A (packaging)
+- **Evidence:** Author named on title page; full bib; SUBMIT checklist; LICENSE
+- **Decision:** **KEEP** as arXiv/workshop submission-ready; live upload requires author account
+- **Experiment ID:** —
+- **Conclusion:** Outcome A at workshop/arXiv scope
+
 

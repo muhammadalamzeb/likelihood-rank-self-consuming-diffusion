@@ -10,7 +10,7 @@
 |-------|--------|
 | Path 1–4 | Historical archive |
 | **Wave-2 / W2-1** | **KEEP** (revised) — paper in `paper/PAPER.md` |
-| Publication | Workshop-scope **PUBLICATION-READY** (`PUBLICATION_STATUS.md`) |
+| Publication | **FIRST-AUTHOR SUBMISSION-READY** (`PUBLICATION_STATUS.md`; arXiv upload is human) |
 | Frozen stacks v0–v8 | Preserved; not novelty for this paper |
 
 ## Research profile (v4)

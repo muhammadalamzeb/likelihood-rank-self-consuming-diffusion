@@ -54,3 +54,15 @@ credentials.json
 # Cursor / local agent caches (if ever copied into repo)
 .agent-tools/
 agent-tools/
+
+# LaTeX intermediates (keep main.pdf)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/arxiv_upload/
+
+# Abandoned FashionMNIST download cache
+experiments/data/

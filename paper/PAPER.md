@@ -1,5 +1,10 @@
 # Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering on Imbalanced Mixtures
 
+**Author:** Muhammad Alamzeb (sole / first author)  
+**Contact:** shayankhanmahar@gmail.com  
+**Venue target:** arXiv cs.LG / workshop empirical note  
+**Status:** First-author submission-ready (`paper/SUBMIT.md`)
+
 ## Abstract
 
 Self-consuming training loops—retraining generative models on their own outputs—are known to induce *model collapse*, including loss of distributional tails. Prior work notes that bias toward “high-quality” synthetic samples worsens the quality–diversity tradeoff, and that task-level *verification* can stabilize labeled synthetic data. We study the most common *unlabeled* selection score for diffusion models: a denoising ELBO / likelihood proxy. On imbalanced 2D Gaussian mixtures with a tiny DDPM, under matched real-data mixing and matched synthetic budget, we find a reproducible **likelihood-rank ordering** of minority-mode survival:
@@ -24,7 +29,7 @@ A practical question remains underspecified: when the only available score is th
 
 ## 2 Related work
 
-**Model collapse.** Shumailov et al. [2023] document recursive training collapse and tail forgetting. Gerstgrasser et al. [2024] show accumulating real+synthetic data can avoid collapse. Dohmatob et al. and Bertrand et al. provide theoretical rates. Alemohammad et al. [2023] (*MAD*) highlight quality-biased sampling.
+**Model collapse.** Shumailov et al. [2023] document recursive training collapse and tail forgetting. Gerstgrasser et al. [2024] show accumulating real+synthetic data can avoid collapse. Alemohammad et al. [2023] (*MAD*) highlight quality-biased sampling.
 
 **Verification and filtering.** Feng et al. [2024] argue verification of synthesized *labels* prevents collapse. Cai et al. [2025] (*LSF*) filter synthetic images using latent-space realism scores. Neither isolates unlabeled ELBO top-\(k\) vs random-\(k\) with mode-grounded metrics on continuous mixtures.
 
@@ -107,13 +112,13 @@ Unlabeled likelihood ranking of synthetic data in self-consuming diffusion induc
 
 ## References
 
-- Alemohammad, S., et al. (2023). Self-Consuming Generative Models Go MAD. arXiv:2307.01850.
-- Cai, Z., et al. (2025). Stabilizing Self-Consuming Diffusion Models with Latent Space Filtering. arXiv:2511.12742.
-- Feng, Y., et al. (2024). Beyond Model Collapse: Scaling Up with Synthesized Data Requires Verification. arXiv:2406.07515.
-- Gerstgrasser, M., et al. (2024). Is Model Collapse Inevitable? arXiv:2404.01413.
-- Li, P., et al. (2026). Diversify Diffusion with Temperature Sampling and Variance-Corrective Time Shifting. arXiv:2607.10853.
-- Shumailov, I., et al. (2023). The Curse of Recursion: Training on Generated Data Makes Models Forget. arXiv:2305.17493.
-- Xu, Y., et al. (2025). Temporal Score Rescaling for Temperature Sampling in Diffusion and Flow Models. arXiv:2510.01184.
+- Alemohammad, S., Casco-Rodriguez, J., Luzi, L., Humayun, A. I., Babaei, H., LeJeune, D., Siahkoohi, A., and Baraniuk, R. G. (2023). Self-Consuming Generative Models Go MAD. arXiv:2307.01850.
+- Cai, Z., Wang, Y., Liu, Y., and Zhang, X. (2025). Stabilizing Self-Consuming Diffusion Models with Latent Space Filtering. arXiv:2511.12742.
+- Feng, Y., Dohmatob, E., Yang, P., Charton, F., and Kempe, J. (2024). Beyond Model Collapse: Scaling Up with Synthesized Data Requires Verification. arXiv:2406.07515.
+- Gerstgrasser, M., Schaeffer, R., Dey, A., Rafailov, R., Pai, D., Sleight, H., Hughes, J., Korbak, T., Agrawal, R., Gromov, A., Roberts, D. A., Yang, D., Donoho, D., and Koyejo, S. (2024). Is Model Collapse Inevitable? arXiv:2404.01413.
+- Li, P., Aksan, E., Ichim, A.-E., Beeler, T., and Sorkine-Hornung, O. (2026). Diversify Diffusion with Temperature Sampling and Variance-Corrective Time Shifting. arXiv:2607.10853.
+- Shumailov, I., Shumaylov, Z., Zhao, Y., Gal, Y., Papernot, N., and Anderson, R. (2023). The Curse of Recursion: Training on Generated Data Makes Models Forget. arXiv:2305.17493.
+- Xu, Y., Wu, Y., Park, S., Zhou, Z., and Tulsiani, S. (2025). Temporal Score Rescaling for Temperature Sampling in Diffusion and Flow Models. arXiv:2510.01184.
 
 ## Appendix A Reproducibility
 

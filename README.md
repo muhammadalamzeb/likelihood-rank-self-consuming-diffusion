@@ -1,10 +1,12 @@
 # Machine Learning Paper
 
-## Status: PUBLICATION-READY (workshop / empirical L2 scope)
+## Status: FIRST-AUTHOR SUBMISSION-READY (arXiv / workshop L2)
 
 **Active constraint set:** v4 (`docs/CONSTRAINTS.md`)  
 **Survivor:** W2-1 likelihood-rank ordering (`docs/RESEARCH_SURVIVOR.md`)  
-**Paper:** [`paper/PAPER.md`](paper/PAPER.md)  
+**Paper:** [`paper/PAPER.md`](paper/PAPER.md) · LaTeX [`paper/main.tex`](paper/main.tex)  
+**Submit checklist:** [`paper/SUBMIT.md`](paper/SUBMIT.md)  
+**Author:** Muhammad Alamzeb (sole / first)  
 **Research log:** [`docs/RESEARCH_LOG.md`](docs/RESEARCH_LOG.md)
 
 | Track | State |
@@ -12,6 +14,7 @@
 | Paths 1–4 (historical) | Archived evidence; stacks v0–v8 frozen |
 | Wave-2 discovery | KEEP → MODIFY → empirical support for revised claim |
 | Principal experiments | `w2_fs` (GMM); `w2_fs_hd`; `w2_fs_digits_pca` (supported); `w2_fs_digits` CVAE inconclusive |
+| Publication | Submission package complete; **arXiv upload needs your account** |
 
 ## Claim (one sentence)
 

@@ -6,8 +6,9 @@
 \title{Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:\\
 Minority Extinction Ordering on Imbalanced Mixtures}
 \author{
-Anonymous\\
-\textit{Workshop / empirical note --- full provenance in accompanying repository}
+Muhammad Alamzeb\\
+\textit{Independent researcher}\\
+\texttt{shayankhanmahar@gmail.com}
 }
 \date{}
 
@@ -15,46 +16,77 @@ Anonymous\\
 \maketitle
 
 \begin{abstract}
-Self-consuming training loops can induce model collapse, including loss of rare modes.
-We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced 2D Gaussian mixtures.
-Under matched real-mix ratio and matched synthetic budget, first-generation minority-mass retention obeys
+Self-consuming training loops---retraining generative models on their own outputs---can induce \emph{model collapse}, including loss of rare modes.
+Prior work notes that bias toward high-quality synthetic samples worsens the quality--diversity tradeoff, and that task-level verification can stabilize labeled synthetic data.
+We study the most common \emph{unlabeled} selection score for diffusion models: a denoising ELBO~/~likelihood proxy.
+On imbalanced Gaussian mixtures with a tiny DDPM, under matched real-data mixing and matched synthetic budget, first-generation minority-mass retention obeys
 \[\mathrm{bottom}\text{-}k \;\;>\;\; \mathrm{random}\text{-}k \;\;>\;\; \mathrm{top}\text{-}k\]
 (means \(0.57/0.36/0.17\) over eight seed--imbalance pairs; order holds on \(5/5\) seeds at imbalance \(\rho{=}5\)).
 Paired Wilcoxon tests vs.\ random-\(k\) give \(p{\approx}0.042\) for both top and bottom contrasts.
+Likelihood top-\(k\) also concentrates majority mass relative to random-\(k\).
 A natural ``false stability'' hypothesis---that top-\(k\) improves sliced \(W_2\) while minorities die---is falsified.
 The ordering transfers to \(8\)D GMM and to Digits in PCA space with nearest class-mean occupancy (\(3/3\) seeds each).
+We release configs, seeds, logs, and analysis code.
 \end{abstract}
 
 \section{Introduction}
-As synthetic data proliferates, generative models are increasingly trained on mixtures of real and generated samples.
-Iterated self-consumption can cause \emph{model collapse}~\citep{shumailov2023,alemohammad2023,gerstgrasser2024}.
-Mitigations include accumulating real data~\citep{gerstgrasser2024}, injecting fresh real samples, and filtering synthetics~\citep{feng2024,cai2025}.
-When the only score available is the generator's own likelihood, how should one select synthetics?
-We provide a matched-budget, mode-exact causal contrast among likelihood ranks.
+As synthetic data proliferates, generative models are increasingly trained on mixtures of real and model-generated samples.
+Iterated self-consumption can cause \emph{model collapse}: progressive loss of diversity and forgetting of rare modes~\citep{shumailov2023,alemohammad2023,gerstgrasser2024}.
+Mitigations include accumulating real data~\citep{gerstgrasser2024}, injecting fresh real samples, and \emph{filtering} synthetic data~\citep{feng2024,cai2025}.
+
+A practical question remains underspecified: when the only available score is the generator's own likelihood (or denoising loss), how should one select synthetic samples?
+\citet{feng2024} show that \emph{task verifiers} for labeled synthetic answers can prevent collapse.
+\citet{cai2025} filter ``unrealistic'' diffusion samples via latent probes and report aggregate FID/precision/recall.
+\citet{alemohammad2023} observe that sampling bias toward high-quality generations drives a quality--diversity tradeoff.
+What is missing is a \textbf{matched-budget, mode-exact} causal contrast among likelihood ranks.
 
 \paragraph{Contributions.}
-(1)~Controlled self-consuming DDPM protocol on imbalanced GMMs with exact mode masses.
-(2)~Evidence for a likelihood-rank ordering of minority retention.
-(3)~Falsification of \(W_2\)-based false stability for likelihood top-\(k\).
+\begin{enumerate}
+\item A controlled self-consuming DDPM protocol on imbalanced GMMs with exact mode masses.
+\item Evidence for a \textbf{likelihood-rank ordering} of minority retention under matched \(k\) and matched real mix ratio.
+\item An experimental \textbf{falsification} of \(W_2\)-based false stability for likelihood top-\(k\).
+\item Transfer checks: \(8\)D GMM and Digits-PCA with nearest class-mean occupancy.
+\end{enumerate}
 
 \section{Related work}
-Model collapse and tail forgetting are documented by~\citet{shumailov2023,alemohammad2023}.
-\citet{feng2024} show task verifiers for labeled synth can prevent collapse; \citet{cai2025} filter diffusion samples via latent probes (FID/precision/recall).
-Inference-time temperature methods~\citep{xu2025,li2026} reshape sampling diversity; we intervene on \emph{training-set selection}.
+\paragraph{Model collapse.}
+\citet{shumailov2023} document recursive training collapse and tail forgetting.
+\citet{gerstgrasser2024} show accumulating real+synthetic data can avoid collapse.
+\citet{alemohammad2023} (\emph{MAD}) highlight quality-biased sampling.
+
+\paragraph{Verification and filtering.}
+\citet{feng2024} argue verification of synthesized \emph{labels} prevents collapse.
+\citet{cai2025} (\emph{LSF}) filter synthetic images using latent-space realism scores.
+Neither isolates unlabeled ELBO top-\(k\) vs.\ random-\(k\) with mode-grounded metrics on continuous mixtures.
+
+\paragraph{Temperature~/~diversity knobs.}
+Inference-time temperature methods~\citep{xu2025,li2026} reshape sampling diversity; we instead intervene on \emph{training-set selection} inside self-consuming loops.
 
 \section{Method}
-Train DDPM \(f^{(g)}\) on \(\mathcal{D}^{(g)}\), sample synthetics, mix a fixed real buffer (fraction \(\alpha\)) with selected synthetics.
-Score \(s(x)\) is mean denoising MSE over a \(t\)-grid (lower $=$ higher likelihood).
-Policies at matched count: top-\(k\), random-\(k\), bottom-\(k\), plus mix/replace references.
-Metrics: nearest-mean mode masses and sliced \(W_2\) to held-out real data.
+\subsection{Self-consuming loop}
+Let \(f^{(g)}\) be a DDPM trained on \(\mathcal{D}^{(g)}\).
+Sample synthetic set \(\widehat{\mathcal{D}}^{(g+1)}\).
+Build the next train set by mixing a fixed real buffer \(\mathcal{D}_{\mathrm{real}}\) (fraction \(\alpha\)) with selected synthetics.
+
+\subsection{Likelihood proxy and policies}
+For each synthetic \(x\), define score \(s(x)\) as mean denoising MSE over a grid of times \(t\) (ELBO proxy; \textbf{lower} $=$ higher likelihood).
+Policies at matched synthetic count:
+\textbf{top-\(k\)} (lowest \(s\)),
+\textbf{random-\(k\)},
+\textbf{bottom-\(k\)} (highest \(s\)),
+plus \textbf{mix}~/~\textbf{replace} references.
+
+\subsection{Metrics}
+Nearest-mean mode assignment on known centers (GMM means or Digits empirical class means in PCA space).
+Report minority-mean mass, majority mass, and sliced \(W_2\) to held-out real samples.
 
 \section{Experiments}
-\textbf{Setup.} \(K{=}4\), \(\rho\in\{5,10\}\), tiny MLP denoiser, \(G{=}5\), seeds \(\{0{\ldots}4\}\), \(\alpha{=}0.5\).
+\textbf{Setup.} \(K{=}4\) modes, \(\rho\in\{5,10\}\), tiny MLP denoiser, \(G{=}5\), seeds \(\{0{\ldots}4\}\) (seeds 3--4 replicate \(\rho{=}5\)), \(\alpha{=}0.5\).
 Logs: \texttt{experiments/logs/w2\_fs.jsonl} (\(n{=}228\)).
 
 \begin{table}[t]
 \centering
-\caption{Minority-mass retention \(m^{(1)}/m^{(0)}\).}
+\caption{Minority-mass retention \(m^{(1)}/m^{(0)}\) on the principal GMM matrix.}
 \label{tab:ret}
 \begin{tabular}{lrrr}
 \toprule
@@ -70,25 +102,41 @@ top\_k & 0.172 & 0.078 & 8 \\
 
 At \(\rho{=}5\), generation 1, all five seeds satisfy \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\).
 Wilcoxon signed-rank vs.\ random-\(k\) (\(n{=}8\)): top$-$rand \(\Delta{=}{-}0.188\) (\(p{\approx}0.042\)); bottom$-$rand \(\Delta{=}{+}0.212\) (\(p{\approx}0.042\)).
-Top-\(k\) does not improve sliced \(W_2\) (mean \(\Delta W_2>0\)).
+Top-\(k\) does \textbf{not} improve sliced \(W_2\) (mean \(\Delta W_2>0\)).
+
+\paragraph{Real-mix sensitivity.}
 An \(\alpha\)-sweep (\texttt{w2\_fs\_alpha.jsonl}) shows the top-\(k\) penalty is clearest at \(\alpha\le 0.5\); at \(\alpha{=}0.75\) it weakens vs.\ random while bottom-\(k\) remains highest on average.
+
+\paragraph{Transfers.}
 An \(8\)D GMM transfer (\texttt{w2\_fs\_hd.jsonl}) reproduces the ordering on \(3/3\) seeds (retention means \(0.55/0.27/0.08\)).
-Digits in PCA-\(8\) with nearest class-mean occupancy (\texttt{w2\_fs\_digits\_pca.jsonl}) likewise holds on \(3/3\) seeds (retention means \(1.49/1.11/0.68\)); an earlier Digits CVAE+classifier probe is inconclusive and unused for claims.
+Digits in PCA-\(8\) with nearest class-mean occupancy (\texttt{w2\_fs\_digits\_pca.jsonl}) holds on \(3/3\) seeds (retention means \(1.49/1.11/0.68\)).
+An earlier Digits CVAE+classifier probe is inconclusive and unused for claims.
+
+\paragraph{Selection-pool size.}
+Under \(k=\max(n_{\mathrm{syn}},\lfloor k_{\mathrm{frac}}N\rfloor)\), \(k_{\mathrm{frac}}\in\{0.25,0.5\}\) are operationally equivalent when \(n_{\mathrm{syn}}\) binds; at \(k_{\mathrm{frac}}{=}0.75\) top-\(k\) remains worst.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.48\textwidth]{figures/retention_bars.png}
 \includegraphics[width=0.48\textwidth]{figures/minority_vs_generation_rho5.png}
 \caption{Left: retention by policy. Right: minority mass vs.\ generation at \(\rho{=}5\).}
+\label{fig:main}
 \end{figure}
 
-\section{Analysis and limitations}
-Top-\(k\) retains points the model already explains well (majority modes), reducing minority inflow.
-Aggregate \(W_2\) is a poor monitor for this failure.
-Limitations: toy GMMs / Digits-PCA (not ImageNet); Digits CVAE inconclusive; effect strongest at moderate imbalance and early generations; L2 empirical novelty relative to MAD/LSF/Feng.
+\section{Analysis}
+Likelihood top-\(k\) preferentially retains synthetic points the current model already explains well---typically majority-mode samples---reducing minority inflow into \(\mathcal{D}^{(g+1)}\).
+Bottom-\(k\) does the opposite relative to random.
+This is consistent with MAD's quality-bias narrative but makes the score-rank interventional and mode-exact.
+Aggregate \(W_2\) is a poor monitor for this failure: it moves with top-\(k\) in the \emph{wrong} direction for a ``quality win.''
+
+\section{Limitations}
+Toy 2D/8D GMMs and Digits-PCA with tiny networks; not ImageNet-scale.
+Digits CVAE transfer was inconclusive; Digits-PCA uses embeddings, not raw pixels.
+Effect strongest at moderate imbalance and early generations; high real mix (\(\alpha{=}0.75\)) weakens the top-\(k\) vs.\ random gap.
+Novelty is \textbf{L2 empirical} relative to MAD/LSF/Feng; we do not claim a new SOTA training method on FID.
 
 \section{Conclusion}
-Unlabeled likelihood ranking induces a stable minority-retention order under matched budgets and does not deliver \(W_2\) improvements.
+Unlabeled likelihood ranking of synthetic data in self-consuming diffusion induces a stable minority-retention order (bottom-\(k\) $>$ random-\(k\) $>$ top-\(k\)) under matched budgets on imbalanced mixtures, while failing to deliver \(W_2\) improvements.
 Preferring ``most likely'' synthetics is not a free lunch for minority survival.
 
 \bibliographystyle{plainnat}
@@ -96,7 +144,9 @@ Preferring ``most likely'' synthetics is not a free lunch for minority survival.
 
 \appendix
 \section{Reproducibility}
-See repository README and \texttt{scripts/reproduce\_w2.ps1}.
-All tables are generated from logged JSONL via analysis scripts.
+Principal command (Windows PowerShell): \texttt{scripts/reproduce\_w2.ps1}.
+All numerical tables are produced from logged JSONL via analysis scripts (no hand-edited metrics).
+Experiment IDs: \texttt{w2\_fs}, \texttt{w2\_fs\_hd}, \texttt{w2\_fs\_digits\_pca} (supported); \texttt{w2\_fs\_digits} (CVAE; inconclusive).
+Code and logs accompany this manuscript.
 
 \end{document}
