@@ -5,39 +5,41 @@
 **Manuscript:** `paper/main.tex` + `paper/PAPER.md`  
 **PDF:** `paper/main.pdf`  
 **arXiv zip:** `paper/arxiv_source.zip`  
+**Abstract paste:** `paper/arxiv_abstract.txt`  
 **Scope:** Workshop / empirical short paper / **arXiv cs.LG** note (L2 empirical).  
 **Not claiming:** NeurIPS/ICML SOTA method; ImageNet-scale results.
 
-## Ready now
+## Package complete (local)
 
 - [x] Sole first-author name on title page
 - [x] Abstract + intro + method + experiments + limitations + conclusion
 - [x] Figures (`paper/figures/*.png`)
-- [x] Tables from analysis CSVs (no hand-edited metrics)
-- [x] Bibliography with full author lists (`refs.bib`)
+- [x] Tables from analysis CSVs (numbers match `table_retention.csv` / Wilcoxon `p≈0.042`)
+- [x] Bibliography with full author lists (`refs.bib` + `main.bbl` in zip)
 - [x] Compiled PDF (`paper/main.pdf`)
-- [x] arXiv source zip (`paper/arxiv_source.zip`)
-- [x] Reproducibility script (`scripts/reproduce_w2.ps1`)
-- [x] Logged experiments: `w2_fs`, `w2_fs_hd`, `w2_fs_digits_pca`, ablations
+- [x] arXiv source zip (`paper/arxiv_source.zip`: `main.tex`, `refs.bib`, `main.bbl`, `00README.txt`, `figures/`)
+- [x] Plain-text abstract for the arXiv form (`arxiv_abstract.txt`)
+- [x] Reproducibility script + logs
 - [x] Honest scope / limitations documented
+- [x] PDF metadata (title/author via hyperref)
 
-## You must do to go live (credentials / account)
+## Only remaining: human arXiv account step
 
-1. Open [arXiv submit](https://arxiv.org/submit) and log in (or create account; cs.LG may need endorsement).
-2. Upload **`paper/arxiv_source.zip`** (contains `main.tex`, `refs.bib`, `figures/`).
-3. Optionally attach `main.pdf` as well.
-4. **Category:** `cs.LG` (primary); optional `stat.ML`.
-5. **License:** Creative Commons Attribution (CC BY 4.0) recommended.
-6. After the arXiv ID issues, optionally index on Hugging Face Paper Pages.
+1. Open [arxiv.org/submit](https://arxiv.org/submit) and log in (new cs.LG accounts may need endorsement).
+2. Upload **`paper/arxiv_source.zip`**.
+3. Paste abstract from **`paper/arxiv_abstract.txt`**.
+4. Category: **cs.LG** (optional secondary: **stat.ML**).
+5. License: **CC BY 4.0**.
+6. After ID issues, optionally index on Hugging Face Paper Pages.
 
 ## Venue guidance
 
 | Target | Fit |
 |--------|-----|
-| arXiv preprint | **Yes** — primary next step |
-| GenAI / synthetic-data / workshop | **Yes** — empirical note |
-| Top conference (NeurIPS/ICML/ICLR main) | **No** without larger-scale evidence |
+| arXiv preprint | **Yes — ready to upload** |
+| GenAI / synthetic-data workshop | **Yes** |
+| Top conference main track | **No** without larger-scale evidence |
 
-## One-sentence claim for cover letter
+## Cover-letter sentence
 
 Under matched budgets in self-consuming DDPM training, minority-mode retention obeys bottom-k > random-k > top-k when ranking synthetics by a denoising likelihood proxy; W₂ “false stability” for top-k is falsified.

@@ -63,6 +63,7 @@ paper/*.log
 paper/*.out
 paper/*.toc
 paper/arxiv_upload/
+!paper/main.bbl
 
 # Abandoned FashionMNIST download cache
 experiments/data/

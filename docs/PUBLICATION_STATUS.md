@@ -17,8 +17,9 @@
 - [x] Bibliography with full author lists (`paper/refs.bib`)
 - [x] Reproducibility package (README + scripts + logs + analysis)
 - [x] Submission checklist (`paper/SUBMIT.md`)
-- [x] Compiled PDF (`paper/main.pdf`) + arXiv zip (`paper/arxiv_source.zip`)
-- [ ] **Live arXiv upload** (requires your arXiv account / endorsement)
+- [x] Compiled PDF (`paper/main.pdf`) + arXiv zip with `.bbl` (`paper/arxiv_source.zip`)
+- [x] Plain-text abstract (`paper/arxiv_abstract.txt`) + `00README.txt`
+- [ ] **Live arXiv upload** (only remaining step — your account)
 
 ## Evidence summary
 

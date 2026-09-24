@@ -1,0 +1,51 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Alemohammad et~al.(2023)Alemohammad, Casco-Rodriguez, Luzi, Humayun,
+  Babaei, LeJeune, Siahkoohi, and Baraniuk]{alemohammad2023}
+Sina Alemohammad, Josue Casco-Rodriguez, Lorenzo Luzi, Ahmed~Imtiaz Humayun,
+  Hossein Babaei, Daniel LeJeune, Ali Siahkoohi, and Richard~G. Baraniuk.
+\newblock Self-consuming generative models go {MAD}, 2023.
+
+\bibitem[Cai et~al.(2025)Cai, Wang, Liu, and Zhang]{cai2025}
+Zhongteng Cai, Yaxuan Wang, Yang Liu, and Xueru Zhang.
+\newblock Stabilizing self-consuming diffusion models with latent space
+  filtering, 2025.
+
+\bibitem[Feng et~al.(2024)Feng, Dohmatob, Yang, Charton, and Kempe]{feng2024}
+Yunzhen Feng, Elvis Dohmatob, Pu~Yang, Francois Charton, and Julia Kempe.
+\newblock Beyond model collapse: Scaling up with synthesized data requires
+  verification, 2024.
+
+\bibitem[Gerstgrasser et~al.(2024)Gerstgrasser, Schaeffer, Dey, Rafailov, Pai,
+  Sleight, Hughes, Korbak, Agrawal, Gromov, Roberts, Yang, Donoho, and
+  Koyejo]{gerstgrasser2024}
+Matthias Gerstgrasser, Rylan Schaeffer, Apratim Dey, Rafael Rafailov, Dhruv
+  Pai, Henry Sleight, John Hughes, Tomasz Korbak, Rajashree Agrawal, Andrey
+  Gromov, Daniel~A. Roberts, Diyi Yang, David Donoho, and Sanmi Koyejo.
+\newblock Is model collapse inevitable? breaking the curse of recursion by
+  accumulating real and synthetic data, 2024.
+
+\bibitem[Li et~al.(2026)Li, Aksan, Ichim, Beeler, and Sorkine-Hornung]{li2026}
+Peizhuo Li, Emre Aksan, Alexandru-Eugen Ichim, Thabo Beeler, and Olga
+  Sorkine-Hornung.
+\newblock Diversify diffusion with temperature sampling and variance-corrective
+  time shifting, 2026.
+
+\bibitem[Shumailov et~al.(2023)Shumailov, Shumaylov, Zhao, Gal, Papernot, and
+  Anderson]{shumailov2023}
+Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Yarin Gal, Nicolas Papernot, and
+  Ross Anderson.
+\newblock The curse of recursion: Training on generated data makes models
+  forget, 2023.
+
+\bibitem[Xu et~al.(2025)Xu, Wu, Park, Zhou, and Tulsiani]{xu2025}
+Yanbo Xu, Yu~Wu, Sungjae Park, Zhizhou Zhou, and Shubham Tulsiani.
+\newblock Temporal score rescaling for temperature sampling in diffusion and
+  flow models, 2025.
+
+\end{thebibliography}

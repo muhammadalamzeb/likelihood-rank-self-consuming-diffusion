@@ -2,6 +2,16 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,natbib}
 \usepackage[T1]{fontenc}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  pdftitle={Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion},
+  pdfauthor={Muhammad Alamzeb},
+  pdfsubject={Model collapse; self-consuming diffusion; likelihood ranking},
+  pdfkeywords={diffusion, model collapse, synthetic data, minority modes}
+}
 
 \title{Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:\\
 Minority Extinction Ordering on Imbalanced Mixtures}
@@ -108,8 +118,8 @@ Top-\(k\) does \textbf{not} improve sliced \(W_2\) (mean \(\Delta W_2>0\)).
 An \(\alpha\)-sweep (\texttt{w2\_fs\_alpha.jsonl}) shows the top-\(k\) penalty is clearest at \(\alpha\le 0.5\); at \(\alpha{=}0.75\) it weakens vs.\ random while bottom-\(k\) remains highest on average.
 
 \paragraph{Transfers.}
-An \(8\)D GMM transfer (\texttt{w2\_fs\_hd.jsonl}) reproduces the ordering on \(3/3\) seeds (retention means \(0.55/0.27/0.08\)).
-Digits in PCA-\(8\) with nearest class-mean occupancy (\texttt{w2\_fs\_digits\_pca.jsonl}) holds on \(3/3\) seeds (retention means \(1.49/1.11/0.68\)).
+An \(8\)D GMM transfer (\texttt{w2\_fs\_hd}) reproduces the ordering on \(3/3\) seeds (retention means \(0.55/0.27/0.08\)).
+Digits in PCA-\(8\) with nearest class-mean occupancy (\texttt{w2\_fs\_digits\_pca}) holds on \(3/3\) seeds (retention means \(1.49/1.11/0.68\)).
 An earlier Digits CVAE+classifier probe is inconclusive and unused for claims.
 
 \paragraph{Selection-pool size.}
@@ -143,10 +153,10 @@ Preferring ``most likely'' synthetics is not a free lunch for minority survival.
 \bibliography{refs}
 
 \appendix
-\section{Reproducibility}
+\section{Reproducibility and code}
 Principal command (Windows PowerShell): \texttt{scripts/reproduce\_w2.ps1}.
 All numerical tables are produced from logged JSONL via analysis scripts (no hand-edited metrics).
 Experiment IDs: \texttt{w2\_fs}, \texttt{w2\_fs\_hd}, \texttt{w2\_fs\_digits\_pca} (supported); \texttt{w2\_fs\_digits} (CVAE; inconclusive).
-Code and logs accompany this manuscript.
+Source code, configs, seeds, and logs accompany this manuscript in the project repository (same directory tree as the paper package).
 
 \end{document}
