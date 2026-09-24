@@ -22,7 +22,7 @@ Under matched real-mix ratio and matched synthetic budget, first-generation mino
 (means \(0.57/0.36/0.17\) over eight seed--imbalance pairs; order holds on \(5/5\) seeds at imbalance \(\rho{=}5\)).
 Paired Wilcoxon tests vs.\ random-\(k\) give \(p{\approx}0.042\) for both top and bottom contrasts.
 A natural ``false stability'' hypothesis---that top-\(k\) improves sliced \(W_2\) while minorities die---is falsified.
-Digits CVAE transfer was inconclusive.
+The ordering transfers to \(8\)D GMM and to Digits in PCA space with nearest class-mean occupancy (\(3/3\) seeds each).
 \end{abstract}
 
 \section{Introduction}
@@ -73,6 +73,7 @@ Wilcoxon signed-rank vs.\ random-\(k\) (\(n{=}8\)): top$-$rand \(\Delta{=}{-}0.1
 Top-\(k\) does not improve sliced \(W_2\) (mean \(\Delta W_2>0\)).
 An \(\alpha\)-sweep (\texttt{w2\_fs\_alpha.jsonl}) shows the top-\(k\) penalty is clearest at \(\alpha\le 0.5\); at \(\alpha{=}0.75\) it weakens vs.\ random while bottom-\(k\) remains highest on average.
 An \(8\)D GMM transfer (\texttt{w2\_fs\_hd.jsonl}) reproduces the ordering on \(3/3\) seeds (retention means \(0.55/0.27/0.08\)).
+Digits in PCA-\(8\) with nearest class-mean occupancy (\texttt{w2\_fs\_digits\_pca.jsonl}) likewise holds on \(3/3\) seeds (retention means \(1.49/1.11/0.68\)); an earlier Digits CVAE+classifier probe is inconclusive and unused for claims.
 
 \begin{figure}[t]
 \centering
@@ -84,7 +85,7 @@ An \(8\)D GMM transfer (\texttt{w2\_fs\_hd.jsonl}) reproduces the ordering on \(
 \section{Analysis and limitations}
 Top-\(k\) retains points the model already explains well (majority modes), reducing minority inflow.
 Aggregate \(W_2\) is a poor monitor for this failure.
-Limitations: toy GMMs; Digits transfer inconclusive; effect strongest at moderate imbalance and early generations; L2 empirical novelty relative to MAD/LSF/Feng.
+Limitations: toy GMMs / Digits-PCA (not ImageNet); Digits CVAE inconclusive; effect strongest at moderate imbalance and early generations; L2 empirical novelty relative to MAD/LSF/Feng.
 
 \section{Conclusion}
 Unlabeled likelihood ranking induces a stable minority-retention order under matched budgets and does not deliver \(W_2\) improvements.

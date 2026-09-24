@@ -11,7 +11,7 @@
 |-------|--------|
 | Paths 1–4 (historical) | Archived evidence; stacks v0–v8 frozen |
 | Wave-2 discovery | KEEP → MODIFY → empirical support for revised claim |
-| Principal experiments | `w2_fs` (GMM); `w2_fs_digits` inconclusive |
+| Principal experiments | `w2_fs` (GMM); `w2_fs_hd`; `w2_fs_digits_pca` (supported); `w2_fs_digits` CVAE inconclusive |
 
 ## Claim (one sentence)
 
@@ -32,7 +32,8 @@ Summary: `experiments/analysis/w2_fs_summary.json`
 Stats: `paper/table_stats_retention.csv`  
 Figures: `paper/figures/`
 
-Optional Digits transfer (inconclusive): `experiments/scripts/run_w2_fs_digits.py`
+Optional Digits-PCA transfer: `experiments/scripts/run_w2_fs_digits_pca.py`  
+(Legacy Digits CVAE, inconclusive: `run_w2_fs_digits.py`)
 
 ## Environment
 

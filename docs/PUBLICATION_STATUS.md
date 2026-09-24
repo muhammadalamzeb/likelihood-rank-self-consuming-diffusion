@@ -18,7 +18,8 @@
 |-------|--------|
 | top_k improves W₂ while hurting minorities | **FALSIFIED** |
 | bottom_k > rand_k > top_k minority retention | **SUPPORTED** (2D GMM 5/5 seeds; 8D GMM 3/3; Wilcoxon p≈0.04) |
-| Digits transfer | **INCONCLUSIVE** |
+| Digits-PCA transfer (nearest class mean) | **SUPPORTED** (3/3 seeds; retention 1.49/1.11/0.68) |
+| Digits CVAE + classifier | **INCONCLUSIVE** (superseded by Digits-PCA) |
 | α / k_frac sensitivity | Scoped: strongest at α≤0.5; see ablation tables |
 
 Reproduce: `scripts/reproduce_w2.ps1`

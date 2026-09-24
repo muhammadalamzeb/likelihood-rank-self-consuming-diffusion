@@ -7,6 +7,10 @@ __pycache__/
 .venv/
 venv/
 env/
+D:/pip-cache/
+D:/tmp/
+D:/hf-home/
+D:/xdg-cache/
 .env
 *.egg-info/
 .eggs/
@@ -29,6 +33,10 @@ wandb/
 runs/
 outputs/
 results/raw/
+experiments/grids/
+experiments/logs/*.png
+experiments/**/*.jpg
+experiments/**/*.jpeg
 
 # IDE / OS
 .idea/

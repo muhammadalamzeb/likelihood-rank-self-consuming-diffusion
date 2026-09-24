@@ -8,7 +8,7 @@ Self-consuming training loops—retraining generative models on their own output
 \text{bottom-}k \;\;>\;\; \text{random-}k \;\;>\;\; \text{top-}k
 \]
 
-in first-generation minority-mass retention (means \(0.57 / 0.36 / 0.17\) over eight seed–imbalance pairs; five seeds at \(\rho{=}5\)). Likelihood top-\(k\) also increases majority-mode concentration relative to random-\(k\). We **falsify** a natural “false stability” hypothesis: top-\(k\) does *not* improve sliced Wasserstein-2 distance to real data while minorities die—it typically worsens both. A Digits CVAE transfer was inconclusive due to classifier-based mass estimates under severe sample degeneration. We release configs, seeds, logs, and plotting code.
+in first-generation minority-mass retention (means \(0.57 / 0.36 / 0.17\) over eight seed–imbalance pairs; five seeds at \(\rho{=}5\)). Likelihood top-\(k\) also increases majority-mode concentration relative to random-\(k\). We **falsify** a natural “false stability” hypothesis: top-\(k\) does *not* improve sliced Wasserstein-2 distance to real data while minorities die—it typically worsens both. The same ordering transfers to an **8D GMM** and to **sklearn Digits in PCA space** with nearest class-mean occupancy (3/3 seeds); a prior Digits CVAE + classifier protocol was inconclusive and is superseded by the PCA design. We release configs, seeds, logs, and plotting code.
 
 ## 1 Introduction
 
@@ -69,7 +69,7 @@ Nearest-mean mode assignment on known GMM centers. Report minority-mean mass (mo
 
 **Falsified claim.** Top-\(k\) does **not** improve sliced W₂ vs random-\(k\) while minorities die (mean \(\Delta\)W₂ \(>0\) for generations 1–5). The original “false stability via better W₂” hypothesis is rejected.
 
-**Digits transfer.** A CVAE self-consuming loop on sklearn Digits (`w2_fs_digits`) showed weak entropy trends in the same direction but unreliable class-mass estimates under collapsed samples; we treat transfer as **inconclusive**.
+**Digits-PCA transfer.** Same DDPM protocol on sklearn Digits classes \(\{0,1,2,3\}\) projected to \(d{=}8\) PCA (`w2_fs_digits_pca.jsonl`, seeds \(\{0,1,2\}\), \(\rho{=}5\)): mode masses by nearest *empirical class mean* (no classifier on synthetics). Generation-1 ordering \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) holds on **3/3** seeds; retention means bottom / rand / top = **1.49 / 1.11 / 0.68**. Top-\(k\) also raises majority mass (mean \(0.76\) vs \(0.60\) for random). An earlier CVAE + logistic-mass Digits probe (`w2_fs_digits`) remains logged as inconclusive and is not used for claims.
 
 **Real-mix sensitivity (\(\alpha\)).** Separate ablation (`w2_fs_alpha.jsonl`, seeds \(\{0,1\}\), \(\rho{=}5\), \(G{\le}3\)):
 
@@ -95,8 +95,8 @@ Likelihood top-\(k\) preferentially retains synthetic points the current model a
 
 ## 6 Limitations
 
-- Toy 2D/8D GMMs and tiny networks; not ImageNet-scale.
-- Digits transfer inconclusive.
+- Toy 2D/8D GMMs / Digits-PCA and tiny networks; not ImageNet-scale.
+- Digits CVAE transfer inconclusive; Digits-PCA supports ordering but uses PCA embeddings, not raw pixels.
 - Effect strongest at moderate imbalance and early generations; at \(\rho{=}10\) minorities are already near floor at \(g{=}0\).
 - Real-mix \(\alpha{=}0.75\) weakens the top-\(k\) vs random gap (see alpha ablation).
 - Novelty is **L2 empirical**: related to MAD/LSF/Feng; we do not claim a new named training algorithm that beats LSF on FID.
@@ -134,6 +134,6 @@ All numerical tables in this paper are produced from `experiments/logs/w2_fs.jso
 
 ## Appendix B Experiment provenance
 
-- Experiment IDs: `w2_fs` (GMM DDPM), `w2_fs_digits` (Digits CVAE; inconclusive).
+- Experiment IDs: `w2_fs` (GMM DDPM), `w2_fs_hd`, `w2_fs_digits_pca` (supported); `w2_fs_digits` (CVAE; inconclusive).
 - Frozen historical stacks v0–v8 were **not** reused as novelty claims.
 - Constraint Set v4; discovery record: `docs/PATH2_DISCOVERY.md`; survivor: `docs/RESEARCH_SURVIVOR.md`.

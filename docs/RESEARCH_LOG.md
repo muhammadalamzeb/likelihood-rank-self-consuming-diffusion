@@ -62,10 +62,11 @@
 - **Experiment ID:** `w2_fs_alpha`
 - **Conclusion:** Submission package extended
 
-## 2026-09-24 — 8D transfer + k_frac ablation
+## 2026-09-24 — Digits-PCA mode-exact transfer
 
-- **Hypothesis:** Ordering transfers beyond 2D; sensitive to selection pool size
-- **Evidence:** HD `w2_fs_hd`: 3/3 seeds order holds, retention 0.55/0.27/0.08; k_frac 0.25≡0.5 under n_syn binding; at 0.75 top still worst
-- **Decision:** **KEEP**; update paper with transfer + pool-size notes
-- **Experiment ID:** `w2_fs_hd`, `w2_fs_kfrac`
-- **Conclusion:** Stronger robustness section
+- **Hypothesis:** Ordering transfers beyond GMM when mode masses use nearest empirical class means (not a classifier on collapsed samples)
+- **Evidence:** `w2_fs_digits_pca.jsonl` (n=45): g1 bottom>rand>top on 3/3 seeds; retention means 1.49/1.11/0.68; top majority_g1 mean 0.76 vs rand 0.60
+- **Decision:** **KEEP**; Digits CVAE remains inconclusive/superseded for claims
+- **Experiment ID:** `w2_fs_digits_pca`
+- **Conclusion:** Non-GMM transfer supported; update paper
+

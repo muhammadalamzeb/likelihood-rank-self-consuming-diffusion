@@ -23,4 +23,4 @@
 ## Topic-search status
 
 **Closed on KEEP W2-1** (likelihood-rank minority ordering; W₂ false-stability falsified).  
-Further work would be extensions (scale, better transfer), not required for current deliverable.
+Further work would be extensions (larger scale, pixel-space Digits/ImageNet), not required for current deliverable.
