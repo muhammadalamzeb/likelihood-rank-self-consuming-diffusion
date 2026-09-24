@@ -1,8 +1,8 @@
 # Path 4 — Archive deliverable
 
 **Date:** 2026-09-23  
-**Status:** **COMPLETE**  
-**Mode:** Stop — treat the repository as the deliverable (no locked topic, no manuscript).
+**Status:** **SUPERSEDED as project endpoint** by Constraint Set v4 ownership wave (2026-09-23/24).  
+This file remains the historical Path-4 archive index. Active deliverable: `paper/PAPER.md` (W2-1).
 
 This file is the **project-level archive index**. It does not claim a scientific contribution and is not a paper.
 
