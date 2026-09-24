@@ -53,3 +53,11 @@
 - **Decision:** **KEEP**; update paper numbers + `scripts/reproduce_w2.ps1`; add `--append` to runner
 - **Experiment ID:** `w2_fs`
 - **Conclusion:** Stronger replication package committed
+
+## 2026-09-24 — Alpha ablation + LaTeX package
+
+- **Hypothesis:** Ordering robust across real-mix α
+- **Evidence:** `w2_fs_alpha.jsonl`: at α=0.25/0.5 top worst; at α=0.75 top−rand gap reverses while bottom still highest mean retention
+- **Decision:** **KEEP** with scoped α limitation; add `paper/main.tex`, `refs.bib`
+- **Experiment ID:** `w2_fs_alpha`
+- **Conclusion:** Submission package extended

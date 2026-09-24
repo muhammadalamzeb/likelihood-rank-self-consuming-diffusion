@@ -230,6 +230,8 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
             "seed": seed,
             "rho": rho,
             "policy": policy,
+            "alpha_real": float(args.alpha_real),
+            "k_frac": float(args.k_frac),
             "generation": g,
             "m_min": m_min,
             "m_max": m_max,
@@ -282,8 +284,9 @@ def main():
     ap.add_argument(
         "--append",
         action="store_true",
-        help="Append to existing w2_fs.jsonl instead of overwriting",
+        help="Append to existing log instead of overwriting",
     )
+    ap.add_argument("--log-name", type=str, default="w2_fs.jsonl")
     args = ap.parse_args()
     if args.quick:
         args.train_steps = 250
@@ -299,7 +302,7 @@ def main():
 
     cfg = {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()}
     cfg["experiment"] = "w2_fs"
-    with open(out / "configs" / "w2_fs.json", "w", encoding="utf-8") as f:
+    with open(out / "configs" / Path(args.log_name).with_suffix(".json").name, "w", encoding="utf-8") as f:
         json.dump(cfg, f, indent=2)
 
     all_recs = []
@@ -308,7 +311,7 @@ def main():
             for policy in args.policies:
                 all_recs.extend(run_one(seed, rho, policy, args))
 
-    log_path = out / "logs" / "w2_fs.jsonl"
+    log_path = out / "logs" / args.log_name
     mode = "a" if args.append and log_path.exists() else "w"
     with open(log_path, mode, encoding="utf-8") as f:
         for r in all_recs:

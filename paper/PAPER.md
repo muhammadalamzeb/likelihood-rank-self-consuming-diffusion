@@ -71,6 +71,16 @@ Nearest-mean mode assignment on known GMM centers. Report minority-mean mass (mo
 
 **Digits transfer.** A CVAE self-consuming loop on sklearn Digits (`w2_fs_digits`) showed weak entropy trends in the same direction but unreliable class-mass estimates under collapsed samples; we treat transfer as **inconclusive**.
 
+**Real-mix sensitivity (\(\alpha\)).** Separate ablation (`w2_fs_alpha.jsonl`, seeds \(\{0,1\}\), \(\rho{=}5\), \(G{\le}3\)):
+
+| \(\alpha\) | bottom retention | rand | top | Order holds (seeds) |
+|------------|------------------|------|-----|---------------------|
+| 0.25 | 0.25 | 0.17 | 0.05 | 1/2 |
+| 0.50 | 0.62 | 0.49 | 0.24 | 1/2 |
+| 0.75 | 1.34 | 0.77 | 0.94 | 0/2 |
+
+At low-to-moderate real mix, top-\(k\) remains the worst for minority retention. At high real mix (\(\alpha{=}0.75\)), the top-\(k\) penalty vs random weakens/reverses while bottom-\(k\) still yields the highest mean retention—an important scope condition.
+
 ![Retention bars](figures/retention_bars.png)
 
 ![Minority vs generation](figures/minority_vs_generation_rho5.png)
@@ -84,6 +94,7 @@ Likelihood top-\(k\) preferentially retains synthetic points the current model a
 - Toy 2D GMMs and tiny networks; not ImageNet-scale.
 - Digits transfer inconclusive.
 - Effect strongest at moderate imbalance and early generations; at \(\rho{=}10\) minorities are already near floor at \(g{=}0\).
+- Real-mix \(\alpha{=}0.75\) weakens the top-\(k\) vs random gap (see alpha ablation).
 - Novelty is **L2 empirical**: related to MAD/LSF/Feng; we do not claim a new named training algorithm that beats LSF on FID.
 
 ## 7 Conclusion
