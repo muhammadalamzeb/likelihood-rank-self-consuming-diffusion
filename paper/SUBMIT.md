@@ -1,22 +1,35 @@
-# Submission package — first-author checklist
+# Submission / publish status
 
 **Author:** Muhammad Alamzeb  
 **Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**PDF:** `paper/main.pdf`  
-**arXiv zip:** `paper/arxiv_source.zip`  
-**Abstract:** `paper/arxiv_abstract.txt`
+**GitHub Release (live now):** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.0.0  
 
-## Pre-upload checklist
+## Public preprint options
 
-- [x] α=0.5 and kfrac=0.5 order counts reconciled (both 1/2; shared cell disclosed)
-- [x] Title scoped to moderate imbalance; lead figure stratified by ρ
-- [x] Transfer \(d_z\) + exact-\(p\) floor at n=3
-- [x] Paper-wide multiplicity sentence
-- [ ] **You:** upload `paper/arxiv_source.zip` to arXiv
+### A) GitHub Release — DONE
+PDF + LaTeX source attached to tag `v1.0.0`.  
+Cite as the release URL until Zenodo DOI exists.
 
-## Upload steps
+### B) Zenodo DOI — do this next (~5 min)
+Deposit kit: `paper/zenodo/`
 
-1. Upload `paper/arxiv_source.zip`
-2. Paste `paper/arxiv_abstract.txt`
-3. Category **cs.LG**; license **CC BY 4.0**
-4. Comments: code at the GitHub URL above
+1. Open https://zenodo.org/deposit/new and sign in (GitHub login works).
+2. Upload `paper/zenodo/Alamzeb_2026_likelihood_rank_self_consuming_diffusion.pdf`
+3. Optionally upload `paper/zenodo/arxiv_source.zip`
+4. Copy fields from `paper/zenodo/metadata.json` (or follow `paper/zenodo/README.md`)
+5. License: **CC BY 4.0** → **Publish**
+6. Paste the DOI here / tell the agent to record it
+
+**API path:** create a Zenodo token, then:
+```powershell
+$env:ZENODO_TOKEN = "YOUR_TOKEN"
+python scripts/zenodo_upload.py
+```
+
+### C) arXiv — waiting on endorsement
+Code `Z4GDY9` for cs.LG. After endorsement, upload `paper/arxiv_source.zip`.
+
+## Local package
+- PDF: `paper/main.pdf`
+- arXiv zip: `paper/arxiv_source.zip`
+- Zenodo kit: `paper/zenodo/`

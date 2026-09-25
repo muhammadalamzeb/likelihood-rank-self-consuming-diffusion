@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering at Moderate Imbalance",
+    "upload_type": "publication",
+    "publication_type": "preprint",
+    "description": "<p>Self-consuming training loops can induce model collapse. We study unlabeled likelihood ranking of synthetic samples in self-consuming DDPM training, emphasizing <strong>moderate</strong> imbalance. Define the minority-mass ratio r = m<sup>(1)</sup>/m<sup>(0)</sup>. Results are stratified by imbalance &rho;. At &rho;=5 (n=5), bottom-k &gt; random-k &gt; top-k on all seeds, with large paired effect sizes (Cohen d<sub>z</sub> &asymp; &minus;1.96 / +1.65); exact Wilcoxon p=0.0625 (minimum attainable at n=5 when all signs agree). At &rho;=10 (n=3), the full order holds on 0/3 seeds and contrasts are near null. Top-k does not improve sliced W<sub>2</sub> vs random-k at generation 1 (&Delta;W<sub>2</sub>&gt;0 on 8/8 cells; exact p=0.0078; Holm-adjusted p=0.039 across five generations). Directional transfers (8D GMM and Digits-PCA; n=3) match the &rho;=5 ordering.</p><p><strong>Code:</strong> <a href=\"https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion\">https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion</a></p>",
+    "creators": [
+      {
+        "name": "Alamzeb, Muhammad",
+        "affiliation": "Independent researcher"
+      }
+    ],
+    "access_right": "open",
+    "license": "cc-by-4.0",
+    "keywords": [
+      "machine learning",
+      "diffusion models",
+      "model collapse",
+      "self-consuming generative models",
+      "synthetic data",
+      "minority modes",
+      "likelihood ranking"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion",
+        "relation": "isSupplementTo",
+        "resource_type": "software",
+        "scheme": "url"
+      }
+    ],
+    "communities": [],
+    "notes": "Empirical short preprint / workshop-scope note. Primary analysis is stratified by imbalance rho. Exact Wilcoxon signed-rank tests used throughout."
+  }
+}
