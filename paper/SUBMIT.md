@@ -1,42 +1,24 @@
 # Submission package — first-author checklist
 
-**Author (sole / first):** Muhammad Alamzeb  
-**Contact:** shayankhanmahar@gmail.com  
-**Manuscript:** `paper/main.tex` + `paper/PAPER.md`  
+**Author:** Muhammad Alamzeb  
+**Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
 **PDF:** `paper/main.pdf`  
 **arXiv zip:** `paper/arxiv_source.zip`  
-**Abstract paste:** `paper/arxiv_abstract.txt`  
-**Public code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**Git commit (repro pin):** see `git rev-parse HEAD` on `master`  
-**Scope:** Workshop / empirical short paper / **arXiv cs.LG** note.  
-**Not claiming:** NeurIPS/ICML SOTA; ImageNet-scale results.
+**Abstract:** `paper/arxiv_abstract.txt`
 
-## Review revision (2026-09-25)
+## Pre-upload checklist
 
-Addressed second-pass review: per-ρ breakdown (order at ρ=5 only); α caption/text fixes; α labeled illustrative (n=2); inline W₂ table gens 1–5; r defined before results; double-blind GitHub note.
-
-## Anonymity
-
-- **arXiv:** named author is correct (keep as-is).
-- **Double-blind workshop/conference:** strip name/email from title page before submission.
-
-## Package complete (local)
-
-- [x] Sole first-author name on title page (arXiv)
-- [x] Stats/methods clarifications from review
-- [x] Figures + tables (incl. `table_seed_rho_grid.csv`, `table_w2_*.csv`, effect-size stats)
-- [x] Cross-platform reproduce: `scripts/reproduce_w2.py` (+ `.sh` / `.ps1`)
-- [x] Compiled PDF + arXiv zip with `.bbl`
-- [x] Public GitHub repo
-- [ ] **Live arXiv upload** (your account) — upload `paper/arxiv_source.zip`
+- [x] Stratified ρ=5 / ρ=10 primary analysis (pooled test secondary)
+- [x] Exact Wilcoxon + bootstrap CIs + \(d_z\) for retention and W₂
+- [x] Holm across five W₂ generation tests (with serial-dependence note)
+- [x] α and \(k_{\mathrm{frac}}\) tables (illustrative n=2)
+- [x] Double-blind note separate from scientific limitations
+- [x] Cross-platform reproduce + public GitHub
+- [ ] **You:** upload zip to https://arxiv.org/submit
 
 ## Upload steps
 
-1. [arxiv.org/submit](https://arxiv.org/submit) → upload `paper/arxiv_source.zip`
+1. Upload `paper/arxiv_source.zip`
 2. Paste `paper/arxiv_abstract.txt`
-3. Category **cs.LG** (optional **stat.ML**); license **CC BY 4.0**
-4. In comments, you may note: code at https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
-
-## Cover-letter sentence
-
-Under matched budgets in self-consuming DDPM training, minority-mode retention obeys bottom-k > random-k > top-k when ranking synthetics by a denoising likelihood proxy; top-k does not improve sliced W₂ vs random-k in the primary eight-cell matrix.
+3. Category **cs.LG**; license **CC BY 4.0**
+4. Comments: code at the GitHub URL above

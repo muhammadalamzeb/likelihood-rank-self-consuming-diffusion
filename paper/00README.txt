@@ -7,18 +7,16 @@ Contact: shayankhanmahar@gmail.com
 Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
 
 Build:
-  pdflatex main
-  bibtex main
-  pdflatex main
-  pdflatex main
-Or upload this zip and let arXiv compile (main.bbl included).
+  pdflatex main && bibtex main && pdflatex main && pdflatex main
+Or let arXiv compile (main.bbl included).
 
-Files:
-  main.tex     - manuscript
-  refs.bib     - bibliography database
-  main.bbl     - precomputed BibTeX output (preferred for arXiv)
-  figures/     - PNG figures
+Files in this zip:
+  main.tex, refs.bib, main.bbl, 00README.txt, figures/
 
 Primary category: cs.LG
 Optional: stat.ML
-License recommendation: CC BY 4.0
+License: CC BY 4.0 recommended
+
+Notes:
+  Primary retention analysis is stratified by rho (see Tables in main.tex).
+  Exact Wilcoxon p-values via sign enumeration (make_submission_stats.py).
