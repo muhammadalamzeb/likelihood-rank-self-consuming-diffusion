@@ -4,6 +4,7 @@ Title: Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:
        Minority Extinction Ordering on Imbalanced Mixtures
 Author: Muhammad Alamzeb (sole / first author)
 Contact: shayankhanmahar@gmail.com
+Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
 
 Build:
   pdflatex main

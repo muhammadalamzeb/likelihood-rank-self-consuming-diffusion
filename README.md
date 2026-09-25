@@ -6,6 +6,7 @@
 **Survivor:** W2-1 likelihood-rank ordering (`docs/RESEARCH_SURVIVOR.md`)  
 **Paper:** [`paper/PAPER.md`](paper/PAPER.md) · LaTeX [`paper/main.tex`](paper/main.tex)  
 **Submit checklist:** [`paper/SUBMIT.md`](paper/SUBMIT.md)  
+**Code (public):** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
 **Author:** Muhammad Alamzeb (sole / first)  
 **Research log:** [`docs/RESEARCH_LOG.md`](docs/RESEARCH_LOG.md)
 

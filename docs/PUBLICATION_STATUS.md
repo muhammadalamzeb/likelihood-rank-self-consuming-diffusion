@@ -19,5 +19,5 @@ Reproduce: `python scripts/reproduce_w2.py`
 
 ## Remaining human steps
 
-1. Host public repo (GitHub/Zenodo) and paste URL into paper appendix.
-2. Upload `paper/arxiv_source.zip` to arXiv.
+1. Upload `paper/arxiv_source.zip` to arXiv (code already public).
+2. Optionally paste the GitHub URL in the arXiv comments field.

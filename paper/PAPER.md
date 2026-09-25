@@ -173,7 +173,7 @@ bash scripts/reproduce_w2.sh
 powershell -File scripts/reproduce_w2.ps1
 ```
 
-All numerical tables are produced from logged JSONL via analysis scripts (no hand-edited metrics). Source, configs, seeds, and logs accompany this manuscript in the project archive (git commit recorded in `SUBMIT.md`); add a public GitHub/Zenodo URL upon posting.
+All numerical tables are produced from logged JSONL via analysis scripts (no hand-edited metrics). Source, configs, seeds, and logs: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
 
 ## Appendix B Experiment provenance
 
