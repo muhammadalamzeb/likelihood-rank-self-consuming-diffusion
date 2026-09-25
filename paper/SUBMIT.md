@@ -13,7 +13,7 @@
 
 ## Review revision (2026-09-25)
 
-Addressed reviewer/self-audit items: explicit 8-cell seed×ρ grid; effect sizes + bootstrap CIs + Holm note; softened “falsification” language with W₂ Wilcoxon; transfer mean±std; retention \(r>1\) definition; mix vs rand_k; sliced-W₂ (24 proj / ≤400 pts); α table numbers; clearer novelty statement; cross-platform `reproduce_w2.py`; **public GitHub URL**.
+Addressed second-pass review: per-ρ breakdown (order at ρ=5 only); α caption/text fixes; α labeled illustrative (n=2); inline W₂ table gens 1–5; r defined before results; double-blind GitHub note.
 
 ## Anonymity
 

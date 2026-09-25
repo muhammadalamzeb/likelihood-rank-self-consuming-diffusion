@@ -28,14 +28,14 @@ Muhammad Alamzeb\\
 \begin{abstract}
 Self-consuming training loops---retraining generative models on their own outputs---can induce \emph{model collapse}, including loss of rare modes.
 We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures.
-Under matched real-mix ratio and matched synthetic budget, the first-generation minority-mass \emph{ratio} $r=m^{(1)}/m^{(0)}$ obeys
+Define the minority-mass ratio $r=m^{(1)}/m^{(0)}$.
+Under matched real-mix ratio and matched synthetic budget, on a primary matrix of \textbf{eight} seed--imbalance cells,
 \[\mathrm{bottom}\text{-}k \;\;>\;\; \mathrm{random}\text{-}k \;\;>\;\; \mathrm{top}\text{-}k\]
-on a primary matrix of \textbf{eight} seed--imbalance cells (seeds $\{0,1,2\}$ at $\rho\in\{5,10\}$ plus seeds $\{3,4\}$ at $\rho{=}5$ only; means $0.57/0.36/0.17$).
-Paired contrasts vs.\ random-$k$ show large effects (Cohen's $d_z{\approx}1.0$) with Wilcoxon $p{\approx}0.042$ (Holm-adjusted $p{\approx}0.085$ for the two tests); we treat the ordering as supported by effect size and directional consistency, with small-$n$ caveats.
-Likelihood top-$k$ also concentrates majority mass relative to random-$k$.
-A hypothesized ``false stability'' pattern---top-$k$ \emph{improving} sliced $W_2$ while minorities die---is \textbf{not observed}: at generation~1, $\Delta W_2(\mathrm{top}-\mathrm{rand})>0$ on $8/8$ cells (Wilcoxon $p{\approx}0.014$).
-Directional transfer checks on $8$D GMM and Digits-PCA ($3$ seeds each) match the same order.
-We release configs, seeds, logs, and analysis code with the manuscript package.
+holds on mean $r$ ($0.57/0.36/0.17$), but a per-$\rho$ split shows the full order is driven by $\rho{=}5$ ($5/5$ seeds) and does \emph{not} hold seed-wise at $\rho{=}10$ ($0/3$).
+Paired contrasts vs.\ random-$k$ ($n{=}8$) show large effects (Cohen's $d_z{\approx}1.0$; Wilcoxon $p{\approx}0.042$; Holm-adjusted $p{\approx}0.085$).
+A hypothesized ``false stability'' pattern---top-$k$ \emph{improving} sliced $W_2$ while minorities die---is \textbf{not observed} at generation~1 ($\Delta W_2>0$ on $8/8$ cells; Wilcoxon $p{\approx}0.014$).
+Directional transfer checks on $8$D GMM and Digits-PCA ($3$ seeds) match the order.
+Code: \url{https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion}.
 \end{abstract}
 
 \section{Introduction}
@@ -57,8 +57,8 @@ The contribution is this controlled contrast and the resulting empirical minorit
 \paragraph{Contributions.}
 \begin{enumerate}
 \item A controlled self-consuming DDPM protocol on imbalanced GMMs with exact mode masses.
-\item Evidence for a likelihood-rank ordering of minority retention under matched $k$ and $\alpha$.
-\item Evidence that top-$k$ does \emph{not} improve sliced $W_2$ vs.\ random-$k$ while minorities decline (the opposite of a ``better aggregate, worse minority'' dissociation).
+\item Evidence for a likelihood-rank ordering of minority retention under matched $k$ and $\alpha$, with an explicit per-$\rho$ split.
+\item Evidence that top-$k$ does \emph{not} improve sliced $W_2$ vs.\ random-$k$ while minorities decline.
 \item Directional transfer checks: $8$D GMM and Digits-PCA with nearest class-mean occupancy.
 \end{enumerate}
 
@@ -93,13 +93,14 @@ At matched synthetic count $n_{\mathrm{syn}}$ and real fraction $\alpha$:
 Thus \textbf{mix} $\neq$ \textbf{random-$k$}: random-$k$ still uses a size-$k$ subsample stage (matched to top/bottom); mix skips ranking entirely.
 
 \subsection{Metrics}
+\label{sec:metrics}
 Nearest-mean mode assignment on known centers (GMM means, or Digits empirical class means in PCA space).
-Report minority-mean mass $m$ (modes $1{\ldots}K-1$), majority mass (mode $0$), and the ratio
+Report minority-mean mass $m$ (modes $1{\ldots}K-1$), majority mass (mode $0$), and
 \[
 r \;=\; \frac{m^{(1)}}{m^{(0)}},
 \]
-which we call \emph{retention} even when $r>1$ (minority mass can rise after one generation under bottom/random selection).
-Sliced $W_2$: average of squared 1D Wasserstein distances over \textbf{24} random projections; each comparison uses up to \textbf{400} synthetic and \textbf{400} held-out real points (same seed schedule as the run).
+the minority-mass \emph{ratio} (called retention even when $r>1$).
+Sliced $W_2$: average of squared 1D Wasserstein distances over \textbf{24} random projections; each comparison uses up to \textbf{400} synthetic and \textbf{400} held-out real points.
 
 \section{Experiments}
 \subsection{Primary design (defines $n{=}8$)}
@@ -122,11 +123,12 @@ $\rho\setminus$ seed & 0 & 1 & 2 & 3 & 4 \\
 \end{table}
 
 \subsection{Primary retention results}
-Table~\ref{tab:ret} averages $r=m^{(1)}/m^{(0)}$ over the eight cells in Table~\ref{tab:grid}.
+We report the ratio $r$ from \S\ref{sec:metrics}.
+Table~\ref{tab:ret} averages $r$ over all eight cells; Table~\ref{tab:byrho} splits by $\rho$.
 
 \begin{table}[t]
 \centering
-\caption{Minority-mass ratio $r=m^{(1)}/m^{(0)}$ on the primary eight-cell matrix (Table~\ref{tab:grid}).}
+\caption{Minority-mass ratio $r=m^{(1)}/m^{(0)}$ pooled over the eight-cell primary matrix (Table~\ref{tab:grid}).}
 \label{tab:ret}
 \begin{tabular}{lrrr}
 \toprule
@@ -140,34 +142,69 @@ top\_k & 0.172 & 0.078 & 8 \\
 \end{tabular}
 \end{table}
 
-At $\rho{=}5$, generation~1, all five seeds satisfy $\mathrm{bottom}>\mathrm{rand}>\mathrm{top}$ on minority mass.
-Paired retention contrasts vs.\ random-$k$ ($n{=}8$):
+\begin{table}[t]
+\centering
+\caption{Per-$\rho$ breakdown of mean $r$ and seed-wise directional counts (generation~1). The full order holds at $\rho{=}5$ but not at $\rho{=}10$.}
+\label{tab:byrho}
+\begin{tabular}{lrrrrrr}
+\toprule
+$\rho$ & $n$ & bottom & rand & top & Full order & top$<$rand / bot$>$rand \\
+\midrule
+5 & 5 & 0.737 & 0.456 & 0.183 & $5/5$ & $5/5$ / $5/5$ \\
+10 & 3 & 0.296 & 0.199 & 0.154 & $0/3$ & $2/3$ / $1/3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Interpretation.}
+Pooled means hide a sharp split: at $\rho{=}5$ the ordering is unanimous ($5/5$).
+At $\rho{=}10$, minorities are already near floor at $g{=}0$, and the full order holds on \textbf{zero} of three seeds (top$<$rand on $2/3$; bottom$>$rand on $1/3$ only).
+Thus the pooled ``$7/8$ top worse; $6/8$ bottom better'' counts are largely driven by the $\rho{=}5$ subgroup; we do \textbf{not} claim robust seed-wise ordering at $\rho{=}10$.
+
+Paired retention contrasts vs.\ random-$k$ on the pooled $n{=}8$ cells:
 top$-$rand mean $\Delta{=}{-}0.188$ (bootstrap 95\% CI $[{-}0.30,{-}0.06]$; Cohen's $d_z{=}{-}1.04$; Wilcoxon $p{\approx}0.042$);
 bottom$-$rand mean $\Delta{=}{+}0.212$ (CI $[0.08,0.35]$; $d_z{=}{+}1.00$; $p{\approx}0.042$).
-With two tests against the same baseline we apply Holm correction: both adjusted $p{\approx}0.085$ (above $0.05$).
-We therefore emphasize \textbf{effect sizes}, CIs, and directional counts ($7/8$ top worse than rand; $6/8$ bottom better) rather than uncorrected $p$-values alone.
-Top-$k$ also raises majority mass vs.\ random-$k$ at early generations.
+Holm-adjusted $p{\approx}0.085$ for both.
+We emphasize effect sizes/CIs and the $\rho{=}5$ directional evidence over uncorrected $p$-values.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.48\textwidth]{figures/retention_bars.png}
 \includegraphics[width=0.48\textwidth]{figures/minority_vs_generation_rho5.png}
-\caption{Left: retention by policy on the primary matrix. Right: minority mass vs.\ generation at $\rho{=}5$.}
+\caption{Left: retention by policy on the primary matrix. Right: minority mass vs.\ generation at $\rho{=}5$ (the regime where the order is stable).}
 \label{fig:main}
 \end{figure}
 
 \subsection{Sliced $W_2$ (``false stability'' check)}
 If top-$k$ were ``falsely stable,'' we would expect better (lower) sliced $W_2$ than random-$k$ while minorities die.
-Instead, at generation~1, $\Delta W_2(\mathrm{top}-\mathrm{rand})$ has mean $+0.113$ (std $0.099$), positive on \textbf{all eight} cells (Wilcoxon $p{\approx}0.014$).
-Means remain positive for generations $2$--$5$ ($6$--$7$ of $8$ cells; see \texttt{table\_w2\_top\_minus\_rand.csv}).
-We report this as \textbf{evidence against} a top-$k$ $W_2$ improvement under minority loss---not as a formal Neyman--Pearson ``falsification'' of a fully specified alternative.
-
-\subsection{Real-mix sensitivity ($\alpha$)}
-Separate ablation (\texttt{w2\_fs\_alpha.jsonl}; seeds $\{0,1\}$, $\rho{=}5$, $G{\le}3$):
+Table~\ref{tab:w2} reports $\Delta W_2(\mathrm{top}-\mathrm{rand})$ by generation on the eight-cell matrix.
 
 \begin{table}[t]
 \centering
-\caption{Mean retention $r$ by real-mix $\alpha$ (two seeds). Order $=$ bottom$>$rand$>$top on both seeds.}
+\caption{Sliced $W_2$ contrast top$-$rand (positive $=$ top worse). Bootstrap-style reporting: mean, std, count of positive cells, Wilcoxon $p$.}
+\label{tab:w2}
+\begin{tabular}{lrrrr}
+\toprule
+Gen.\ $g$ & Mean $\Delta W_2$ & Std & $\#\{>0\}$ & Wilcoxon $p$ \\
+\midrule
+1 & $+0.113$ & 0.099 & $8/8$ & 0.014 \\
+2 & $+0.061$ & 0.060 & $6/8$ & 0.042 \\
+3 & $+0.039$ & 0.035 & $7/8$ & 0.030 \\
+4 & $+0.027$ & 0.032 & $7/8$ & 0.030 \\
+5 & $+0.024$ & 0.033 & $7/8$ & 0.030 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We report this as \textbf{evidence against} a top-$k$ $W_2$ improvement under minority loss---not as a formal Neyman--Pearson falsification.
+
+\subsection{Real-mix $\alpha$ ablation (illustrative; $n{=}2$ seeds)}
+Separate exploratory ablation (\texttt{w2\_fs\_alpha.jsonl}; seeds $\{0,1\}$, $\rho{=}5$, $G{\le}3$).
+With only two seeds, order-hold counts are preliminary and should not be treated as establishing a hard scope law.
+
+\begin{table}[t]
+\centering
+\caption{Mean retention $r$ by real-mix $\alpha$ (two seeds). ``Order holds'' counts seeds with bottom$>$rand$>$top; the order is \emph{not} guaranteed on both seeds except at $\alpha{=}0.5$.}
 \label{tab:alpha}
 \begin{tabular}{lrrrr}
 \toprule
@@ -180,14 +217,15 @@ $\alpha$ & bottom & rand & top & Order holds \\
 \end{tabular}
 \end{table}
 
-At $\alpha{\le}0.5$, top-$k$ remains worst; at $\alpha{=}0.75$ the top vs.\ random gap reverses on average while bottom stays highest---an important scope condition ($r>1$ again means minority mass rose vs.\ $g{=}0$).
+At the \emph{mean} level, top-$k$ is worst for $\alpha{\in}\{0.25,0.50\}$, but at $\alpha{=}0.25$ the seed-wise order holds only $1/2$ (one seed breaks the full ranking).
+At $\alpha{=}0.75$, means reverse for top vs.\ random ($0.94$ vs.\ $0.77$) and order holds on $0/2$ seeds, while bottom remains highest on average.
+We treat these as \textbf{illustrative} hints that high real mix can blunt the top-$k$ penalty---not as a definitive scope condition.
 
 \subsection{Transfer checks (directional; $n{=}3$)}
 These are \textbf{not} powered significance tests; we report mean$\pm$std and seed-wise order counts.
 \begin{itemize}
 \item \textbf{$8$D GMM} (\texttt{w2\_fs\_hd}): retention $0.55{\pm}0.20$ / $0.27{\pm}0.06$ / $0.08{\pm}0.03$ (bottom/rand/top); order holds $3/3$.
 \item \textbf{Digits-PCA} (\texttt{w2\_fs\_digits\_pca}): $1.49{\pm}0.11$ / $1.11{\pm}0.08$ / $0.68{\pm}0.17$; order holds $3/3$.
-  Ratios $>1$ mean minority mass increased from $g{=}0$ to $g{=}1$ under bottom/random (definition of $r$ above).
 \end{itemize}
 An earlier Digits CVAE+classifier probe is inconclusive and unused for claims.
 
@@ -197,33 +235,31 @@ Under $k=\max(n_{\mathrm{syn}},\lfloor k_{\mathrm{frac}}N\rfloor)$, $k_{\mathrm{
 \section{Analysis}
 Likelihood top-$k$ preferentially retains points the model already explains well (majority modes), reducing minority inflow.
 Bottom-$k$ does the opposite relative to random.
-Aggregate sliced $W_2$ is a poor monitor for minority survival: it moves with top-$k$ in the wrong direction for a ``quality win.''
+Aggregate sliced $W_2$ is a poor monitor for minority survival in our setting.
+The $\rho{=}5$ vs.\ $\rho{=}10$ split suggests the ordering is clearest when minorities remain above a near-floor mass at $g{=}0$.
 
 \section{Limitations}
 \begin{itemize}
-\item Toy 2D/8D GMMs and Digits-PCA with tiny networks; not ImageNet-scale.
-\item Primary Wilcoxon tests use only $n{=}8$ pairs; uncorrected $p{\approx}0.042$ becomes Holm-adjusted $p{\approx}0.085$. Inference relies on large $d_z$, CIs, and directional consistency.
-\item Transfer checks use three seeds without formal hypothesis tests.
-\item Digits CVAE transfer was inconclusive; Digits-PCA uses embeddings, not raw pixels.
-\item Effect strongest at moderate imbalance and early generations; high real mix ($\alpha{=}0.75$) weakens top vs.\ random.
-\item Contribution is a controlled empirical contrast relative to MAD/LSF/Feng, not a new SOTA training method.
+\item Toy 2D/8D GMMs and Digits-PCA; not ImageNet-scale.
+\item Primary Wilcoxon $n{=}8$; Holm-adjusted $p{\approx}0.085$. The seed-wise full order is robust at $\rho{=}5$ only.
+\item $\alpha$ ablation uses only two seeds (illustrative).
+\item Transfer checks: three seeds, no formal tests.
+\item For \textbf{double-blind} venues, the public GitHub URL reveals author identity; use an anonymous mirror for review (arXiv submission may keep the named repo).
+\item Contribution is a controlled empirical contrast relative to MAD/LSF/Feng, not a SOTA training method.
 \end{itemize}
 
 \section{Conclusion}
-Unlabeled likelihood ranking of synthetic data in self-consuming diffusion induces a reproducible minority-retention \emph{order} (bottom-$k$ $>$ random-$k$ $>$ top-$k$) under matched budgets on imbalanced mixtures, with large paired effect sizes despite small $n$.
-Top-$k$ does not improve sliced $W_2$ relative to random-$k$ in our primary matrix.
-Preferring ``most likely'' synthetics is not a free lunch for minority survival.
+Under matched budgets, unlabeled likelihood ranking induces a minority-retention order that is \textbf{stable at moderate imbalance} ($\rho{=}5$) and \textbf{not seed-wise reliable at} $\rho{=}10$ in our matrix.
+Top-$k$ does not improve sliced $W_2$ vs.\ random-$k$ on the primary eight cells.
+Preferring ``most likely'' synthetics is not a free lunch for minority survival when rare modes are still measurable.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
 
 \appendix
 \section{Reproducibility and code}
-Cross-platform entry point: \texttt{python scripts/reproduce\_w2.py} (also \texttt{scripts/reproduce\_w2.sh} and Windows \texttt{scripts/reproduce\_w2.ps1}).
-All numerical tables are produced from logged JSONL via analysis scripts (no hand-edited metrics).
-Experiment IDs: \texttt{w2\_fs}, \texttt{w2\_fs\_hd}, \texttt{w2\_fs\_digits\_pca} (supported); \texttt{w2\_fs\_digits} (CVAE; inconclusive).
-Source, configs, seeds, and logs:
-\url{https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion}
-(commit recorded at submission time on the \texttt{master} branch).
+Cross-platform entry point: \texttt{python scripts/reproduce\_w2.py} (also \texttt{scripts/reproduce\_w2.sh} / \texttt{scripts/reproduce\_w2.ps1}).
+All tables come from logged JSONL via analysis scripts.
+Code: \url{https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion}.
 
 \end{document}
