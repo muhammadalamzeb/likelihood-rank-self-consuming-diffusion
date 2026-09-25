@@ -14,7 +14,7 @@
 }
 
 \title{Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:\\
-Minority Extinction Ordering on Imbalanced Mixtures}
+Minority Extinction Ordering at Moderate Imbalance}
 \author{
 Muhammad Alamzeb\\
 \textit{Independent researcher}\\
@@ -27,7 +27,7 @@ Muhammad Alamzeb\\
 
 \begin{abstract}
 Self-consuming training loops---retraining generative models on their own outputs---can induce \emph{model collapse}, including loss of rare modes.
-We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures.
+We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures, with emphasis on \textbf{moderate} imbalance.
 Define the minority-mass ratio $r=m^{(1)}/m^{(0)}$.
 On a primary matrix of eight seed--imbalance cells, we report results \textbf{stratified by imbalance} $\rho$ (not a single pooled test as the headline claim).
 At $\rho{=}5$ ($n{=}5$ seeds), generation~1 minority mass obeys $\mathrm{bottom}>\mathrm{rand}>\mathrm{top}$ on all seeds; paired retention contrasts vs.\ random-$k$ have large effects (top$-$rand: Cohen's $d_z{=}{-}1.96$, bootstrap 95\% CI $[{-}0.37,{-}0.15]$; bottom$-$rand: $d_z{=}{+}1.65$, CI $[0.16,0.43]$).
@@ -138,9 +138,8 @@ For completeness, a pooled $n{=}8$ exact Wilcoxon yields $p{=}0.039$ for both co
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.48\textwidth]{figures/retention_bars.png}
-\includegraphics[width=0.48\textwidth]{figures/minority_vs_generation_rho5.png}
-\caption{Left: pooled retention bars. Right: minority mass vs.\ generation at $\rho{=}5$.}
+\includegraphics[width=0.95\textwidth]{figures/retention_by_rho.png}
+\caption{Primary retention $r$ stratified by $\rho$ (matches the primary claim). A pooled bar chart would mix the $5/5$ and $0/3$ regimes and is not used as the lead figure.}
 \label{fig:main}
 \end{figure}
 
@@ -168,28 +167,38 @@ Evidence against top-$k$ improving $W_2$ is strongest at $g{=}1$.
 \subsection{Real-mix $\alpha$ ablation (illustrative; $n{=}2$)}
 \begin{table}[t]
 \centering
-\caption{Mean $r$ by $\alpha$ (seeds $\{0,1\}$, $\rho{=}5$). ``Order holds'' $=$ bottom$>$rand$>$top; not guaranteed on both seeds except at $\alpha{=}0.5$.}
+\caption{Mean $r$ by $\alpha$ (seeds $\{0,1\}$, $\rho{=}5$, default $k_{\mathrm{frac}}{=}0.5$).
+``Order holds'' $=$ bottom$>$rand$>$top on $g{=}1$ minority mass.
+The $\alpha{=}0.5$ row is the \emph{same cell} as $k_{\mathrm{frac}}{=}0.5$ in Table~\ref{tab:kfrac}.}
 \label{tab:alpha}
 \begin{tabular}{lrrrr}
 \toprule
 $\alpha$ & bottom & rand & top & Order holds \\
 \midrule
 0.25 & 0.25 & 0.17 & 0.05 & 1/2 \\
-0.50 & 0.62 & 0.49 & 0.24 & 2/2 \\
+0.50 & 0.62 & 0.49 & 0.24 & 1/2 \\
 0.75 & 1.34 & 0.77 & 0.94 & 0/2 \\
 \bottomrule
 \end{tabular}
 \end{table}
-Preliminary only: at $\alpha{=}0.25$, means rank top worst but seed-wise order holds $1/2$; at $\alpha{=}0.75$, top vs.\ random reverses on average.
+At $\alpha{=}0.5$, seed~0 breaks the full order (bottom $m^{(1)}$ slightly below random) while seed~1 holds---hence $1/2$ (means still rank bottom$>$rand$>$top).
+At $\alpha{=}0.25$, likewise $1/2$; at $\alpha{=}0.75$, top vs.\ random reverses on average ($0/2$).
 
 \subsection{Transfer checks (directional; $n{=}3$)}
-$8$D GMM: $0.55{\pm}0.20$ / $0.27{\pm}0.06$ / $0.08{\pm}0.03$; order $3/3$.
-Digits-PCA: $1.49{\pm}0.11$ / $1.11{\pm}0.08$ / $0.68{\pm}0.17$; order $3/3$.
+Minimum two-sided exact Wilcoxon $p$ at $n{=}3$ with all signs agreeing is $0.25$; we report Cohen's $d_z$ against that bound.
+\begin{itemize}
+\item \textbf{$8$D GMM:} $0.55{\pm}0.20$ / $0.27{\pm}0.06$ / $0.08{\pm}0.03$; order $3/3$;
+  top$-$rand $d_z{=}{-}2.56$, bottom$-$rand $d_z{=}{+}1.28$ (exact $p{=}0.25$).
+\item \textbf{Digits-PCA:} $1.49{\pm}0.11$ / $1.11{\pm}0.08$ / $0.68{\pm}0.17$; order $3/3$;
+  top$-$rand $d_z{=}{-}1.72$, bottom$-$rand $d_z{=}{+}2.67$ (exact $p{=}0.25$).
+\end{itemize}
 
 \subsection{Selection-pool size $k_{\mathrm{frac}}$ (illustrative; $n{=}2$)}
 \begin{table}[t]
 \centering
-\caption{$k_{\mathrm{frac}}$ ablation (seeds $\{0,1\}$, $\rho{=}5$). Under $k=\max(n_{\mathrm{syn}},\lfloor k_{\mathrm{frac}}N\rfloor)$, $0.25$ and $0.5$ are identical here ($n_{\mathrm{syn}}$ binds).}
+\caption{$k_{\mathrm{frac}}$ ablation (seeds $\{0,1\}$, $\rho{=}5$, $\alpha{=}0.5$).
+$0.25\equiv 0.5$ when $n_{\mathrm{syn}}$ binds.
+The $k_{\mathrm{frac}}{=}0.5$ row duplicates Table~\ref{tab:alpha}'s $\alpha{=}0.5$ row.}
 \label{tab:kfrac}
 \begin{tabular}{lrrrr}
 \toprule
@@ -201,26 +210,28 @@ $k_{\mathrm{frac}}$ & bottom & rand & top & Order holds \\
 \bottomrule
 \end{tabular}
 \end{table}
-Top-$k$ remains worst on means at all three settings; at $0.75$, bottom vs.\ random flips and the full order holds on $0/2$ seeds.
+Top-$k$ remains worst on means; at $0.75$, bottom vs.\ random flips ($0/2$ full order).
 
 \section{Analysis}
 Top-$k$ retains high-likelihood (typically majority) synthetics, reducing minority inflow.
-The ordering is clear when minorities remain measurable ($\rho{=}5$) and collapses toward noise when they are near floor ($\rho{=}10$).
+The ordering is clear when minorities remain measurable ($\rho{=}5$) and near noise at $\rho{=}10$.
 Sliced $W_2$ is a poor monitor of minority survival here.
 
 \section{Limitations}
 Toy GMMs / Digits-PCA; not ImageNet-scale.
 At $\rho{=}5$, exact Wilcoxon cannot beat $p{=}0.0625$ with $n{=}5$ all-agreeing signs---inference leans on $d_z$ and unanimous direction.
-$\alpha$ and $k_{\mathrm{frac}}$ ablations use two seeds (illustrative).
-Transfers: three seeds, no formal tests.
+$\alpha$ and $k_{\mathrm{frac}}$ ablations use two seeds; their default rows are the same experimental cell.
+Transfers: $n{=}3$ cannot beat exact $p{=}0.25$.
+\textbf{Multiplicity:} Holm is applied within families (two $\rho{=}5$ retention contrasts; five $W_2$ generations).
+Additional stratified/exploratory tests are not multiplicity-corrected paper-wide; we treat them as descriptive under the small-sample framing.
 Contribution is a controlled empirical contrast relative to MAD/LSF/Feng.
 
 \paragraph{Note on double-blind review.}
 The public GitHub URL reveals author identity. For double-blind venues, provide an anonymous code mirror; for arXiv, the named repository is appropriate.
 
 \section{Conclusion}
-Likelihood ranking induces a minority-retention order that is stable at moderate imbalance ($\rho{=}5$) and not seed-wise reliable at $\rho{=}10$ in our matrix.
-Top-$k$ does not improve sliced $W_2$ vs.\ random-$k$ at generation~1 on the eight-cell matrix.
+Likelihood ranking induces a minority-retention order that is stable at \textbf{moderate} imbalance ($\rho{=}5$) and not seed-wise reliable at $\rho{=}10$ in our matrix.
+Top-$k$ does not improve sliced $W_2$ vs.\ random-$k$ at generation~1.
 Preferring ``most likely'' synthetics is not a free lunch for minority survival when rare modes remain measurable.
 
 \bibliographystyle{plainnat}

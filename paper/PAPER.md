@@ -1,4 +1,4 @@
-# Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering on Imbalanced Mixtures
+# Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering at Moderate Imbalance
 
 **Author:** Muhammad Alamzeb (sole / first author)  
 **Contact:** shayankhanmahar@gmail.com  
@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Self-consuming training loops can induce *model collapse*, including loss of rare modes. We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures. Define \(r=m^{(1)}/m^{(0)}\). On eight seed–imbalance cells, results are **stratified by** \(\rho\) (not a pooled test as the headline). At \(\rho{=}5\) (\(n{=}5\)), generation-1 mass obeys bottom>rand>top on all seeds; paired contrasts vs random-\(k\) have large effects (top−rand: \(d_z{=}{-}1.96\), bootstrap 95% CI \([{-}0.37,{-}0.15]\); bottom−rand: \(d_z{=}{+}1.65\), CI \([0.16,0.43]\)). Exact Wilcoxon \(p{=}0.0625\) for both (minimum two-sided exact \(p\) at \(n{=}5\) when all signs agree). At \(\rho{=}10\) (\(n{=}3\)), full order holds \(0/3\) and contrasts are near null. Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\) (\(\Delta W_2>0\) on \(8/8\); exact \(p{=}0.0078\); Holm across five gens \(p{=}0.039\)). Directional transfers (8D GMM, Digits-PCA; 3 seeds) match the \(\rho{=}5\) order.
+Self-consuming training loops can induce *model collapse*. We study unlabeled likelihood ranking of synthetics in self-consuming DDPM training, emphasizing **moderate** imbalance. Define \(r=m^{(1)}/m^{(0)}\). Results are **stratified by** \(\rho\). At \(\rho{=}5\) (\(n{=}5\)), bottom>rand>top on all seeds; top−rand \(d_z{=}{-}1.96\), bottom−rand \(d_z{=}{+}1.65\); exact Wilcoxon \(p{=}0.0625\) (minimum at \(n{=}5\) all-agree). At \(\rho{=}10\) (\(n{=}3\)), order \(0/3\), contrasts near null. Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\) (\(8/8\) positive; exact \(p{=}0.0078\); Holm \(p{=}0.039\)). Transfers (8D, Digits-PCA; \(n{=}3\)) match \(\rho{=}5\) with large \(d_z\) (exact \(p{=}0.25\) floor). Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion.
 
 ## 1 Introduction
 
@@ -72,12 +72,14 @@ Holm notes serial dependence across generations (conservative).
 | \(\alpha\) | bottom | rand | top | Order holds |
 |--|--|--|--|--|
 | 0.25 | 0.25 | 0.17 | 0.05 | 1/2 |
-| 0.50 | 0.62 | 0.49 | 0.24 | 2/2 |
+| 0.50 | 0.62 | 0.49 | 0.24 | **1/2** |
 | 0.75 | 1.34 | 0.77 | 0.94 | 0/2 |
+
+The \(\alpha{=}0.5\) row is the **same cell** as \(k_{\mathrm{frac}}{=}0.5\) below (identical means). Seed 0 breaks full order (bottom \(m^{(1)}\) slightly < rand); seed 1 holds.
 
 ### 4.5 Transfers (directional; \(n{=}3\))
 
-8D: 0.55±0.20 / 0.27±0.06 / 0.08±0.03 (3/3). Digits-PCA: 1.49±0.11 / 1.11±0.08 / 0.68±0.17 (3/3).
+Min exact Wilcoxon \(p{=}0.25\) when all signs agree. 8D: order 3/3; top−rand \(d_z{=}{-}2.56\), bottom−rand \(d_z{=}{+}1.28\). Digits-PCA: 3/3; \(d_z{=}{-}1.72\) / \(+2.67\).
 
 ### 4.6 \(k_{\mathrm{frac}}\) (illustrative; \(n{=}2\))
 
@@ -87,7 +89,7 @@ Holm notes serial dependence across generations (conservative).
 | 0.50 | 0.62 | 0.49 | 0.24 | 1/2 |
 | 0.75 | 0.48 | 0.61 | 0.22 | 0/2 |
 
-0.25≡0.5 when \(n_{\mathrm{syn}}\) binds; top remains worst on means; at 0.75 bottom vs random flips.
+0.25≡0.5 when \(n_{\mathrm{syn}}\) binds; \(k_{\mathrm{frac}}{=}0.5\) duplicates α=0.5.
 
 ## 5 Analysis
 

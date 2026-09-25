@@ -1,0 +1,5 @@
+experiment,contrast,mean_diff,cohen_dz,n,p_exact,min_exact_p_n,order_holds
+hd,top_minus_rand,-0.194054,-2.5568,3,0.2500,0.25,3/3
+hd,bottom_minus_rand,0.281361,1.2803,3,0.2500,0.25,3/3
+digits_pca,top_minus_rand,-0.425671,-1.7223,3,0.2500,0.25,3/3
+digits_pca,bottom_minus_rand,0.379548,2.6694,3,0.2500,0.25,3/3
