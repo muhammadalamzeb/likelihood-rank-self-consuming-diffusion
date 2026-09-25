@@ -1,37 +1,23 @@
 # Publication status
 
-**Date:** 2026-09-24  
-**Verdict: FIRST-AUTHOR SUBMISSION-READY** for arXiv cs.LG / workshop empirical note  
-(not claiming top-venue theoretical novelty or ImageNet SOTA).
+**Date:** 2026-09-25  
+**Verdict: FIRST-AUTHOR SUBMISSION-READY** (post review-revision) for arXiv cs.LG / workshop empirical note.
 
 **Sole / first author:** Muhammad Alamzeb (`paper/SUBMIT.md`)
 
-## Contribution checklist
-
-- [x] Topic KEEP / MODIFY with documented novelty case (`RESEARCH_SURVIVOR.md`)
-- [x] Explicit novelty statement (likelihood-rank ordering; W₂ false-stability falsified)
-- [x] Core experiments logged with seeds/configs (`w2_fs`)
-- [x] Transfer: 8D GMM + Digits-PCA (supported); Digits CVAE inconclusive
-- [x] Literature verification vs MAD / Feng / LSF / temperature papers
-- [x] Manuscript with author name (`paper/PAPER.md`, `paper/main.tex`)
-- [x] Bibliography with full author lists (`paper/refs.bib`)
-- [x] Reproducibility package (README + scripts + logs + analysis)
-- [x] Submission checklist (`paper/SUBMIT.md`)
-- [x] Compiled PDF (`paper/main.pdf`) + arXiv zip with `.bbl` (`paper/arxiv_source.zip`)
-- [x] Plain-text abstract (`paper/arxiv_abstract.txt`) + `00README.txt`
-- [ ] **Live arXiv upload** (only remaining step — your account)
-
-## Evidence summary
+## Evidence summary (honest)
 
 | Claim | Result |
 |-------|--------|
-| top_k improves W₂ while hurting minorities | **FALSIFIED** |
-| bottom_k > rand_k > top_k minority retention | **SUPPORTED** (2D GMM 5/5 seeds; 8D GMM 3/3; Digits-PCA 3/3; Wilcoxon p≈0.04) |
-| Digits CVAE + classifier | **INCONCLUSIVE** (superseded) |
-| α / k_frac sensitivity | Scoped: strongest at α≤0.5; see ablation tables |
+| Primary \(n\) | **8** cells: seeds 0–2 × ρ∈{5,10} + seeds 3–4 × ρ=5 only |
+| bottom > rand > top retention | **Supported** by means, \(d_z{\approx}1\), CIs, 5/5 order at ρ=5; Wilcoxon \(p{\approx}0.042\), Holm \(p{\approx}0.085\) |
+| top improves W₂ while minorities die | **Not observed** (gen-1 \(\Delta W_2>0\) on 8/8; Wilcoxon \(p{\approx}0.014\)) |
+| 8D / Digits-PCA | **Directional** (3/3 order; mean±std reported; not powered tests) |
+| Digits CVAE | **INCONCLUSIVE** (unused) |
 
-Reproduce: `scripts/reproduce_w2.ps1`
+Reproduce: `python scripts/reproduce_w2.py`
 
-## Honesty limits
+## Remaining human steps
 
-Contribution is L2 empirical relative to MAD quality-bias discussion. Suitable for workshop / short paper / arXiv note. Not a new SOTA training method.
+1. Host public repo (GitHub/Zenodo) and paste URL into paper appendix.
+2. Upload `paper/arxiv_source.zip` to arXiv.

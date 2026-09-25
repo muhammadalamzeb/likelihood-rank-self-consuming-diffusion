@@ -1,0 +1,4 @@
+policy,mean_retention,std,n
+bottom_k,1.4890,0.1105,3
+rand_k,1.1095,0.0789,3
+top_k,0.6838,0.1710,3

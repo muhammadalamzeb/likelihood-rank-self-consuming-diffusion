@@ -22,15 +22,20 @@ Under matched budgets in self-consuming DDPM training on imbalanced GMMs, minori
 
 ## Reproduce principal results
 
+```bash
+python scripts/reproduce_w2.py
+# or: bash scripts/reproduce_w2.sh
+# Windows: powershell -File scripts/reproduce_w2.ps1
+```
+
 ```powershell
 cd "D:\Machine Learning Paper"
 .\.venv\Scripts\python.exe -m pip install -r docs\requirements-freeze.txt
-.\.venv\Scripts\python.exe -m pip install matplotlib
-powershell -File scripts\reproduce_w2.ps1
+.\.venv\Scripts\python.exe scripts\reproduce_w2.py
 ```
 
 Configs: `experiments/configs/w2_fs.json`  
-Logs: `experiments/logs/w2_fs.jsonl` (n=228; seeds 0–4)  
+Logs: `experiments/logs/w2_fs.jsonl` (n=228; primary analysis uses 8 seed×ρ cells)  
 Summary: `experiments/analysis/w2_fs_summary.json`  
 Stats: `paper/table_stats_retention.csv`  
 Figures: `paper/figures/`

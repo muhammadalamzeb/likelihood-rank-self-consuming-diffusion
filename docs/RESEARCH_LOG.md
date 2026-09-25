@@ -62,12 +62,12 @@
 - **Experiment ID:** `w2_fs_alpha`
 - **Conclusion:** Submission package extended
 
-## 2026-09-24 — First-author submission package
+## 2026-09-25 — Review revision (stats/methods/presentation)
 
-- **Hypothesis:** N/A (packaging)
-- **Evidence:** Author named on title page; full bib; SUBMIT checklist; LICENSE
-- **Decision:** **KEEP** as arXiv/workshop submission-ready; live upload requires author account
-- **Experiment ID:** —
-- **Conclusion:** Outcome A at workshop/arXiv scope
+- **Hypothesis:** N/A (manuscript quality)
+- **Evidence:** Explicit 8-cell grid; Cohen dz≈1 + bootstrap CIs; Holm note; W₂ Wilcoxon; retention r>1 defined; mix≠rand_k; sliced W₂ specs; α numbers; cross-platform reproduce.py
+- **Decision:** **KEEP** claims with softened language where required
+- **Conclusion:** Resubmit-ready package
+
 
 

@@ -6,40 +6,36 @@
 **PDF:** `paper/main.pdf`  
 **arXiv zip:** `paper/arxiv_source.zip`  
 **Abstract paste:** `paper/arxiv_abstract.txt`  
-**Scope:** Workshop / empirical short paper / **arXiv cs.LG** note (L2 empirical).  
-**Not claiming:** NeurIPS/ICML SOTA method; ImageNet-scale results.
+**Git commit (repro pin):** see `git rev-parse HEAD` after pull  
+**Scope:** Workshop / empirical short paper / **arXiv cs.LG** note.  
+**Not claiming:** NeurIPS/ICML SOTA; ImageNet-scale results.
+
+## Review revision (2026-09-25)
+
+Addressed reviewer/self-audit items: explicit 8-cell seed×ρ grid; effect sizes + bootstrap CIs + Holm note; softened “falsification” language with W₂ Wilcoxon; transfer mean±std; retention \(r>1\) definition; mix vs rand_k; sliced-W₂ (24 proj / ≤400 pts); α table numbers; clearer novelty statement; cross-platform `reproduce_w2.py`; repo URL pending public hosting.
+
+## Anonymity
+
+- **arXiv:** named author is correct (keep as-is).
+- **Double-blind workshop/conference:** strip name/email from title page before submission.
 
 ## Package complete (local)
 
-- [x] Sole first-author name on title page
-- [x] Abstract + intro + method + experiments + limitations + conclusion
-- [x] Figures (`paper/figures/*.png`)
-- [x] Tables from analysis CSVs (numbers match `table_retention.csv` / Wilcoxon `p≈0.042`)
-- [x] Bibliography with full author lists (`refs.bib` + `main.bbl` in zip)
-- [x] Compiled PDF (`paper/main.pdf`)
-- [x] arXiv source zip (`paper/arxiv_source.zip`: `main.tex`, `refs.bib`, `main.bbl`, `00README.txt`, `figures/`)
-- [x] Plain-text abstract for the arXiv form (`arxiv_abstract.txt`)
-- [x] Reproducibility script + logs
-- [x] Honest scope / limitations documented
-- [x] PDF metadata (title/author via hyperref)
+- [x] Sole first-author name on title page (arXiv)
+- [x] Stats/methods clarifications from review
+- [x] Figures + tables (incl. `table_seed_rho_grid.csv`, `table_w2_*.csv`, effect-size stats)
+- [x] Cross-platform reproduce: `scripts/reproduce_w2.py` (+ `.sh` / `.ps1`)
+- [x] Compiled PDF + arXiv zip with `.bbl`
+- [ ] Public GitHub/Zenodo URL (add when hosted; archive ships with manuscript)
+- [ ] **Live arXiv upload** (your account)
 
-## Only remaining: human arXiv account step
+## Upload steps
 
-1. Open [arxiv.org/submit](https://arxiv.org/submit) and log in (new cs.LG accounts may need endorsement).
-2. Upload **`paper/arxiv_source.zip`**.
-3. Paste abstract from **`paper/arxiv_abstract.txt`**.
-4. Category: **cs.LG** (optional secondary: **stat.ML**).
-5. License: **CC BY 4.0**.
-6. After ID issues, optionally index on Hugging Face Paper Pages.
-
-## Venue guidance
-
-| Target | Fit |
-|--------|-----|
-| arXiv preprint | **Yes — ready to upload** |
-| GenAI / synthetic-data workshop | **Yes** |
-| Top conference main track | **No** without larger-scale evidence |
+1. [arxiv.org/submit](https://arxiv.org/submit) → upload `paper/arxiv_source.zip`
+2. Paste `paper/arxiv_abstract.txt`
+3. Category **cs.LG** (optional **stat.ML**); license **CC BY 4.0**
+4. After ID issues, publish code archive and link URL in a revision
 
 ## Cover-letter sentence
 
-Under matched budgets in self-consuming DDPM training, minority-mode retention obeys bottom-k > random-k > top-k when ranking synthetics by a denoising likelihood proxy; W₂ “false stability” for top-k is falsified.
+Under matched budgets in self-consuming DDPM training, minority-mode retention obeys bottom-k > random-k > top-k when ranking synthetics by a denoising likelihood proxy; top-k does not improve sliced W₂ vs random-k in the primary eight-cell matrix.
