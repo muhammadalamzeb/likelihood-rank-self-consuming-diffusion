@@ -1,14 +1,14 @@
 {
   "out": "experiments",
   "seeds": [
-    5,
-    6,
-    7,
     8,
-    9
+    9,
+    10,
+    11,
+    12
   ],
   "rhos": [
-    5.0
+    10.0
   ],
   "policies": [
     "top_k",

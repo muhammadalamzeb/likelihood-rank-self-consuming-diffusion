@@ -101,15 +101,10 @@ def main():
         if (s, rh, "bottom_k", 0) in by and (s, rh, "rand_k", 0) in by
     ]
 
-    # --- retention stratified ---
-    ret_lines = [
-        "stratum,n,contrast,mean_diff,std_diff,cohen_dz,boot_ci_low,boot_ci_high,wilcoxon_W,p_exact,p_approx_normal"
-    ]
-    order_lines = ["rho,n,mean_bottom,mean_rand,mean_top,full_order,top_lt_rand,bot_gt_rand"]
-    for rho in rhos:
-        sub = [(s, rh) for s, rh in cells_full if rh == rho]
+    def summarize_subset(tag: str, sub: list[tuple[int, float]]):
         if not sub:
-            continue
+            return
+        rho = sub[0][1]
         mb = np.array([retention(s, rho, "bottom_k") for s, _ in sub])
         mr = np.array([retention(s, rho, "rand_k") for s, _ in sub])
         mt = np.array([retention(s, rho, "top_k") for s, _ in sub])
@@ -117,23 +112,37 @@ def main():
         tlr = int(np.sum(mt < mr))
         bgr = int(np.sum(mb > mr))
         order_lines.append(
-            f"{rho},{len(sub)},{mb.mean():.6f},{mr.mean():.6f},{mt.mean():.6f},{full}/{len(sub)},{tlr}/{len(sub)},{bgr}/{len(sub)}"
+            f"{tag},{len(sub)},{mb.mean():.6f},{mr.mean():.6f},{mt.mean():.6f},{full}/{len(sub)},{tlr}/{len(sub)},{bgr}/{len(sub)}"
         )
         print(
-            f"rho={rho} order {full}/{len(sub)} means b/r/t={mb.mean():.3f}/{mr.mean():.3f}/{mt.mean():.3f}"
+            f"{tag} order {full}/{len(sub)} means b/r/t={mb.mean():.3f}/{mr.mean():.3f}/{mt.mean():.3f}"
         )
         for name, pa, pb in [("top_minus_rand", "top_k", "rand_k"), ("bottom_minus_rand", "bottom_k", "rand_k")]:
             d = np.array([retention(s, rho, pa) - retention(s, rho, pb) for s, _ in sub])
             lo, hi = boot_ci(d, rng)
             w = wilcoxon_exact(d)
             dz = float(d.mean() / d.std(ddof=1)) if len(d) > 1 and d.std(ddof=1) > 0 else float("nan")
-            tag = f"rho{int(rho)}" if float(rho).is_integer() else f"rho{rho}"
             ret_lines.append(
                 f"{tag},{len(sub)},{name},{d.mean():.6f},{d.std(ddof=1):.6f},{dz:.4f},{lo:.6f},{hi:.6f},{w['W']},{w['p_exact']:.6f},{w['p_approx']:.6f}"
             )
             print(
-                f"rho={rho} {name}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} exact_p={w['p_exact']:.4f}"
+                f"{tag} {name}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} exact_p={w['p_exact']:.4f}"
             )
+
+    # --- retention stratified ---
+    ret_lines = [
+        "stratum,n,contrast,mean_diff,std_diff,cohen_dz,boot_ci_low,boot_ci_high,wilcoxon_W,p_exact,p_approx_normal"
+    ]
+    order_lines = ["stratum,n,mean_bottom,mean_rand,mean_top,full_order,top_lt_rand,bot_gt_rand"]
+    for rho in rhos:
+        sub = [(s, rh) for s, rh in cells_full if rh == rho]
+        tag = f"rho{int(rho)}" if float(rho).is_integer() else f"rho{rho}"
+        summarize_subset(tag, sub)
+
+    # Held-out confirmatory split at rho=5: seeds 0-9 exploratory; 10-14 held-out
+    rho5_all = [(s, rh) for s, rh in cells_full if rh == 5.0]
+    summarize_subset("rho5_exploratory_0_9", [(s, rh) for s, rh in rho5_all if s <= 9])
+    summarize_subset("rho5_heldout_10_14", [(s, rh) for s, rh in rho5_all if s >= 10])
 
     # pooled (secondary; mixes heterogeneous strata)
     for name, pa, pb in [("top_minus_rand", "top_k", "rand_k"), ("bottom_minus_rand", "bottom_k", "rand_k")]:
@@ -152,31 +161,37 @@ def main():
     (ANALYSIS / "table_order_by_rho.csv").write_text("\n".join(order_lines) + "\n", encoding="utf-8")
 
     # --- W2 by generation (all cells with top_k & rand_k) ---
-    w2_cells = [(s, rh) for s, rh in cells if (s, rh, "rand_k", 1) in by]
-    n_w2 = len(w2_cells)
+    # Drop pathological sliced-W2 values (mode collapse → exploding projection distances).
+    W2_MAX = 10.0
     w2_lines = [
-        "generation,mean_delta,std,cohen_dz,boot_ci_low,boot_ci_high,n_pos,n,p_exact,p_approx_normal,holm_p_exact"
+        "generation,mean_delta,std,cohen_dz,boot_ci_low,boot_ci_high,n_pos,n,p_exact,p_approx_normal,holm_p_exact,n_excluded"
     ]
     rows = []
     for g in range(1, 6):
-        d = np.array(
-            [
-                by[(s, rho, "top_k", g)]["w2_sliced"] - by[(s, rho, "rand_k", g)]["w2_sliced"]
-                for s, rho in w2_cells
-            ]
-        )
+        deltas = []
+        n_excl = 0
+        for s, rho in cells:
+            if (s, rho, "rand_k", g) not in by or (s, rho, "top_k", g) not in by:
+                continue
+            a = by[(s, rho, "top_k", g)]["w2_sliced"]
+            b = by[(s, rho, "rand_k", g)]["w2_sliced"]
+            if a > W2_MAX or b > W2_MAX:
+                n_excl += 1
+                continue
+            deltas.append(a - b)
+        d = np.asarray(deltas, dtype=float)
         lo, hi = boot_ci(d, rng)
         w = wilcoxon_exact(d)
         dz = float(d.mean() / d.std(ddof=1)) if d.std(ddof=1) > 0 else float("nan")
-        rows.append((g, d.mean(), d.std(ddof=1), dz, lo, hi, int((d > 0).sum()), len(d), w))
+        rows.append((g, d.mean(), d.std(ddof=1), dz, lo, hi, int((d > 0).sum()), len(d), w, n_excl))
         print(
-            f"W2 g={g}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} npos={(d>0).sum()}/{len(d)} exact={w['p_exact']:.4f}"
+            f"W2 g={g}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} npos={(d>0).sum()}/{len(d)} excl={n_excl} exact={w['p_exact']:.4f}"
         )
 
     holm_p = holm([r[8]["p_exact"] for r in rows])
-    for i, (g, mean, std, dz, lo, hi, npos, n, w) in enumerate(rows):
+    for i, (g, mean, std, dz, lo, hi, npos, n, w, n_excl) in enumerate(rows):
         w2_lines.append(
-            f"{g},{mean:.6f},{std:.6f},{dz:.4f},{lo:.6f},{hi:.6f},{npos},{n},{w['p_exact']:.6f},{w['p_approx']:.6f},{holm_p[i]:.6f}"
+            f"{g},{mean:.6f},{std:.6f},{dz:.4f},{lo:.6f},{hi:.6f},{npos},{n},{w['p_exact']:.6f},{w['p_approx']:.6f},{holm_p[i]:.6f},{n_excl}"
         )
 
     (PAPER / "table_w2_top_minus_rand.csv").write_text("\n".join(w2_lines) + "\n", encoding="utf-8")
