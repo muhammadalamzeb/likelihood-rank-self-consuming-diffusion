@@ -1,27 +1,25 @@
 # Publication status
 
 **Author:** Muhammad Alamzeb  
+**Contact:** shayankhanmahar@gmail.com  
 **Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**GitHub Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.1.0  
-**Zenodo DOI (concept / latest):** https://doi.org/10.5281/zenodo.22956890
+**GitHub Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.2.0  
+**Zenodo DOI (resolves):** https://doi.org/10.5281/zenodo.22956890  
+→ currently redirects to https://zenodo.org/records/22956890 (concept record; upload a **New version** so the landing page matches v1.2.0 title/PDF).
 
 ## Public preprint
 
-### A) GitHub Release — v1.1.0
-PDF and LaTeX source attached to tag `v1.1.0` (imbalance-dependent boundary; ρ=7; expanded ρ=10; CI-led framing).
+### A) GitHub Release — v1.2.0
+Primary claim = \(W_2\) negative result; retention = narrow regime at \(\rho=5\) with \(n=10\) (exact \(p=0.002\)).
 
-### B) Zenodo — publish a new version (~3 min)
-Kit files are refreshed in `paper/zenodo/`. Do **not** create a separate new deposit (that would orphan the concept DOI).
-
+### B) Zenodo — New version required
 1. Open https://doi.org/10.5281/zenodo.22956890 → **New version**
-2. Replace files with:
-   - `paper/zenodo/Alamzeb_2026_likelihood_rank_self_consuming_diffusion.pdf`
-   - `paper/zenodo/arxiv_source.zip` (optional)
-3. Refresh description from `paper/zenodo/metadata.json` if needed
-4. **Publish** (keeps the same concept DOI; version DOI updates)
+2. Upload `paper/zenodo/Alamzeb_2026_likelihood_rank_self_consuming_diffusion.pdf`
+3. Refresh title/description from `paper/zenodo/metadata.json`
+4. Publish
 
 ### C) arXiv — pending endorsement
-Endorsement code `Z4GDY9` for cs.LG. After endorsement, upload `paper/arxiv_source.zip`.
+Code `Z4GDY9` for cs.LG. Upload `paper/arxiv_source.zip` after endorsement.
 
 ## Local package
 

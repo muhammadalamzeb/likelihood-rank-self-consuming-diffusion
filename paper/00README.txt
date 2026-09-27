@@ -1,7 +1,7 @@
 00README.txt for arXiv
 
-Title: Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:
-       An Imbalance-Dependent Boundary for Minority Retention
+Title: Likelihood-Ranked Selection in Self-Consuming Diffusion:
+       A W2 Negative Result and a Narrow Minority-Retention Regime
 Author: Muhammad Alamzeb
 Contact: shayankhanmahar@gmail.com
 Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion

@@ -15,7 +15,8 @@ PAPER = ROOT / "paper"
 ANALYSIS = ROOT / "experiments" / "analysis"
 
 
-def wilcoxon_exact(d: np.ndarray) -> dict:
+def wilcoxon_exact(d: np.ndarray, max_exact: int = 16) -> dict:
+    """Exact sign-enumeration Wilcoxon when n<=max_exact; else normal approx as p_exact."""
     d = np.asarray(d, dtype=float)
     d = d[d != 0]
     n = len(d)
@@ -34,24 +35,28 @@ def wilcoxon_exact(d: np.ndarray) -> dict:
         i = j + 1
     signs = np.sign(d)
     w_obs = float(min(ranks[signs > 0].sum(), ranks[signs < 0].sum()))
-    count = 0
-    total = 1 << n
-    for mask in range(total):
-        s = np.array([1 if (mask >> k) & 1 else -1 for k in range(n)])
-        w = min(ranks[s > 0].sum(), ranks[s < 0].sum())
-        if w <= w_obs + 1e-12:
-            count += 1
-    p_exact = count / total
     mean = n * (n + 1) / 4.0
     var = n * (n + 1) * (2 * n + 1) / 24.0
     z = (w_obs - mean + 0.5) / sqrt(var) if var > 0 else 0.0
     p_approx = float(erfc(abs(z) / sqrt(2.0)))
+    if n <= max_exact:
+        count = 0
+        total = 1 << n
+        for mask in range(total):
+            s = np.array([1 if (mask >> k) & 1 else -1 for k in range(n)])
+            w = min(ranks[s > 0].sum(), ranks[s < 0].sum())
+            if w <= w_obs + 1e-12:
+                count += 1
+        p_exact = count / total
+    else:
+        p_exact = p_approx
     return {"n": n, "W": w_obs, "p_exact": p_exact, "p_approx": p_approx}
 
 
-def boot_ci(d: np.ndarray, rng: np.random.Generator, B: int = 20000):
+def boot_ci(d: np.ndarray, rng: np.random.Generator, B: int = 10000):
     d = np.asarray(d, dtype=float)
-    boots = np.array([d[rng.integers(0, len(d), len(d))].mean() for _ in range(B)])
+    idx = rng.integers(0, len(d), size=(B, len(d)))
+    boots = d[idx].mean(axis=1)
     return np.percentile(boots, [2.5, 97.5])
 
 

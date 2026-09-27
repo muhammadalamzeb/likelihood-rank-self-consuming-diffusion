@@ -1,16 +1,19 @@
-# Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion
+# Likelihood-Ranked Selection in Self-Consuming Diffusion
 
-**An Imbalance-Dependent Boundary for Minority Retention**
+**A \(W_2\) Negative Result and a Narrow Minority-Retention Regime**
 
 Author: **Muhammad Alamzeb**  
+Contact: shayankhanmahar@gmail.com  
 Preprint: [https://doi.org/10.5281/zenodo.22956890](https://doi.org/10.5281/zenodo.22956890)  
-Code release: [v1.1.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.1.0)
+Code release: [v1.2.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.2.0)
 
 ## Abstract
 
-Self-consuming training loops can induce model collapse, including loss of rare modes. This repository accompanies an empirical study of unlabeled likelihood ranking of synthetic samples in self-consuming DDPM training on imbalanced mixtures.
+Self-consuming training loops can induce model collapse. This repository accompanies a workshop-scale empirical study of unlabeled likelihood ranking of synthetic samples in self-consuming DDPM training on imbalanced mixtures.
 
-The main finding is **imbalance-dependent**, not a universal law: the full \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) minority-retention order holds at moderate imbalance (\(\rho=5\), \(n=5\), all seeds; bootstrap 95\% CIs for mean paired \(\Delta\) vs random-\(k\) exclude zero) and breaks down at \(\rho=7\) (\(2/5\)) and \(\rho=10\) (\(n=8\), \(3/8\)). The strongest powered claim is that top-\(k\) does **not** improve sliced \(W_2\) at generation 1 (\(18/18\) cells; CI excludes zero). Digits-PCA and a Digits pixel-space DDPM provide small image-adjacent checks (pixel DDPM does not stably replicate the full order); Digits-CVAE was inconclusive.
+**Primary result:** top-\(k\) selection by a denoising likelihood proxy does **not** improve sliced \(W_2\) versus random-\(k\) at generation 1 (\(23/23\) seed–imbalance cells; bootstrap 95% CI excludes zero).
+
+**Secondary, narrow-regime observation:** the full \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) minority-retention order appears at moderate imbalance \(\rho=5\) (\(n=10\), \(10/10\); exact Wilcoxon \(p=0.002\)) and already fails for most seeds at \(\rho=7\) (\(2/5\)) and \(\rho=10\) (\(3/8\)). Not shown on ImageNet-scale diffusion.
 
 ## Paper
 
@@ -28,8 +31,8 @@ The main finding is **imbalance-dependent**, not a universal law: the full \(\ma
 ```bibtex
 @misc{alamzeb2026likelihood,
   author       = {Alamzeb, Muhammad},
-  title        = {Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:
-                  Minority Extinction Ordering at Moderate Imbalance},
+  title        = {Likelihood-Ranked Selection in Self-Consuming Diffusion:
+                  A W2 Negative Result and a Narrow Minority-Retention Regime},
   year         = {2026},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.22956890},
@@ -42,6 +45,7 @@ The main finding is **imbalance-dependent**, not a universal law: the full \(\ma
 ```bash
 python -m pip install -r docs/requirements-freeze.txt
 python scripts/reproduce_w2.py
+python experiments/scripts/make_submission_stats.py
 ```
 
 Windows:
@@ -49,18 +53,18 @@ Windows:
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r docs\requirements-freeze.txt
 .\.venv\Scripts\python.exe scripts\reproduce_w2.py
-# or: powershell -File scripts\reproduce_w2.ps1
+.\.venv\Scripts\python.exe experiments\scripts\make_submission_stats.py
 ```
 
 | Artifact | Path |
 |----------|------|
 | Primary config | `experiments/configs/w2_fs.json` |
 | Primary logs | `experiments/logs/w2_fs.jsonl` |
-| Summary | `experiments/analysis/w2_fs_summary.json` |
-| Retention stats | `paper/table_stats_retention_stratified.csv` |
-| Environment notes | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) |
+| Stratified stats | `paper/table_stats_retention_stratified.csv` |
+| \(W_2\) table | `paper/table_w2_top_minus_rand.csv` |
+| Environment | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) |
 
-Optional transfers: `experiments/scripts/run_w2_fs_hd.py` (8D), `experiments/scripts/run_w2_fs_digits_pca.py` (Digits-PCA).
+Optional: `experiments/scripts/run_w2_fs_hd.py`, `run_w2_fs_digits_pca.py`, `run_w2_fs_digits_ddpm.py`.
 
 ## Repository layout
 
@@ -68,7 +72,7 @@ Optional transfers: `experiments/scripts/run_w2_fs_hd.py` (8D), `experiments/scr
 paper/           Manuscript, figures, tables, Zenodo kit
 experiments/     Configs, runners, logs, analysis
 scripts/         End-to-end reproduce helpers
-docs/            Environment freeze and research notes
+docs/            Environment freeze (and historical research notes)
 ```
 
 ## License
