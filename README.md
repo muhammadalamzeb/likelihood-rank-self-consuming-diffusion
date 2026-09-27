@@ -5,7 +5,7 @@
 Author: **Muhammad Alamzeb**  
 Contact: shayankhanmahar@gmail.com  
 Preprint: [https://doi.org/10.5281/zenodo.22956890](https://doi.org/10.5281/zenodo.22956890)  
-Code release: [v1.2.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.2.0)
+Code release: [v1.2.1](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.2.1)
 
 ## Abstract
 
