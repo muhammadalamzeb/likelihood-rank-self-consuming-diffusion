@@ -30,6 +30,6 @@
       }
     ],
     "communities": [],
-    "notes": "Empirical short preprint / workshop-scope note. Retention at rho=5 is directional (exact Wilcoxon floored at n=5); primary powered claim is W2 at generation 1. Stratified by imbalance rho."
+    "notes": "Workshop-scope empirical note. Primary claim: top-k does not improve sliced W2 (n=23 cells). Secondary: narrow minority-retention regime at rho=5 (n=10; exact Wilcoxon p=0.002). Not ImageNet-scale."
   }
 }
