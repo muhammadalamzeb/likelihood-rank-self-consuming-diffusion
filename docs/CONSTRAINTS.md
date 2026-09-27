@@ -8,9 +8,9 @@
 
 | Track | State |
 |-------|--------|
-| Path 1–4 | Historical archive |
+| Path 1–4 | Historical archive (see other files in this folder) |
 | **Wave-2 / W2-1** | **KEEP** (revised) — paper in `paper/PAPER.md` |
-| Publication | **FIRST-AUTHOR SUBMISSION-READY** (`PUBLICATION_STATUS.md`; arXiv upload is human) |
+| Publication | See `paper/SUBMIT.md` (current release v1.2.0) |
 | Frozen stacks v0–v8 | Preserved; not novelty for this paper |
 
 ## Research profile (v4)
