@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -35,6 +35,12 @@ Peizhuo Li, Emre Aksan, Alexandru-Eugen Ichim, Thabo Beeler, and Olga
   Sorkine-Hornung.
 \newblock Diversify diffusion with temperature sampling and variance-corrective
   time shifting, 2026.
+
+\bibitem[Qiao et~al.(2026)Qiao, Du, Liu, Zhang, Mai, Zhang, and Pang]{qiao2026}
+Xinbao Qiao, Xianglong Du, Wei Liu, Jingqi Zhang, Peihua Mai, Meng Zhang, and
+  Yan Pang.
+\newblock When sample selection bias precipitates model collapse, 2026.
+\newblock ICML 2026.
 
 \bibitem[Shumailov et~al.(2023)Shumailov, Shumaylov, Zhao, Gal, Papernot, and
   Anderson]{shumailov2023}
