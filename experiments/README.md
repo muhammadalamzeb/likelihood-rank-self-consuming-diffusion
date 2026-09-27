@@ -1,18 +1,21 @@
 # Experiments
 
-**Active (W2-1):** self-consuming likelihood-rank study — do not overwrite `logs/w2_fs.jsonl` without `--append`.
+Code and logs for the likelihood-rank self-consuming DDPM study.
 
-| Experiment | Script | Logs | Status |
-|------------|--------|------|--------|
-| **w2_fs** GMM DDPM | `scripts/run_w2_false_stability.py` | `logs/w2_fs.jsonl` | KEEP support |
-| w2_fs_hd (8D) | `scripts/run_w2_fs_hd.py` | `logs/w2_fs_hd.jsonl` | transfer support |
-| w2_fs_alpha / kfrac | same runner, `--log-name` | `logs/w2_fs_alpha.jsonl`, `w2_fs_kfrac.jsonl` | sensitivity |
-| w2_fs_digits_pca | `scripts/run_w2_fs_digits_pca.py` | `logs/w2_fs_digits_pca.jsonl` | Digits-PCA transfer support |
-| w2_fs_digits (CVAE) | `scripts/run_w2_fs_digits.py` | `logs/w2_fs_digits.jsonl` | inconclusive (superseded) |
-| analyze / figures | `analyze_w2_fs.py`, `analyze_w2_fs_digits_pca.py`, `make_w2_figures.py` | `analysis/` | — |
+| Experiment | Script | Logs |
+|------------|--------|------|
+| Primary GMM (`w2_fs`) | `scripts/run_w2_false_stability.py` | `logs/w2_fs.jsonl` |
+| 8D transfer | `scripts/run_w2_fs_hd.py` | `logs/w2_fs_hd.jsonl` |
+| \(\alpha\) / \(k_{\mathrm{frac}}\) sensitivity | same runner, `--log-name` | `logs/w2_fs_alpha.jsonl`, `logs/w2_fs_kfrac.jsonl` |
+| Digits-PCA transfer | `scripts/run_w2_fs_digits_pca.py` | `logs/w2_fs_digits_pca.jsonl` |
+| Digits CVAE (inconclusive) | `scripts/run_w2_fs_digits.py` | `logs/w2_fs_digits.jsonl` |
+| Analysis / figures | `analyze_w2_fs.py`, `analyze_w2_fs_digits_pca.py`, `make_w2_figures.py` | `analysis/` |
 
-Reproduce: `scripts/reproduce_w2.ps1` (repo root).
+End-to-end reproduce from the repository root:
 
-## Frozen historical stacks (v0–v8)
+```bash
+python scripts/reproduce_w2.py
+```
 
-Preserved; not novelty for the W2-1 paper. See `docs/EXPERIMENT_INVENTORY.md`.
+Do not overwrite `logs/w2_fs.jsonl` unless appending with `--append`.  
+Earlier exploratory stacks are listed in `docs/EXPERIMENT_INVENTORY.md` and are not part of the paper’s claims.

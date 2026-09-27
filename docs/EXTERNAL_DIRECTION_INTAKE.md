@@ -8,7 +8,7 @@ Owner authorized autonomous direction finding. Funnel Stage 1–4 executed. Stan
 
 ---
 
-## Intake outcome (agent-filled after search)
+## Intake outcome
 
 ### 1. Proposed direction
 

@@ -1,35 +1,24 @@
-# Submission / publish status
+# Publication status
 
 **Author:** Muhammad Alamzeb  
 **Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**GitHub Release (live now):** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.0.0  
+**GitHub Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.0.0  
+**Zenodo DOI:** https://doi.org/10.5281/zenodo.22956890
 
-## Public preprint options
+## Public preprint
 
-### A) GitHub Release — DONE
-PDF + LaTeX source attached to tag `v1.0.0`.  
-Cite as the release URL until Zenodo DOI exists.
+### A) GitHub Release — done
+PDF and LaTeX source are attached to tag `v1.0.0`.
 
-### B) Zenodo DOI — do this next (~5 min)
-Deposit kit: `paper/zenodo/`
+### B) Zenodo — done
+DOI: [10.5281/zenodo.22956890](https://doi.org/10.5281/zenodo.22956890)  
+Deposit kit (for updates): `paper/zenodo/`
 
-1. Open https://zenodo.org/deposit/new and sign in (GitHub login works).
-2. Upload `paper/zenodo/Alamzeb_2026_likelihood_rank_self_consuming_diffusion.pdf`
-3. Optionally upload `paper/zenodo/arxiv_source.zip`
-4. Copy fields from `paper/zenodo/metadata.json` (or follow `paper/zenodo/README.md`)
-5. License: **CC BY 4.0** → **Publish**
-6. Paste the DOI here / tell the agent to record it
-
-**API path:** create a Zenodo token, then:
-```powershell
-$env:ZENODO_TOKEN = "YOUR_TOKEN"
-python scripts/zenodo_upload.py
-```
-
-### C) arXiv — waiting on endorsement
-Code `Z4GDY9` for cs.LG. After endorsement, upload `paper/arxiv_source.zip`.
+### C) arXiv — pending endorsement
+Endorsement code `Z4GDY9` for cs.LG. After endorsement, upload `paper/arxiv_source.zip`.
 
 ## Local package
+
 - PDF: `paper/main.pdf`
 - arXiv zip: `paper/arxiv_source.zip`
 - Zenodo kit: `paper/zenodo/`

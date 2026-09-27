@@ -1,16 +1,21 @@
 # Paper package
 
+Companion materials for *Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering at Moderate Imbalance*.
+
+**Author:** Muhammad Alamzeb  
+**DOI:** [10.5281/zenodo.22956890](https://doi.org/10.5281/zenodo.22956890)
+
 | File | Role |
 |------|------|
-| `PAPER.md` | Primary manuscript (markdown) |
-| `main.tex` + `refs.bib` | LaTeX for workshop / arXiv |
-| `SUBMIT.md` | First-author arXiv checklist |
-| `figures/` | Generated plots |
-| `table_*.csv` | Tables from analysis scripts |
+| `PAPER.md` | Manuscript (Markdown) |
+| `main.tex` + `refs.bib` | LaTeX source |
+| `main.pdf` | Compiled PDF |
+| `SUBMIT.md` | Publication checklist |
+| `figures/` | Figures used in the paper |
+| `table_*.csv` | Tables exported from analysis scripts |
+| `zenodo/` | Zenodo deposit files and metadata |
 
-**Author:** Muhammad Alamzeb (sole / first)
-
-Compile LaTeX (if TeX installed):
+## Compile LaTeX
 
 ```powershell
 cd paper
@@ -20,6 +25,6 @@ pdflatex main
 pdflatex main
 ```
 
-Or zip `main.tex`, `refs.bib`, `figures/` for arXiv cloud compile (`SUBMIT.md`).
+For arXiv upload, use `arxiv_source.zip` (see `SUBMIT.md`).
 
-All numbers come from `experiments/logs/*.jsonl` via analysis scripts.
+All reported numbers are computed from `experiments/logs/*.jsonl` via the analysis scripts under `experiments/scripts/`.

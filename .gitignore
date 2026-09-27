@@ -51,7 +51,7 @@ Thumbs.db
 credentials.json
 **/secrets*
 
-# Cursor / local agent caches (if ever copied into repo)
+# Local tool caches
 .agent-tools/
 agent-tools/
 

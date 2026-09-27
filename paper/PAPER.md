@@ -1,10 +1,9 @@
 # Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: Minority Extinction Ordering at Moderate Imbalance
 
-**Author:** Muhammad Alamzeb (sole / first author)  
+**Author:** Muhammad Alamzeb  
 **Contact:** shayankhanmahar@gmail.com  
-**Venue:** arXiv cs.LG (named author OK); anonymize + anonymous code mirror for double-blind  
-**Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**Status:** Submission-ready (`paper/SUBMIT.md`)
+**DOI:** https://doi.org/10.5281/zenodo.22956890  
+**Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
 
 ## Abstract
 
