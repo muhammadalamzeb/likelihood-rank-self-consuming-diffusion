@@ -7,17 +7,21 @@
 
 ## Abstract
 
-Self-consuming training loops can induce *model collapse*. We study unlabeled likelihood ranking of synthetics in self-consuming DDPM training, emphasizing **moderate** imbalance. Define \(r=m^{(1)}/m^{(0)}\). Results are **stratified by** \(\rho\). At \(\rho{=}5\) (\(n{=}5\)), bottom>rand>top on all seeds; top−rand \(d_z{=}{-}1.96\), bottom−rand \(d_z{=}{+}1.65\); exact Wilcoxon \(p{=}0.0625\) (minimum at \(n{=}5\) all-agree). At \(\rho{=}10\) (\(n{=}3\)), order \(0/3\), contrasts near null. Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\) (\(8/8\) positive; exact \(p{=}0.0078\); Holm \(p{=}0.039\)). Transfers (8D, Digits-PCA; \(n{=}3\)) match \(\rho{=}5\) with large \(d_z\) (exact \(p{=}0.25\) floor). Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion.
+Self-consuming training loops can induce *model collapse*. We study unlabeled likelihood ranking of synthetics in self-consuming DDPM training, emphasizing **moderate** imbalance. Define \(r=m^{(1)}/m^{(0)}\). Results are **stratified by** \(\rho\). At \(\rho{=}5\) (\(n{=}5\)), bottom>rand>top on all seeds with large paired effects vs random-\(k\) (\(d_z{=}{-}1.96\) / \({+}1.65\)); we treat this as **directional** because exact Wilcoxon \(p{=}0.0625\) is the discrete minimum at \(n{=}5\) and cannot reach \(p{<}0.05\). At \(\rho{=}10\) (\(n{=}3\)), order \(0/3\), contrasts near null (minority-mass floor). Strongest powered claim: top-\(k\) does **not** improve sliced \(W_2\) at \(g{=}1\) (\(8/8\) positive; exact \(p{=}0.0078\); Holm \(p{=}0.039\)). Transfers (8D, Digits-PCA; \(n{=}3\)) match \(\rho{=}5\); Digits-CVAE was inconclusive. Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion.
 
 ## 1 Introduction
 
 Self-consuming training can cause model collapse [Shumailov et al., 2023; Alemohammad et al., 2023; Gerstgrasser et al., 2024]. Mitigations include accumulating real data [Gerstgrasser et al., 2024] and filtering [Feng et al., 2024; Cai et al., 2025]. We isolate an interventional top-\(k\) / random-\(k\) / bottom-\(k\) contrast under matched budgets with mode-exact metrics.
 
-**What is new.** Controlled score-rank intervention—not a new SOTA training algorithm.
+**What is new.** Controlled score-rank intervention plus falsification of “top-\(k\) looks better on \(W_2\)”—not a new SOTA training algorithm.
+
+**Contributions.** (1) Matched-budget DDPM protocol with exact mode masses. (2) Directional likelihood-rank ordering of minority retention at \(\rho{=}5\), stratified by \(\rho\). (3) Powered evidence that top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\). (4) Directional 8D / Digits-PCA checks (Digits-CVAE inconclusive).
 
 ## 2 Related work
 
-MAD / collapse [Shumailov et al., 2023; Alemohammad et al., 2023]; accumulation [Gerstgrasser et al., 2024]; verification [Feng et al., 2024]; LSF [Cai et al., 2025]; temperature sampling [Xu et al., 2025; Li et al., 2026].
+MAD / collapse [Shumailov et al., 2023; Alemohammad et al., 2023]; accumulation [Gerstgrasser et al., 2024]; verification [Feng et al., 2024]; LSF [Cai et al., 2025]; siloed / biased-reference selection accelerating collapse [Qiao et al., 2026]; temperature sampling [Xu et al., 2025; Li et al., 2026].
+
+**Contrast to Qiao et al. (2026).** They study selection against a *biased local real-data* verifier in data silos and propose collaborative Wasserstein proxy references. We study ranking by the *generator’s own* denoising-likelihood proxy, with a matched-budget top/rand/bottom contrast and minority-mass retention as the primary diversity metric, plus an explicit \(W_2\) “false stability” falsification.
 
 ## 3 Method
 
@@ -48,13 +52,9 @@ MAD / collapse [Shumailov et al., 2023; Alemohammad et al., 2023]; accumulation 
 | 10 | top−rand | −0.045 | −0.28 | [−0.19, 0.13] | 0.75 |
 | 10 | bottom−rand | +0.097 | +0.38 | [−0.08, 0.39] | 1.00 |
 
-Pooled \(n{=}8\) exact \(p{=}0.039\) is **secondary** (mixes heterogeneous strata). At \(\rho{=}5\), \(p{=}0.0625\) is the discrete minimum when all signs agree—not evidence of a null effect given \(|d_z|>1.6\).
+Pooled \(n{=}8\) exact \(p{=}0.039\) is **secondary** (mixes heterogeneous strata). At \(\rho{=}5\), \(p{=}0.0625\) is the discrete minimum when all signs agree—the test cannot reach \(p{<}0.05\); we report the ordering as **directional** (unanimous signs, \(|d_z|>1.6\), CIs excluding zero). At \(\rho{=}10\), minorities are near floor at \(g{=}0\), so rankable minority synthetics are scarce and contrasts are near null (floor / saturation hypothesis).
 
-![Retention bars](figures/retention_bars.png)
-
-![Minority vs generation](figures/minority_vs_generation_rho5.png)
-
-### 4.3 Sliced \(W_2\)
+### 4.3 Sliced \(W_2\) (primary powered claim)
 
 | \(g\) | Mean \(\Delta\) | Std | \(d_z\) | 95% CI | \(\#>0\) | Exact \(p\) (Holm) |
 |--|--|--|--|--|--|--|
@@ -64,7 +64,7 @@ Pooled \(n{=}8\) exact \(p{=}0.039\) is **secondary** (mixes heterogeneous strat
 | 4 | +0.027 | 0.032 | 0.83 | [0.01, 0.05] | 7/8 | 0.023 (0.094) |
 | 5 | +0.024 | 0.033 | 0.73 | [0.01, 0.05] | 7/8 | 0.023 (0.094) |
 
-Holm notes serial dependence across generations (conservative).
+Holm notes serial dependence across generations (conservative). Evidence against top-\(k\) improving \(W_2\) is strongest at \(g{=}1\).
 
 ### 4.4 α ablation (illustrative; \(n{=}2\))
 
@@ -78,7 +78,7 @@ The \(\alpha{=}0.5\) row is the **same cell** as \(k_{\mathrm{frac}}{=}0.5\) bel
 
 ### 4.5 Transfers (directional; \(n{=}3\))
 
-Min exact Wilcoxon \(p{=}0.25\) when all signs agree. 8D: order 3/3; top−rand \(d_z{=}{-}2.56\), bottom−rand \(d_z{=}{+}1.28\). Digits-PCA: 3/3; \(d_z{=}{-}1.72\) / \(+2.67\).
+Min exact Wilcoxon \(p{=}0.25\) when all signs agree—unpowered for \(\alpha{=}0.05\). 8D: order 3/3; top−rand \(d_z{=}{-}2.56\), bottom−rand \(d_z{=}{+}1.28\). Digits-PCA: 3/3; \(d_z{=}{-}1.72\) / \(+2.67\). Digits-CVAE: **inconclusive** (no stable bottom>rand>top under the same budget protocol); Digits-PCA is the supported image-adjacent check.
 
 ### 4.6 \(k_{\mathrm{frac}}\) (illustrative; \(n{=}2\))
 
@@ -92,17 +92,19 @@ Min exact Wilcoxon \(p{=}0.25\) when all signs agree. 8D: order 3/3; top−rand 
 
 ## 5 Analysis
 
-Top-\(k\) retains high-likelihood (majority) synthetics. Order is clear at \(\rho{=}5\) and near noise at \(\rho{=}10\). \(W_2\) poorly tracks minority survival.
+Top-\(k\) retains high-likelihood (majority) synthetics. Order is directionally clear at \(\rho{=}5\) and near noise at \(\rho{=}10\) (floor on rankable minority mass). \(W_2\) poorly tracks minority survival.
 
 ## 6 Limitations
 
-Toy scale; \(\rho{=}5\) exact \(p\) floored at 0.0625 by \(n{=}5\); alpha / \(k_{\mathrm{frac}}\) illustrative (\(n{=}2\)); transfers unpowered; L2 empirical vs MAD/LSF/Feng.
+Toy scale; \(\rho{=}5\) retention is directional (\(p\) floored at 0.0625 by \(n{=}5\)); powered claim is \(W_2\) at \(g{=}1\); alpha / \(k_{\mathrm{frac}}\) illustrative (\(n{=}2\)); transfers unpowered; Digits-CVAE inconclusive.
+
+**Exploratory search and \(p$-values.** The reported claim is the survivor of an earlier exploratory search over several small stacks (archived under `docs/` and `experiments/` in the public repo), not a single pre-registered test. Retention \(p\)-values should be read as descriptive under that history; we mitigate overclaiming by stratifying on \(\rho\), demoting pooled tests, labeling \(\rho{=}5\) retention as directional, and treating the \(W_2\) \(g{=}1\) result as the primary powered claim.
 
 **Note on double-blind review.** Named GitHub reveals identity—use an anonymous mirror for DB venues; fine for arXiv.
 
 ## 7 Conclusion
 
-Stable minority-retention order at moderate imbalance (\(\rho{=}5\)); not seed-wise reliable at \(\rho{=}10\). Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\). Preferring “most likely” synthetics is not a free lunch when rare modes remain measurable.
+Directional minority-retention order at moderate imbalance (\(\rho{=}5\)); not seed-wise reliable at \(\rho{=}10\) (floor). Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\). Preferring “most likely” synthetics is not a free lunch when rare modes remain measurable.
 
 ## References
 
@@ -111,6 +113,7 @@ Stable minority-retention order at moderate imbalance (\(\rho{=}5\)); not seed-w
 - Feng et al. (2024). Beyond Model Collapse. arXiv:2406.07515.
 - Gerstgrasser et al. (2024). Is Model Collapse Inevitable? arXiv:2404.01413.
 - Li et al. (2026). Temperature Sampling and Variance-Corrective Time Shifting. arXiv:2607.10853.
+- Qiao et al. (2026). When Sample Selection Bias Precipitates Model Collapse. arXiv:2606.13732 (ICML 2026).
 - Shumailov et al. (2023). The Curse of Recursion. arXiv:2305.17493.
 - Xu et al. (2025). Temporal Score Rescaling. arXiv:2510.01184.
 
