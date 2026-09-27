@@ -7,14 +7,14 @@
   linkcolor=blue,
   citecolor=blue,
   urlcolor=blue,
-  pdftitle={Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion},
+  pdftitle={Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion: An Imbalance-Dependent Boundary},
   pdfauthor={Muhammad Alamzeb},
   pdfsubject={Model collapse; self-consuming diffusion; likelihood ranking},
-  pdfkeywords={diffusion, model collapse, synthetic data, minority modes}
+  pdfkeywords={diffusion, model collapse, synthetic data, minority modes, imbalance}
 }
 
 \title{Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:\\
-Minority Extinction Ordering at Moderate Imbalance}
+An Imbalance-Dependent Boundary for Minority Retention}
 \author{
 Muhammad Alamzeb\\
 \textit{Independent researcher}\\
@@ -26,14 +26,15 @@ Muhammad Alamzeb\\
 \maketitle
 
 \begin{abstract}
-Self-consuming training loops---retraining generative models on their own outputs---can induce \emph{model collapse}, including loss of rare modes.
-We study unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures, with emphasis on \textbf{moderate} imbalance.
-Define the minority-mass ratio $r=m^{(1)}/m^{(0)}$.
-Results are \textbf{stratified by} $\rho$.
-At $\rho{=}5$ ($n{=}5$), generation~1 minority mass obeys $\mathrm{bottom}>\mathrm{rand}>\mathrm{top}$ on all seeds with large paired effects vs.\ random-$k$ (top$-$rand $d_z{=}{-}1.96$; bottom$-$rand $d_z{=}{+}1.65$); we treat this as a \emph{directional} finding because exact Wilcoxon $p{=}0.0625$ is the discrete minimum at $n{=}5$ and cannot reach $p{<}0.05$.
-At $\rho{=}10$ ($n{=}3$), the order fails ($0/3$) and contrasts are near null, consistent with a minority-mass floor.
-Our strongest powered claim is that top-$k$ does \emph{not} improve sliced $W_2$ at generation~1 ($\Delta W_2>0$ on $8/8$ cells; exact $p{=}0.0078$; Holm $p{=}0.039$).
-Directional transfers ($8$D GMM, Digits-PCA; $n{=}3$) match the $\rho{=}5$ order; a Digits-CVAE check was inconclusive.
+Self-consuming training loops can induce \emph{model collapse}, including loss of rare modes.
+We ask when unlabeled likelihood ranking of synthetics harms minority modes in self-consuming DDPM training on imbalanced mixtures.
+The answer is \textbf{imbalance-dependent}: we report a moderate-imbalance boundary for the full bottom$>$rand$>$top ordering, not a universal law.
+Define $r=m^{(1)}/m^{(0)}$.
+At $\rho{=}5$ ($n{=}5$), generation~1 retention obeys $\mathrm{bottom}>\mathrm{rand}>\mathrm{top}$ on all seeds; bootstrap 95\% CIs for mean paired $\Delta$ vs.\ random-$k$ exclude zero (top$-$rand $[{-}0.37,{-}0.15]$; bottom$-$rand $[0.16,0.43]$), while exact Wilcoxon $p{=}0.0625$ is the discrete floor at $n{=}5$ (directional).
+At intermediate $\rho{=}7$ the full order holds on only $2/5$ seeds; at $\rho{=}10$ ($n{=}8$) on $3/8$.
+Top$-$rand CIs still exclude zero at $\rho{=}7$ and $\rho{=}10$, but bottom$-$rand does not at $\rho{=}10$---consistent with a partial floor on rankable minority mass.
+Strongest powered claim: top-$k$ does \emph{not} improve sliced $W_2$ at generation~1 (18/18 cells positive; bootstrap CI of mean $\Delta$ excludes zero; exact $p{=}7.6{\times}10^{-6}$; Holm $p{=}3.8{\times}10^{-5}$).
+Directional transfers ($8$D GMM, Digits-PCA) match $\rho{=}5$; Digits pixel-space DDPM and Digits-CVAE do not stably replicate the full order (honest negative/mixed image checks at toy resolution).
 Code: \url{https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion}.
 \end{abstract}
 
@@ -45,11 +46,11 @@ When the only score is the generator's own likelihood, how should one select syn
 We isolate an \emph{interventional} selection policy at matched synthetic count and matched real-mix $\alpha$, with mode-exact metrics.
 
 \paragraph{What is new.}
-A controlled top-$k$ / random-$k$ / bottom-$k$ contrast under matched budgets, with mode-exact minority retention and an explicit falsification of ``top-$k$ looks better on $W_2$''---not a new named training algorithm or ImageNet-scale SOTA method.
+An \emph{imbalance-dependent boundary}: likelihood-rank ordering of minority retention is clear at moderate imbalance and breaks down under severe imbalance---plus a falsification of ``top-$k$ looks better on $W_2$''---not a universal law or ImageNet-scale SOTA method.
 
 \paragraph{Contributions.}
 (1)~Matched-budget DDPM protocol with exact mode masses.
-(2)~Directional likelihood-rank ordering of minority retention at moderate imbalance ($\rho{=}5$), \textbf{stratified by} $\rho$.
+(2)~Stratified evidence for a moderate-imbalance regime ($\rho{=}5$) with directional bottom$>$rand$>$top ordering, vs.\ null/floor behavior at severe imbalance.
 (3)~Powered evidence that top-$k$ does not improve sliced $W_2$ vs.\ random-$k$ at generation~1.
 (4)~Directional $8$D GMM and Digits-PCA checks (Digits-CVAE inconclusive).
 
@@ -81,45 +82,49 @@ Sliced $W_2$: mean squared 1D Wasserstein over \textbf{24} projections; $\le$400
 Hypothesis tests use the \textbf{exact} Wilcoxon signed-rank distribution over sign assignments (enumeration; midranks for magnitude ties), not only a normal approximation.
 
 \section{Experiments}
-\subsection{Primary design ($n{=}8$ cells)}
+\subsection{Primary design ($n{=}18$ cells)}
 $K{=}4$, $G{=}5$, $\alpha{=}0.5$, $k_{\mathrm{frac}}{=}0.5$. Logs: \texttt{w2\_fs.jsonl}.
+We expand beyond the original eight cells by adding intermediate imbalance $\rho{=}7$ ($n{=}5$) and additional $\rho{=}10$ seeds ($n{=}8$ total) so the breakdown of the full ordering can be stated more sharply than on three seeds alone.
 
 \begin{table}[t]
 \centering
-\caption{Primary cells. Seeds $3$--$4$ only at $\rho{=}5$.}
+\caption{Primary cells (seed $\times$ $\rho$).}
 \label{tab:grid}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccccc}
 \toprule
-$\rho\setminus$ seed & 0 & 1 & 2 & 3 & 4 \\
+$\rho\setminus$ seed & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
 \midrule
-5 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
-10 & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- & --- \\
+5 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- & --- & --- \\
+7 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- & --- & --- \\
+10 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Retention: stratified primary analysis}
 \label{sec:ret}
-Because $\rho{=}5$ and $\rho{=}10$ behave differently, we do \textbf{not} treat a single pooled Wilcoxon as the primary claim.
+Because strata differ, we do \textbf{not} treat a single pooled Wilcoxon as the primary claim.
+We lead with bootstrap 95\% CIs of the mean paired $\Delta$ (more honest than $p$-values alone at these $n$); exact Wilcoxon $p$ is reported alongside.
 Table~\ref{tab:byrho} gives means and seed-wise order counts; Table~\ref{tab:strat} gives stratified paired contrasts.
 
 \begin{table}[t]
 \centering
-\caption{Per-$\rho$ mean $r$ and seed-wise counts (generation~1).}
+\caption{Per-$\rho$ mean $r$ and seed-wise counts (generation~1). Full order $=$ bottom$>$rand$>$top.}
 \label{tab:byrho}
 \begin{tabular}{lrrrrrr}
 \toprule
 $\rho$ & $n$ & bottom & rand & top & Full order & top$<$rand / bot$>$rand \\
 \midrule
 5 & 5 & 0.737 & 0.456 & 0.183 & $5/5$ & $5/5$ / $5/5$ \\
-10 & 3 & 0.296 & 0.199 & 0.154 & $0/3$ & $2/3$ / $1/3$ \\
+7 & 5 & 0.437 & 0.266 & 0.145 & $2/5$ & $4/5$ / $3/5$ \\
+10 & 8 & 0.329 & 0.247 & 0.164 & $3/8$ & $7/8$ / $4/8$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Stratified paired retention contrasts vs.\ random-$k$ (exact Wilcoxon; bootstrap 95\% CI of mean $\Delta$).}
+\caption{Stratified paired retention contrasts vs.\ random-$k$ (bootstrap 95\% CI of mean $\Delta$; exact Wilcoxon).}
 \label{tab:strat}
 \begin{tabular}{llrrrrr}
 \toprule
@@ -127,46 +132,48 @@ $\rho$ & Contrast & Mean $\Delta$ & $d_z$ & 95\% CI & Exact $p$ \\
 \midrule
 5 & top$-$rand & $-0.273$ & $-1.96$ & $[{-}0.37,{-}0.15]$ & $0.0625$ \\
 5 & bottom$-$rand & $+0.281$ & $+1.65$ & $[0.16,0.43]$ & $0.0625$ \\
-10 & top$-$rand & $-0.045$ & $-0.28$ & $[{-}0.19,0.13]$ & $0.75$ \\
-10 & bottom$-$rand & $+0.097$ & $+0.38$ & $[{-}0.08,0.39]$ & $1.00$ \\
+7 & top$-$rand & $-0.121$ & $-1.09$ & $[{-}0.21,{-}0.04]$ & $0.125$ \\
+7 & bottom$-$rand & $+0.171$ & $+0.92$ & $[0.03,0.32]$ & $0.250$ \\
+10 & top$-$rand & $-0.083$ & $-0.79$ & $[{-}0.14,{-}0.01]$ & $0.078$ \\
+10 & bottom$-$rand & $+0.082$ & $+0.44$ & $[{-}0.03,0.21]$ & $0.578$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-At $\rho{=}5$, all five seeds agree in sign with large effects ($|d_z|{>}1.6$).
-Exact two-sided $p{=}0.0625$ is the smallest attainable at $n{=}5$ under the signed-rank null when all signs agree; the test \emph{cannot} reject at $\alpha{=}0.05$ no matter how large the effect.
-We therefore report the $\rho{=}5$ ordering as \textbf{directional / suggestive} (unanimous signs + effect sizes + CIs excluding zero for the mean $\Delta$), not as a claim that clears a conventional significance threshold.
-At $\rho{=}10$, minorities are already near floor at $g{=}0$: few minority synthetics remain to rank, so top/random/bottom pools become statistically similar and contrasts are consistent with null (a saturation / floor hypothesis; isolating equal-minority-count designs is left to future work).
-For completeness, a pooled $n{=}8$ exact Wilcoxon yields $p{=}0.039$ for both contrasts, but we treat that as secondary because it mixes heterogeneous strata.
+At $\rho{=}5$, all five seeds agree in sign with large effects ($|d_z|{>}1.6$) and CIs excluding zero.
+Exact two-sided $p{=}0.0625$ is the smallest attainable at $n{=}5$ under the signed-rank null when all signs agree; the test \emph{cannot} reject at $\alpha{=}0.05$.
+We report the $\rho{=}5$ \emph{full} ordering as \textbf{directional} (unanimous signs + CIs), not as $p{<}0.05$.
+The full order is unreliable at $\rho{=}7$ ($2/5$) and $\rho{=}10$ ($3/8$).
+Top$-$rand CIs still exclude zero at $\rho{=}7$ and $\rho{=}10$ (top remains worse on average), but bottom$-$rand's CI includes zero at $\rho{=}10$---consistent with a partial floor on rankable minority mass under severe imbalance.
+Pooled $n{=}18$ tests are secondary (mix heterogeneous strata).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/retention_by_rho.png}
-\caption{Primary retention $r$ stratified by $\rho$ (matches the primary claim). A pooled bar chart would mix the $5/5$ and $0/3$ regimes and is not used as the lead figure.}
+\caption{Primary retention $r$ stratified by $\rho$ (imbalance-dependent boundary).}
 \label{fig:main}
 \end{figure}
 
 \subsection{Sliced $W_2$}
 \begin{table}[t]
 \centering
-\caption{$\Delta W_2(\mathrm{top}-\mathrm{rand})$ by generation on all eight cells (positive $=$ top worse). Exact Wilcoxon $p$; Holm adjustment across the five (non-independent) generation-wise tests; bootstrap 95\% CI of the mean.}
+\caption{$\Delta W_2(\mathrm{top}-\mathrm{rand})$ by generation on all $18$ cells (positive $=$ top worse). Bootstrap 95\% CI; exact Wilcoxon $p$; Holm across five generation-wise tests.}
 \label{tab:w2}
 \begin{tabular}{lrrrrrr}
 \toprule
 $g$ & Mean & Std & $d_z$ & 95\% CI & $\#\{>0\}$ & Exact $p$ (Holm) \\
 \midrule
-1 & $+0.113$ & 0.099 & $1.14$ & $[0.05,0.18]$ & $8/8$ & $0.0078$ ($0.039$) \\
-2 & $+0.061$ & 0.060 & $1.00$ & $[0.02,0.10]$ & $6/8$ & $0.039$ ($0.094$) \\
-3 & $+0.039$ & 0.035 & $1.11$ & $[0.02,0.06]$ & $7/8$ & $0.023$ ($0.094$) \\
-4 & $+0.027$ & 0.032 & $0.83$ & $[0.01,0.05]$ & $7/8$ & $0.023$ ($0.094$) \\
-5 & $+0.024$ & 0.033 & $0.73$ & $[0.01,0.05]$ & $7/8$ & $0.023$ ($0.094$) \\
+1 & $+0.075$ & 0.075 & $1.00$ & $[0.044,0.112]$ & $18/18$ & $7.6{\times}10^{-6}$ ($3.8{\times}10^{-5}$) \\
+2 & $+0.038$ & 0.047 & $0.82$ & $[0.019,0.061]$ & $16/18$ & $0.0007$ ($0.0027$) \\
+3 & $+0.028$ & 0.031 & $0.90$ & $[0.014,0.042]$ & $16/18$ & $0.0013$ ($0.0039$) \\
+4 & $+0.015$ & 0.033 & $0.47$ & $[0.000,0.030]$ & $14/18$ & $0.010$ ($0.010$) \\
+5 & $+0.016$ & 0.025 & $0.65$ & $[0.007,0.029]$ & $15/18$ & $0.0019$ ($0.0039$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Generation-wise tests are repeated measures on the same cells (serially correlated), so Holm is a conservative acknowledgment rather than an assumption of independence.
-Evidence against top-$k$ improving $W_2$ is strongest at $g{=}1$.
-
+Evidence against top-$k$ improving $W_2$ is strongest at $g{=}1$ (CI excludes zero; unanimous sign).
 \subsection{Real-mix $\alpha$ ablation (illustrative; $n{=}2$)}
 \begin{table}[t]
 \centering
@@ -194,7 +201,10 @@ Minimum two-sided exact Wilcoxon $p$ at $n{=}3$ with all signs agreeing is $0.25
   top$-$rand $d_z{=}{-}2.56$, bottom$-$rand $d_z{=}{+}1.28$ (exact $p{=}0.25$).
 \item \textbf{Digits-PCA:} $1.49{\pm}0.11$ / $1.11{\pm}0.08$ / $0.68{\pm}0.17$; order $3/3$;
   top$-$rand $d_z{=}{-}1.72$, bottom$-$rand $d_z{=}{+}2.67$ (exact $p{=}0.25$).
-\item \textbf{Digits-CVAE (inconclusive):} a pixel-space conditional VAE transfer did not reproduce a stable bottom$>$rand$>$top order under the same budget protocol; we treat Digits-PCA (mode masses in PCA space) as the supported image-adjacent check and do not claim CVAE replication.
+\item \textbf{Digits pixel-space DDPM ($8{\times}8$ MLP denoiser):} order $1/3$ at $\rho{=}5$;
+  means $1.25$ / $0.88$ / $1.23$; bottom$>$rand on $3/3$ seeds ($d_z{=}{+}1.27$) but top vs.\ random is inconsistent (exact signs $1/3$ for top$<$rand).
+  A small image-diffusion check, not ImageNet-scale validation; full ordering not replicated.
+\item \textbf{Digits-CVAE (inconclusive):} pixel-space conditional VAE did not reproduce a stable bottom$>$rand$>$top order.
 \end{itemize}
 
 \subsection{Selection-pool size $k_{\mathrm{frac}}$ (illustrative; $n{=}2$)}
@@ -218,29 +228,30 @@ Top-$k$ remains worst on means; at $0.75$, bottom vs.\ random flips ($0/2$ full 
 
 \section{Analysis}
 Top-$k$ retains high-likelihood (typically majority) synthetics, reducing minority inflow.
-The ordering is directionally clear when minorities remain measurable ($\rho{=}5$) and near noise at $\rho{=}10$, consistent with a floor on rankable minority mass.
-Sliced $W_2$ is a poor monitor of minority survival here: aggregate transport can look acceptable while rare-mode retention collapses.
+The \emph{full} bottom$>$rand$>$top ordering is a moderate-imbalance phenomenon ($\rho{=}5$: $5/5$), already unreliable at $\rho{=}7$ ($2/5$) and $\rho{=}10$ ($3/8$).
+Top remains worse than random on average even at higher $\rho$ (top$-$rand CIs exclude zero), but bottom's advantage fades as minority mass floors.
+Sliced $W_2$ is a poor monitor of minority survival: aggregate transport can look mixed while rare-mode retention collapses under top-$k$.
 
 \section{Limitations}
-Toy GMMs / Digits-PCA; not ImageNet-scale.
-At $\rho{=}5$, exact Wilcoxon cannot beat $p{=}0.0625$ with $n{=}5$ all-agreeing signs---retention inference is directional ($d_z$, unanimous signs); the powered negative result is the $W_2$ contrast at $g{=}1$.
+Toy GMMs and small Digits image checks; not ImageNet-scale.
+At $\rho{=}5$, exact Wilcoxon cannot beat $p{=}0.0625$ with $n{=}5$---retention inference leans on bootstrap CIs and unanimous direction; the powered negative result is $W_2$ at $g{=}1$ ($n{=}18$).
 $\alpha$ and $k_{\mathrm{frac}}$ ablations use two seeds; their default rows are the same experimental cell.
 Transfers: $n{=}3$ cannot beat exact $p{=}0.25$; Digits-CVAE was inconclusive.
-\textbf{Multiplicity:} Holm is applied within families (two $\rho{=}5$ retention contrasts; five $W_2$ generations).
-Additional stratified/exploratory tests are not multiplicity-corrected paper-wide; we treat them as descriptive under the small-sample framing.
-Contribution is a controlled empirical contrast complementary to MAD/LSF/Feng and to siloed-selection theory~\citep{qiao2026}.
+\textbf{Multiplicity:} Holm is applied within the $W_2$ generation family.
+Additional stratified/exploratory tests are not multiplicity-corrected paper-wide; we treat them as descriptive under the small-sample framing and lead with CIs.
+Contribution is a controlled empirical contrast complementary to MAD/LSF/Feng and to siloed-selection theory~\citep{qiao2026}; venue target is workshop / short empirical note scope.
 
 \paragraph{Exploratory search and interpretation of $p$-values.}
 The reported claim is the survivor of an earlier exploratory search over several small experimental stacks (archived under \texttt{docs/} and \texttt{experiments/} in the public repository), not a single pre-registered hypothesis tested once.
-Readers should interpret retention $p$-values as descriptive under that history; we mitigate overclaiming by stratifying on $\rho$, demoting pooled tests, labeling $\rho{=}5$ retention as directional, and treating the $W_2$ generation-1 result as the primary powered claim.
+Readers should interpret retention $p$-values as descriptive under that history; we mitigate overclaiming by stratifying on $\rho$, demoting pooled tests, labeling $\rho{=}5$ full-order retention as directional, leading with bootstrap CIs, and treating the $W_2$ generation-1 result as the primary powered claim.
 
 \paragraph{Note on double-blind review.}
 The public GitHub URL reveals author identity. For double-blind venues, provide an anonymous code mirror; for arXiv, the named repository is appropriate.
 
 \section{Conclusion}
-At moderate imbalance ($\rho{=}5$), likelihood ranking yields a directional minority-retention order $\mathrm{bottom}>\mathrm{rand}>\mathrm{top}$; the order is not seed-wise reliable at $\rho{=}10$ in our matrix, consistent with a minority-mass floor.
+Likelihood-ranked synthetic selection induces an \textbf{imbalance-dependent} minority-retention pattern: a directional bottom$>$rand$>$top order at moderate imbalance ($\rho{=}5$), already unstable at $\rho{=}7$, and not seed-wise reliable at $\rho{=}10$.
 Top-$k$ does not improve sliced $W_2$ vs.\ random-$k$ at generation~1.
-Preferring ``most likely'' synthetics is not a free lunch for minority survival when rare modes remain measurable.
+Preferring ``most likely'' synthetics is not a free lunch for minority survival when rare modes remain measurable---and the effect should not be stated as a universal law.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

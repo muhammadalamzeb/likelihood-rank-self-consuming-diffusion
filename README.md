@@ -1,6 +1,6 @@
 # Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion
 
-**Minority Extinction Ordering at Moderate Imbalance**
+**An Imbalance-Dependent Boundary for Minority Retention**
 
 Author: **Muhammad Alamzeb**  
 Preprint: [https://doi.org/10.5281/zenodo.22956890](https://doi.org/10.5281/zenodo.22956890)  
@@ -8,9 +8,9 @@ Code release: [v1.0.1](https://github.com/muhammadalamzeb/likelihood-rank-self-c
 
 ## Abstract
 
-Self-consuming training loops—retraining generative models on their own outputs—can induce model collapse, including loss of rare modes. This repository accompanies an empirical study of unlabeled selection of synthetic samples by a denoising likelihood proxy in self-consuming DDPM training on imbalanced mixtures, with emphasis on **moderate** imbalance.
+Self-consuming training loops can induce model collapse, including loss of rare modes. This repository accompanies an empirical study of unlabeled likelihood ranking of synthetic samples in self-consuming DDPM training on imbalanced mixtures.
 
-Define the minority-mass ratio \(r = m^{(1)}/m^{(0)}\). Results are stratified by imbalance \(\rho\). At \(\rho=5\) (\(n=5\) seeds), generation-1 minority mass obeys \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) on all seeds with large paired effects versus random-\(k\) (\(d_z \approx -1.96\) / \(+1.65\)); this is reported as **directional** because exact Wilcoxon \(p=0.0625\) is the discrete minimum at \(n=5\). At \(\rho=10\) (\(n=3\)), the order fails and contrasts are near null (minority-mass floor). The strongest powered claim is that top-\(k\) does **not** improve sliced \(W_2\) at generation 1. Directional transfers (8D GMM, Digits-PCA) match \(\rho=5\); Digits-CVAE was inconclusive.
+The main finding is **imbalance-dependent**, not a universal law: the full \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) minority-retention order holds at moderate imbalance (\(\rho=5\), \(n=5\), all seeds; bootstrap 95\% CIs for mean paired \(\Delta\) vs random-\(k\) exclude zero) and breaks down at \(\rho=7\) (\(2/5\)) and \(\rho=10\) (\(n=8\), \(3/8\)). The strongest powered claim is that top-\(k\) does **not** improve sliced \(W_2\) at generation 1 (\(18/18\) cells; CI excludes zero). Digits-PCA and a Digits pixel-space DDPM provide small image-adjacent checks (pixel DDPM does not stably replicate the full order); Digits-CVAE was inconclusive.
 
 ## Paper
 

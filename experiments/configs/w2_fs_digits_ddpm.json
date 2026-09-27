@@ -1,0 +1,34 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "rhos": [
+    5.0
+  ],
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k"
+  ],
+  "generations": 5,
+  "n_data": 1200,
+  "n_synth": 1200,
+  "train_steps": 800,
+  "n_steps": 40,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 256,
+  "n_t": 6,
+  "classes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "log_name": "w2_fs_digits_ddpm.jsonl",
+  "append": false,
+  "experiment": "w2_fs_digits_ddpm"
+}

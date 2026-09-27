@@ -1,7 +1,7 @@
 00README.txt for arXiv
 
 Title: Likelihood-Ranked Synthetic Selection in Self-Consuming Diffusion:
-       Minority Extinction Ordering on Imbalanced Mixtures
+       An Imbalance-Dependent Boundary for Minority Retention
 Author: Muhammad Alamzeb
 Contact: shayankhanmahar@gmail.com
 Code: https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion

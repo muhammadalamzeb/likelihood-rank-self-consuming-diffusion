@@ -88,40 +88,67 @@ def main():
         m1 = by[(s, rho, p, 1)]["minority_mean"]
         return m1 / max(m0, 1e-9)
 
+    rhos = sorted({rh for _, rh in cells})
+    # cells that have bottom_k (required for order counts / bottom contrasts)
+    cells_full = [
+        (s, rh)
+        for s, rh in cells
+        if (s, rh, "bottom_k", 0) in by and (s, rh, "rand_k", 0) in by
+    ]
+
     # --- retention stratified ---
     ret_lines = [
         "stratum,n,contrast,mean_diff,std_diff,cohen_dz,boot_ci_low,boot_ci_high,wilcoxon_W,p_exact,p_approx_normal"
     ]
-    for rho in [5.0, 10.0]:
-        sub = [(s, rh) for s, rh in cells if rh == rho]
+    order_lines = ["rho,n,mean_bottom,mean_rand,mean_top,full_order,top_lt_rand,bot_gt_rand"]
+    for rho in rhos:
+        sub = [(s, rh) for s, rh in cells_full if rh == rho]
+        if not sub:
+            continue
+        mb = np.array([retention(s, rho, "bottom_k") for s, _ in sub])
+        mr = np.array([retention(s, rho, "rand_k") for s, _ in sub])
+        mt = np.array([retention(s, rho, "top_k") for s, _ in sub])
+        full = int(np.sum((mb > mr) & (mr > mt)))
+        tlr = int(np.sum(mt < mr))
+        bgr = int(np.sum(mb > mr))
+        order_lines.append(
+            f"{rho},{len(sub)},{mb.mean():.6f},{mr.mean():.6f},{mt.mean():.6f},{full}/{len(sub)},{tlr}/{len(sub)},{bgr}/{len(sub)}"
+        )
+        print(
+            f"rho={rho} order {full}/{len(sub)} means b/r/t={mb.mean():.3f}/{mr.mean():.3f}/{mt.mean():.3f}"
+        )
         for name, pa, pb in [("top_minus_rand", "top_k", "rand_k"), ("bottom_minus_rand", "bottom_k", "rand_k")]:
             d = np.array([retention(s, rho, pa) - retention(s, rho, pb) for s, _ in sub])
             lo, hi = boot_ci(d, rng)
             w = wilcoxon_exact(d)
             dz = float(d.mean() / d.std(ddof=1)) if len(d) > 1 and d.std(ddof=1) > 0 else float("nan")
+            tag = f"rho{int(rho)}" if float(rho).is_integer() else f"rho{rho}"
             ret_lines.append(
-                f"rho{int(rho)},{len(sub)},{name},{d.mean():.6f},{d.std(ddof=1):.6f},{dz:.4f},{lo:.6f},{hi:.6f},{w['W']},{w['p_exact']:.6f},{w['p_approx']:.6f}"
+                f"{tag},{len(sub)},{name},{d.mean():.6f},{d.std(ddof=1):.6f},{dz:.4f},{lo:.6f},{hi:.6f},{w['W']},{w['p_exact']:.6f},{w['p_approx']:.6f}"
             )
-            print(f"rho={rho} {name}: mean={d.mean():.4f} dz={dz:.3f} exact_p={w['p_exact']:.4f}")
+            print(
+                f"rho={rho} {name}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} exact_p={w['p_exact']:.4f}"
+            )
 
-    # pooled (for supplemental comparison only)
+    # pooled (secondary; mixes heterogeneous strata)
     for name, pa, pb in [("top_minus_rand", "top_k", "rand_k"), ("bottom_minus_rand", "bottom_k", "rand_k")]:
-        d = np.array([retention(s, rho, pa) - retention(s, rho, pb) for s, rho in cells])
+        d = np.array([retention(s, rho, pa) - retention(s, rho, pb) for s, rho in cells_full])
         lo, hi = boot_ci(d, rng)
         w = wilcoxon_exact(d)
-        dz = float(d.mean() / d.std(ddof=1))
+        dz = float(d.mean() / d.std(ddof=1)) if len(d) > 1 and d.std(ddof=1) > 0 else float("nan")
         ret_lines.append(
-            f"pooled8,8,{name},{d.mean():.6f},{d.std(ddof=1):.6f},{dz:.4f},{lo:.6f},{hi:.6f},{w['W']},{w['p_exact']:.6f},{w['p_approx']:.6f}"
+            f"pooled{len(cells_full)},{len(cells_full)},{name},{d.mean():.6f},{d.std(ddof=1):.6f},{dz:.4f},{lo:.6f},{hi:.6f},{w['W']},{w['p_exact']:.6f},{w['p_approx']:.6f}"
         )
-        print(f"pooled {name}: mean={d.mean():.4f} dz={dz:.3f} exact_p={w['p_exact']:.4f}")
-
-    # Holm within rho=5 for the two contrasts
-    # (already only two)
+        print(f"pooled n={len(cells_full)} {name}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] exact_p={w['p_exact']:.4f}")
 
     (PAPER / "table_stats_retention_stratified.csv").write_text("\n".join(ret_lines) + "\n", encoding="utf-8")
     (ANALYSIS / "table_stats_retention_stratified.csv").write_text("\n".join(ret_lines) + "\n", encoding="utf-8")
+    (PAPER / "table_order_by_rho.csv").write_text("\n".join(order_lines) + "\n", encoding="utf-8")
+    (ANALYSIS / "table_order_by_rho.csv").write_text("\n".join(order_lines) + "\n", encoding="utf-8")
 
-    # --- W2 by generation ---
+    # --- W2 by generation (all cells with top_k & rand_k) ---
+    w2_cells = [(s, rh) for s, rh in cells if (s, rh, "rand_k", 1) in by]
+    n_w2 = len(w2_cells)
     w2_lines = [
         "generation,mean_delta,std,cohen_dz,boot_ci_low,boot_ci_high,n_pos,n,p_exact,p_approx_normal,holm_p_exact"
     ]
@@ -130,21 +157,21 @@ def main():
         d = np.array(
             [
                 by[(s, rho, "top_k", g)]["w2_sliced"] - by[(s, rho, "rand_k", g)]["w2_sliced"]
-                for s, rho in cells
+                for s, rho in w2_cells
             ]
         )
         lo, hi = boot_ci(d, rng)
         w = wilcoxon_exact(d)
         dz = float(d.mean() / d.std(ddof=1)) if d.std(ddof=1) > 0 else float("nan")
-        rows.append((g, d.mean(), d.std(ddof=1), dz, lo, hi, int((d > 0).sum()), w))
+        rows.append((g, d.mean(), d.std(ddof=1), dz, lo, hi, int((d > 0).sum()), len(d), w))
         print(
-            f"W2 g={g}: mean={d.mean():.4f} dz={dz:.3f} npos={(d>0).sum()}/8 exact={w['p_exact']:.4f}"
+            f"W2 g={g}: mean={d.mean():.4f} CI=[{lo:.3f},{hi:.3f}] dz={dz:.3f} npos={(d>0).sum()}/{len(d)} exact={w['p_exact']:.4f}"
         )
 
-    holm_p = holm([r[7]["p_exact"] for r in rows])
-    for i, (g, mean, std, dz, lo, hi, npos, w) in enumerate(rows):
+    holm_p = holm([r[8]["p_exact"] for r in rows])
+    for i, (g, mean, std, dz, lo, hi, npos, n, w) in enumerate(rows):
         w2_lines.append(
-            f"{g},{mean:.6f},{std:.6f},{dz:.4f},{lo:.6f},{hi:.6f},{npos},8,{w['p_exact']:.6f},{w['p_approx']:.6f},{holm_p[i]:.6f}"
+            f"{g},{mean:.6f},{std:.6f},{dz:.4f},{lo:.6f},{hi:.6f},{npos},{n},{w['p_exact']:.6f},{w['p_approx']:.6f},{holm_p[i]:.6f}"
         )
 
     (PAPER / "table_w2_top_minus_rand.csv").write_text("\n".join(w2_lines) + "\n", encoding="utf-8")
