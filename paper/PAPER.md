@@ -11,9 +11,9 @@ Self-consuming training loops can induce *model collapse*. We study unlabeled li
 
 **Primary claim:** top-\(k\) does **not** improve sliced \(W_2\) vs random-\(k\) at generation 1 (\(\Delta W_2>0\) on \(23/23\) cells; bootstrap 95% CI excludes zero; Wilcoxon \(p{=}2.9{\times}10^{-5}\), Holm \(p{=}1.4{\times}10^{-4}\)).
 
-**Secondary, narrow-regime observation:** full bottom>rand>top minority retention only at moderate imbalance \(\rho{=}5\) (\(n{=}10\), \(10/10\); exact Wilcoxon \(p{=}0.002\); CIs exclude zero), failing for most seeds at \(\rho{=}7\) (\(2/5\)) and \(\rho{=}10\) (\(3/8\)).
+**Secondary, post-hoc / narrow-regime observation:** after an original “false stability” hypothesis was falsified, full bottom>rand>top minority retention appears only at \(\rho{=}5\) (\(n{=}10\), \(10/10\); exact \(p{=}0.002\)), failing for most seeds at \(\rho{=}7\) (\(2/5\)) and \(\rho{=}10\) (\(3/8\)). Treat as exploratory (HARKing risk), not a pre-registered law.
 
-Workshop-scale note on controllable mixtures and tiny Digits checks—**not** ImageNet-scale diffusion.
+Workshop-scale note—**not** ImageNet-scale diffusion.
 
 ## 1 Introduction
 
@@ -63,7 +63,9 @@ At \(\rho{=}5\): top−rand mean \(\Delta{=}{-}0.225\), CI \([{-}0.30,{-}0.15]\)
 
 ## 5 Limitations
 
-Toy / Digits scale only; workshop note. Retention is a narrow regime. Exploratory-search history archived under `docs/` (not the submission narrative). \(W_2\) is the primary powered claim.
+**Scale.** Toy GMMs / tiny Digits only; no ImageNet-scale diffusion result.
+
+**Researcher degrees of freedom / post-hoc revision.** Long exploratory search across many topics precedes this note (`docs/`). Within this topic, the original hypothesis was top-\(k\) *improves* \(W_2\) while secretly killing minorities (“false stability”); the pilot **falsified** that dissociation, and the claim was revised to the present stratified retention story plus an explicit \(W_2\) negative. Treat bottom>rand>top as **post-hoc / exploratory** even at \(n{=}10\), \(p{=}0.002\). The \(W_2\) negative is more trustworthy: it killed the original hypothesis and held on \(n{=}23\) cells (23/23 at \(g{=}1\)).
 
 ## 6 Conclusion
 

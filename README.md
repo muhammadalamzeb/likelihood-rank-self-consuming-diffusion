@@ -13,7 +13,7 @@ Self-consuming training loops can induce model collapse. This repository accompa
 
 **Primary result:** top-\(k\) selection by a denoising likelihood proxy does **not** improve sliced \(W_2\) versus random-\(k\) at generation 1 (\(23/23\) seed–imbalance cells; bootstrap 95% CI excludes zero).
 
-**Secondary, narrow-regime observation:** the full \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) minority-retention order appears at moderate imbalance \(\rho=5\) (\(n=10\), \(10/10\); exact Wilcoxon \(p=0.002\)) and already fails for most seeds at \(\rho=7\) (\(2/5\)) and \(\rho=10\) (\(3/8\)). Not shown on ImageNet-scale diffusion.
+**Secondary, post-hoc / narrow-regime observation:** after an original “false stability” hypothesis was falsified, the full \(\mathrm{bottom}>\mathrm{rand}>\mathrm{top}\) order appears at \(\rho=5\) (\(n=10\), \(10/10\); exact \(p=0.002\)) and fails for most seeds at \(\rho=7\) / \(\rho=10\). Treat as exploratory (HARKing risk), not a pre-registered law. Not shown on ImageNet-scale diffusion.
 
 ## Paper
 

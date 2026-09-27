@@ -30,8 +30,9 @@ Self-consuming training loops can induce \emph{model collapse}, including loss o
 We study unlabeled likelihood ranking of synthetics in self-consuming DDPM training on imbalanced mixtures.
 \textbf{Primary claim:} selecting by top likelihood does \emph{not} improve sliced $W_2$ vs.\ random-$k$ at generation~1
 ($\Delta W_2>0$ on $23/23$ seed--imbalance cells; bootstrap 95\% CI of the mean excludes zero; Wilcoxon $p{=}2.9{\times}10^{-5}$, Holm $p{=}1.4{\times}10^{-4}$).
-\textbf{Secondary, narrow-regime observation:} the full bottom$>$rand$>$top minority-retention order appears only at moderate imbalance $\rho{=}5$ ($n{=}10$ seeds, $10/10$; exact Wilcoxon $p{=}0.002$ for both paired contrasts vs.\ random-$k$; bootstrap CIs exclude zero), and already fails for most seeds at $\rho{=}7$ ($2/5$) and $\rho{=}10$ ($3/8$).
-This is a workshop-scale empirical note on controllable mixtures and tiny Digits checks---\emph{not} a result on ImageNet-scale diffusion.
+\textbf{Secondary, post-hoc / narrow-regime observation:} after an original ``false stability'' hypothesis was falsified, we report that full bottom$>$rand$>$top minority retention appears only at moderate imbalance $\rho{=}5$ ($n{=}10$, $10/10$; exact Wilcoxon $p{=}0.002$; CIs exclude zero), and already fails for most seeds at $\rho{=}7$ ($2/5$) and $\rho{=}10$ ($3/8$).
+Treat that ordering as exploratory (elevated HARKing risk), not a pre-registered law.
+Workshop-scale note on controllable mixtures and tiny Digits checks---\emph{not} ImageNet-scale diffusion.
 Code: \url{https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion}.
 \end{abstract}
 
@@ -234,9 +235,13 @@ $\alpha$ and $k_{\mathrm{frac}}$ ablations use two seeds; their default rows are
 \textbf{Multiplicity:} Holm within the $W_2$ generation family and within the two $\rho{=}5$ retention contrasts; other tests descriptive.
 Complementary to MAD/LSF/Feng and siloed-selection theory~\citep{qiao2026}.
 
-\paragraph{Exploratory search.}
-The retention hypothesis is the survivor of an earlier exploratory search (historical notes under \texttt{docs/} in the repository, not part of the submission narrative).
-We mitigate overclaiming by making $W_2$ the primary claim, stratifying retention by $\rho$, demoting pooled tests, and leading with bootstrap CIs.
+\paragraph{Researcher degrees of freedom and post-hoc revision (important).}
+This note is the survivor of a long, documented exploratory search across many unrelated directions before self-consuming diffusion (archived under \texttt{docs/} in the public repository).
+Within this topic, the \emph{original} working hypothesis was a ``false stability'' dissociation: top-$k$ would \emph{improve} sliced $W_2$ while secretly accelerating minority collapse.
+The pilot \textbf{falsified} that dissociation (top-$k$ worsened $W_2$), after which the claim was revised to the present imbalance-stratified retention ordering plus an explicit $W_2$ negative result.
+Readers should therefore treat the bottom$>$rand$>$top ordering as a \textbf{post-hoc / exploratory} finding with elevated HARKing risk---even though $\rho{=}5$ now uses $n{=}10$ seeds and exact $p{=}0.002$---and should \textbf{not} read it as a pre-registered general law.
+The $W_2$ negative result is comparatively more trustworthy: it was the observation that killed the original hypothesis, then held on the expanded $n{=}23$ cell matrix with unanimous sign at $g{=}1$.
+We mitigate overclaiming by making $W_2$ primary in the abstract, stratifying retention by $\rho$, demoting pooled tests, and leading with bootstrap CIs.
 
 \paragraph{Note on double-blind review.}
 The public GitHub URL reveals author identity. For double-blind venues, provide an anonymous code mirror; for arXiv, the named repository is appropriate.
