@@ -12,7 +12,9 @@ Code and logs for the likelihood-rank self-consuming DDPM study.
 | Digits CVAE (inconclusive) | `scripts/run_w2_fs_digits.py` | `logs/w2_fs_digits.jsonl` |
 | CIFAR-10 tiny-UNet (appendix) | `scripts/run_w2_fs_cifar.py` | `logs/w2_fs_cifar.jsonl` |
 | Proxy vs exact GMM density | `scripts/validate_likelihood_proxy.py` | `logs/w2_fs_proxy_val.jsonl` |
-| Analysis / figures | `analyze_w2_fs.py`, `analyze_w2_fs_digits_pca.py`, `make_w2_figures.py` | `analysis/` |
+| Continuous ρ sweep | `scripts/run_w2_false_stability.py` | `logs/w2_fs_rho_sweep.jsonl` |
+| Accumulate / oracle baselines | same runner (`accumulate`, `oracle_*`) | `logs/w2_fs_baselines.jsonl` |
+| Analysis / figures | `analyze_w2_fs.py`, `analyze_rho_sweep_baselines.py`, `make_w2_figures.py` | `analysis/` |
 
 End-to-end reproduce from the repository root:
 

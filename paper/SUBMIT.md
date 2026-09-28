@@ -1,8 +1,8 @@
 # Publication status
 
 **Author:** Muhammad Alamzeb · **Contact:** shayankhanmahar@gmail.com  
-**Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.5.0  
-**Zenodo DOI:** https://doi.org/10.5281/zenodo.22956890 → **New version** with v1.5.0 PDF still needed.
+**Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.6.0  
+**Zenodo DOI:** https://doi.org/10.5281/zenodo.22956890 → **New version** with v1.6.0 PDF still needed.
 
 ## Checklist
 
@@ -14,6 +14,8 @@
 - [x] Sync PAPER.md with powered stats (stale markdown caused n=5 review)
 - [x] Proxy vs exact GMM density (Spearman mean 0.44; Jaccard 0.64)
 - [x] Bottom-k \(W_2\) cost + unranked mix baseline (ρ=5 seeds 0–4)
+- [x] Continuous ρ sweep (seeds 0–4): full order 5/5 for ρ≤5, then decays to 1/5 at ρ=10
+- [x] Accumulate + exact-density oracle baselines at ρ=5
 - [ ] Zenodo New version upload
 - [ ] arXiv after endorsement `Z4GDY9`
-- [ ] Growing-accumulation / Feng–Cai external verifier / FID (out of CPU scope)
+- [ ] FID / CIFAR-10-LT / ImageNet (out of CPU scope)

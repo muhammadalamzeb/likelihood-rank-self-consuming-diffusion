@@ -4,7 +4,7 @@
 **Contact:** shayankhanmahar@gmail.com  
 **DOI:** https://doi.org/10.5281/zenodo.22956890  
 **Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**Release:** [v1.5.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.5.0)
+**Release:** [v1.6.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.6.0)
 
 ## Abstract
 
@@ -60,25 +60,27 @@ Pooled cells share \(\rho\) strata and are not independent Bernoulli trials; pri
 
 At \(\rho{=}5\) (all \(n{=}15\)): top−rand mean \(\Delta{=}{-}0.222\), CI \([{-}0.28,{-}0.16]\), \(p{=}0.0001\); bottom−rand \({+}0.254\), CI \([0.19,0.32]\), \(p{=}0.0001\). Held-out \(10\)–\(14\): direction replicates (CIs exclude zero; full order \(4/5\)) but exact Wilcoxon is floored at \(n{=}5\).
 
-### 4.4 Bottom-\(k\) quality cost and mix baseline
+### 4.4 Bottom-\(k\) quality, \(\rho\) sweep, and baselines
 
-Mean sliced \(W_2\) at \(g{=}1\) (\(\rho{=}5\), \(n{=}15\)): bottom \(0.51\) < rand \(0.64\) < top \(0.80\). Bottom-\(k\) improves aggregate \(W_2\) while retaining minorities—it is not a “junk dump” on this metric.
+Mean sliced \(W_2\) at \(g{=}1\) (\(\rho{=}5\), \(n{=}15\)): bottom \(0.51\) < rand \(0.64\) < top \(0.80\).
 
-Unranked mix (\(\alpha{=}0.5\), no rank filter; \(\rho{=}5\), seeds \(0\)–\(4\)): mean \(r{=}0.37\), \(W_2{=}0.69\), between top and rand and worse than bottom on both metrics. This is a Gerstgrasser-style *fixed real fraction* control, not growing accumulation.
+Continuous \(\rho\) sweep (seeds \(0\)–\(4\)): full-order rate \(5/5\) at \(\rho\in\{3,4,5\}\), then \(3/5\) (\(\rho{=}6\)), \(2/5\) (\(\rho{=}7,8\)), \(1/5\) (\(\rho{=}10\)).
+
+Baselines at \(\rho{=}5\) (seeds \(0\)–\(4\)): accumulate \(r{=}0.41\); mix \(0.37\); oracle bottom/top \(0.71/0.17\) ≈ proxy bottom/top \(0.74/0.18\).
 
 ### 4.5 Proxy check and transfers
 
-Denoising-MSE proxy vs exact GMM \(-\log p\) (\(\rho{=}5\), \(n{=}5\)): mean Spearman \(0.44\) (range \(0.33\)–\(0.51\)); top-\(k\) Jaccard vs exact density ranking \(0.64\) at \(k{=}N/2\). Directional but imperfect.
+Denoising-MSE proxy vs exact GMM \(-\log p\) (\(\rho{=}5\), \(n{=}5\)): mean Spearman \(0.44\) (range \(0.33\)–\(0.51\)); top-\(k\) Jaccard vs exact density ranking \(0.64\) at \(k{=}N/2\). Directional but imperfect; oracle policies still match proxy policies.
 
 8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3. Digits-CVAE: inconclusive. CIFAR-10 tiny-UNet (\(\rho{=}5\), \(n{=}3\)): mean \(\bar r\) bottom \(>\) rand \(>\) top, seed-wise full order \(0/3\) (preliminary/negative). **No ImageNet-scale diffusion result.**
 
 ## 5 Limitations
 
-**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale / LT-benchmark result.
+**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale / LT-benchmark / FID result.
 
-**Researcher degrees of freedom / post-hoc revision.** Long exploratory search precedes this note (`docs/`). Within-topic, the original “false stability” hypothesis was falsified and the claim revised. Treat bottom>rand>top as **post-hoc / exploratory**. Mitigation: \(W_2\) primary; stratified \(\rho\); held-out seeds \(10\)–\(14\); bootstrap CIs.
+**Researcher degrees of freedom / post-hoc revision.** Long exploratory search precedes this note (`docs/`). Within-topic, the original “false stability” hypothesis was falsified and the claim revised. Treat bottom>rand>top as **post-hoc / exploratory**. Mitigation: \(W_2\) primary; stratified \(\rho\); held-out seeds \(10\)–\(14\); continuous \(\rho\) sweep; bootstrap CIs.
 
-**Other.** No continuous \(\rho\) sweep; mix baseline is \(n{=}5\) at \(\rho{=}5\) only; no FID/precision–recall on images; no growing-accumulation or Feng/Cai-style external verifier.
+**Other.** Accumulate/oracle baselines are \(n{=}5\) at \(\rho{=}5\); oracle uses exact GMM density (not a learned Feng/Cai probe).
 
 ## 6 Conclusion
 

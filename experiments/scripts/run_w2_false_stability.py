@@ -158,14 +158,32 @@ def wasserstein2_1d_proj(a: np.ndarray, b: np.ndarray, n_proj: int = 16, seed: i
     return total / n_proj
 
 
+def gmm_neglogpdf(X: np.ndarray, means: np.ndarray, weights: np.ndarray, sigma: float = 0.15) -> np.ndarray:
+    """Exact mixture -log density (external oracle score; lower = higher likelihood)."""
+    var = sigma**2
+    log_norm = -np.log(2 * np.pi * var)
+    d2 = ((X[:, None, :] - means[None, :, :]) ** 2).sum(-1)
+    log_comp = log_norm - 0.5 * d2 / var + np.log(weights[None, :])
+    m = log_comp.max(axis=1, keepdims=True)
+    return -(m.squeeze(1) + np.log(np.exp(log_comp - m).sum(axis=1)))
+
+
 def select_policy(synth: np.ndarray, scores: np.ndarray, k: int, policy: str, rng: np.random.Generator):
     n = len(synth)
     k = min(k, n)
-    if policy == "top_k":
-        idx = np.argsort(scores)[:k]  # lowest ELBO proxy
-    elif policy == "bottom_k":
+    # ranking policies share score semantics: lower score = higher likelihood
+    rank_policy = {
+        "top_k": "top",
+        "bottom_k": "bottom",
+        "oracle_top_k": "top",
+        "oracle_bottom_k": "bottom",
+        "rand_k": "rand",
+    }.get(policy, policy)
+    if rank_policy == "top":
+        idx = np.argsort(scores)[:k]
+    elif rank_policy == "bottom":
         idx = np.argsort(scores)[-k:]
-    elif policy == "rand_k":
+    elif rank_policy == "rand":
         idx = rng.choice(n, size=k, replace=False)
     else:
         raise ValueError(policy)
@@ -180,10 +198,23 @@ def build_next_train(
     alpha_real: float,
     k_frac: float,
     rng: np.random.Generator,
-) -> np.ndarray:
-    n_target = len(real_buf)
+    accum_cap: int | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Returns (next_train, updated_real_buf)."""
+    n_target = len(real_buf) if policy != "accumulate" else (accum_cap or len(real_buf))
+
     if policy == "replace":
-        return synth[:n_target].copy()
+        return synth[:n_target].copy(), real_buf
+
+    if policy == "accumulate":
+        # Gerstgrasser-style: grow the retained pool with all new synthetics, then cap.
+        pooled = np.concatenate([real_buf, synth], axis=0)
+        if accum_cap is not None and len(pooled) > accum_cap:
+            # keep all original-scale real if possible; otherwise subsample pooled
+            idx = rng.choice(len(pooled), size=accum_cap, replace=False)
+            pooled = pooled[idx]
+        return pooled.copy(), pooled.copy()
+
     if policy == "mix":
         n_real = int(round(alpha_real * n_target))
         n_syn = n_target - n_real
@@ -191,28 +222,27 @@ def build_next_train(
         real_idx = rng.choice(len(real_buf), size=n_real, replace=False)
         out = np.concatenate([real_buf[real_idx], synth[syn_idx]], axis=0)
         rng.shuffle(out)
-        return out
-    # top_k / rand_k / bottom_k: mix fixed real fraction with selected synth
+        return out, real_buf
+
+    # top_k / rand_k / bottom_k / oracle_*: mix fixed real fraction with selected synth
     n_real = int(round(alpha_real * n_target))
     n_syn = n_target - n_real
     k = max(n_syn, int(round(k_frac * len(synth))))
     selected = select_policy(synth, scores, k=k, policy=policy, rng=rng)
     if len(selected) < n_syn:
-        # pad if needed
         extra = synth[rng.choice(len(synth), size=n_syn - len(selected), replace=True)]
         selected = np.concatenate([selected, extra], axis=0)
     syn_idx = rng.choice(len(selected), size=n_syn, replace=False)
     real_idx = rng.choice(len(real_buf), size=n_real, replace=False)
     out = np.concatenate([real_buf[real_idx], selected[syn_idx]], axis=0)
     rng.shuffle(out)
-    return out
+    return out, real_buf
 
 
 def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
     rng = np.random.default_rng(seed)
     X0, _, means, true_w = make_gmm(args.n_data, K=args.K, delta=args.delta, rho=rho, seed=seed)
     real_buf = X0.copy()
-    # held-out real for metrics
     X_hold, _, _, _ = make_gmm(args.n_data, K=args.K, delta=args.delta, rho=rho, seed=seed + 999)
     train = X0.copy()
     records = []
@@ -222,7 +252,6 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
         masses = occupancy(samp, means)
         m_min = float(masses.min())
         m_max = float(masses.max())
-        # minority = all non-boosted modes (modes 1..K-1); report mean and min
         minority_mean = float(masses[1:].mean()) if args.K > 1 else m_min
         w2 = wasserstein2_1d_proj(samp, X_hold, n_proj=24, seed=seed + g)
         rec = {
@@ -243,11 +272,32 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
             "train_size": int(len(train)),
         }
         records.append(rec)
-        print(json.dumps({k: rec[k] for k in ("seed", "rho", "policy", "generation", "m_min", "minority_mean", "majority_mass", "w2_sliced")}))
+        print(
+            json.dumps(
+                {
+                    k: rec[k]
+                    for k in (
+                        "seed",
+                        "rho",
+                        "policy",
+                        "generation",
+                        "m_min",
+                        "minority_mean",
+                        "majority_mass",
+                        "w2_sliced",
+                        "train_size",
+                    )
+                }
+            ),
+            flush=True,
+        )
         if g == args.generations:
             break
-        scores = elbo_proxy(model, samp, n_t=args.n_t)
-        train = build_next_train(
+        if policy.startswith("oracle_"):
+            scores = gmm_neglogpdf(samp, means, true_w, sigma=args.sigma)
+        else:
+            scores = elbo_proxy(model, samp, n_t=args.n_t)
+        train, real_buf = build_next_train(
             real_buf=real_buf,
             synth=samp,
             scores=scores,
@@ -255,6 +305,7 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
             alpha_real=args.alpha_real,
             k_frac=args.k_frac,
             rng=rng,
+            accum_cap=args.accum_cap,
         )
     return records
 
@@ -280,6 +331,13 @@ def main():
     ap.add_argument("--k-frac", type=float, default=0.5)
     ap.add_argument("--hidden", type=int, default=64)
     ap.add_argument("--n-t", type=int, default=6)
+    ap.add_argument("--sigma", type=float, default=0.15, help="GMM component std for oracle scores")
+    ap.add_argument(
+        "--accum-cap",
+        type=int,
+        default=3000,
+        help="Max train size for accumulate policy (Gerstgrasser-style growth, then cap)",
+    )
     ap.add_argument("--quick", action="store_true")
     ap.add_argument(
         "--append",
@@ -305,18 +363,18 @@ def main():
     with open(out / "configs" / Path(args.log_name).with_suffix(".json").name, "w", encoding="utf-8") as f:
         json.dump(cfg, f, indent=2)
 
-    all_recs = []
-    for seed in args.seeds:
-        for rho in args.rhos:
-            for policy in args.policies:
-                all_recs.extend(run_one(seed, rho, policy, args))
-
     log_path = out / "logs" / args.log_name
     mode = "a" if args.append and log_path.exists() else "w"
+    n_wrote = 0
     with open(log_path, mode, encoding="utf-8") as f:
-        for r in all_recs:
-            f.write(json.dumps(r) + "\n")
-    print(f"wrote {log_path} n={len(all_recs)} mode={mode}")
+        for seed in args.seeds:
+            for rho in args.rhos:
+                for policy in args.policies:
+                    for r in run_one(seed, rho, policy, args):
+                        f.write(json.dumps(r) + "\n")
+                        f.flush()
+                        n_wrote += 1
+    print(f"wrote {log_path} n={n_wrote} mode={mode}", flush=True)
 
 
 if __name__ == "__main__":

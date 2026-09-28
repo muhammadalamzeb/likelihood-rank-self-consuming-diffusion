@@ -1,0 +1,38 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "rhos": [
+    3.0,
+    4.0,
+    6.0,
+    8.0
+  ],
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k"
+  ],
+  "generations": 1,
+  "n_data": 1500,
+  "n_synth": 1500,
+  "train_steps": 600,
+  "n_steps": 30,
+  "K": 4,
+  "delta": 1.5,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 64,
+  "n_t": 6,
+  "sigma": 0.15,
+  "accum_cap": 3000,
+  "quick": false,
+  "append": false,
+  "log_name": "w2_fs_rho_sweep.jsonl",
+  "experiment": "w2_fs"
+}

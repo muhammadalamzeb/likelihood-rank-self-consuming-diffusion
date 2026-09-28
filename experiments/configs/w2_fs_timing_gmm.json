@@ -1,0 +1,29 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0
+  ],
+  "rhos": [
+    3.0
+  ],
+  "policies": [
+    "top_k"
+  ],
+  "generations": 1,
+  "n_data": 1500,
+  "n_synth": 1500,
+  "train_steps": 600,
+  "n_steps": 30,
+  "K": 4,
+  "delta": 1.5,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "hidden": 64,
+  "n_t": 6,
+  "sigma": 0.15,
+  "accum_cap": 3000,
+  "quick": false,
+  "append": false,
+  "log_name": "w2_fs_timing_gmm.jsonl",
+  "experiment": "w2_fs"
+}

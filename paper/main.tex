@@ -48,8 +48,8 @@ Caveats that apply throughout: this is a workshop empirical note on controllable
 \paragraph{Contributions.}
 (1)~Primary powered $W_2$ negative result for top-$k$ at $g{=}1$ ($n{=}38$ cells).
 (2)~Stratified retention at $\rho\in\{5,7,10\}$, with a labeled held-out seed block at $\rho{=}5$.
-(3)~A lightweight account of why the full order weakens as $\rho$ grows (minority-mass floor).
-(4)~Explicit contrast to siloed biased-verifier selection~\citep{qiao2026}.
+(3)~A continuous $\rho$ sweep and a lightweight account of why the full order weakens as $\rho$ grows (minority-mass floor).
+(4)~Accumulate and exact-density oracle baselines at $\rho{=}5$; explicit contrast to siloed biased-verifier selection~\citep{qiao2026}.
 
 \section{Related work}
 \citet{shumailov2023,alemohammad2023} document collapse and quality-biased sampling (\emph{MAD}).
@@ -184,19 +184,31 @@ At higher $\rho$, top still tends to underperform random, but the full three-way
 Mean sliced $W_2$ at $g{=}1$ ($\rho{=}5$, $n{=}15$): bottom $0.51$ $<$ rand $0.64$ $<$ top $0.80$.
 Bottom-$k$ improves aggregate $W_2$ while retaining minorities---it is not a ``junk dump'' on this metric (same ordering at $\rho{=}7,10$).
 
-\paragraph{Unranked mix baseline.}
-Matched-$\alpha$ mix (no rank filter; Gerstgrasser-style fixed real fraction, not growing accumulation) at $\rho{=}5$, seeds $0$--$4$: mean $r{=}0.37$, $W_2{=}0.69$, between top and rand and worse than bottom on both metrics.
+\paragraph{Continuous $\rho$ sweep (seeds $0$--$4$).}
+Full bottom$>$rand$>$top rate: $5/5$ at $\rho\in\{3,4,5\}$, then $3/5$ ($\rho{=}6$), $2/5$ ($\rho{=}7,8$), $1/5$ ($\rho{=}10$) (Figure~\ref{fig:sweep}).
+
+\paragraph{Baselines at $\rho{=}5$ (seeds $0$--$4$).}
+Growing accumulate~\citep{gerstgrasser2024} (cap $3000$): mean $r{=}0.41$, $W_2{=}0.65$---better than replace, but below bottom-$k$ on both metrics.
+Exact-density oracle top/bottom (GMM analogue of an external likelihood verifier): $r{=}0.17/0.71$, nearly matching proxy top/bottom ($0.18/0.74$), so the selection effect is not an artifact of a broken proxy.
+Unranked mix: $r{=}0.37$, $W_2{=}0.69$.
 
 \paragraph{Proxy vs.\ exact GMM density.}
 On $g{=}0$ synthetics ($\rho{=}5$, $n{=}5$), Spearman of $s(x)$ vs.\ $-\log p_{\mathrm{GMM}}(x)$ averages $0.44$ (range $0.33$--$0.51$);
 top-$k$ Jaccard vs.\ exact density ranking averages $0.64$ at $k{=}N/2$.
-The proxy is directionally informative but imperfect.
+The proxy is imperfect pointwise, yet oracle-vs-proxy \emph{policies} agree closely (above).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/retention_by_rho.png}
-\caption{Retention $r$ by $\rho$ (means $\pm$ sd over seeds).}
+\caption{Retention $r$ by $\rho$ (means $\pm$ sd over seeds; primary matrix).}
 \label{fig:main}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/rho_sweep.png}
+\caption{Continuous $\rho$ sweep (seeds $0$--$4$): mean $r$ (left) and full-order rate (right).}
+\label{fig:sweep}
 \end{figure}
 
 Illustrative $\alpha$ / $k_{\mathrm{frac}}$ ablations ($n{=}2$) and $8$D GMM / Digits-PCA transfers ($n{=}3$) are in Appendix~\ref{app:extra}.
@@ -210,10 +222,10 @@ Aggregate $W_2$ remains a poor minority monitor: top-$k$ is worse on $W_2$ at $g
 
 \section{Limitations}
 \label{sec:limit}
-\textbf{Scale.} 2D/8D GMMs only for primary claims; CIFAR tiny-UNet is appendix-only; no ImageNet / CIFAR-10-LT / DiT result.
+\textbf{Scale.} 2D/8D GMMs only for primary claims; CIFAR tiny-UNet is appendix-only; no ImageNet / CIFAR-10-LT / DiT result; no FID/precision--recall.
 \textbf{Process.} Documented exploratory search ($>$100 killed directions in \texttt{docs/KILL\_LOG.md}) precedes this topic; within-topic, the original false-stability hypothesis was falsified and the retention claim revised (HARKing risk).
-Mitigation: $W_2$ primary; stratified $\rho$; held-out seeds $10$--$14$ at $\rho{=}5$; bootstrap CIs.
-\textbf{Other.} $\alpha$/$k_{\mathrm{frac}}$ ablations are $n{=}2$; mix baseline is $n{=}5$ at $\rho{=}5$ only; no growing-accumulation or external-verifier (Feng/Cai) baseline; no FID/precision--recall; no continuous $\rho$ sweep; Holm within $W_2$ generations and within paired $\rho{=}5$ contrasts.
+Mitigation: $W_2$ primary; stratified $\rho$; held-out seeds $10$--$14$ at $\rho{=}5$; bootstrap CIs; continuous $\rho$ sweep on seeds $0$--$4$.
+\textbf{Other.} $\alpha$/$k_{\mathrm{frac}}$ ablations are $n{=}2$; accumulate/oracle baselines are $n{=}5$ at $\rho{=}5$; oracle uses exact GMM density (not a learned Feng/Cai-style probe); Holm within $W_2$ generations and within paired $\rho{=}5$ contrasts.
 
 \section{Conclusion}
 Top-$k$ likelihood selection does not improve sliced $W_2$ at $g{=}1$ in this matrix.

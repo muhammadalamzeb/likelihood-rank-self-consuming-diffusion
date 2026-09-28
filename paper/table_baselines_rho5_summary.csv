@@ -1,0 +1,9 @@
+policy,n,mean_retention,mean_w2_g1
+accumulate,5,0.410812,0.645779
+bottom_k,5,0.737035,0.492710
+mix,5,0.367979,0.688752
+oracle_bottom_k,5,0.707179,0.499697
+oracle_top_k,5,0.168673,0.816158
+rand_k,5,0.456120,0.624756
+replace,3,0.054337,0.796493
+top_k,5,0.182805,0.794807
