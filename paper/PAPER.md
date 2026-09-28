@@ -3,15 +3,16 @@
 **Author:** Muhammad Alamzeb  
 **Contact:** shayankhanmahar@gmail.com  
 **DOI:** https://doi.org/10.5281/zenodo.22956890  
-**Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion
+**Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
+**Release:** [v1.5.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.5.0)
 
 ## Abstract
 
 Self-consuming training loops can induce *model collapse*. We study unlabeled likelihood ranking of synthetics in self-consuming DDPM training on imbalanced mixtures.
 
-**Primary claim:** top-\(k\) does **not** improve sliced \(W_2\) vs random-\(k\) at generation 1 (\(\Delta W_2>0\) on \(23/23\) cells; bootstrap 95% CI excludes zero; Wilcoxon \(p{=}2.9{\times}10^{-5}\), Holm \(p{=}1.4{\times}10^{-4}\)).
+**Primary claim:** top-\(k\) does **not** improve sliced \(W_2\) vs random-\(k\) at generation 1 (\(\Delta W_2>0\) on \(38/38\) cells; bootstrap 95% CI excludes zero).
 
-**Secondary, post-hoc / narrow-regime observation:** after an original “false stability” hypothesis was falsified, full bottom>rand>top minority retention appears only at \(\rho{=}5\) (\(n{=}10\), \(10/10\); exact \(p{=}0.002\)), failing for most seeds at \(\rho{=}7\) (\(2/5\)) and \(\rho{=}10\) (\(3/8\)). Treat as exploratory (HARKing risk), not a pre-registered law.
+**Secondary, post-hoc / narrow-regime observation:** after an original “false stability” hypothesis was falsified, full bottom>rand>top minority retention is strongest at \(\rho{=}5\) (exploratory \(n{=}10\), \(10/10\), exact \(p{=}0.002\); held-out seeds \(10\)–\(14\): \(4/5\)). Weaker at \(\rho{=}7\) (\(6/10\)) and \(\rho{=}10\) (\(4/13\)). Treat as exploratory (HARKing risk), not a pre-registered law.
 
 Workshop-scale note—**not** ImageNet-scale diffusion.
 
@@ -29,47 +30,59 @@ MAD / collapse [Shumailov et al., 2023; Alemohammad et al., 2023]; accumulation 
 
 ## 3 Method
 
-Policies: top/bottom/rand-\(k\) then mix with \(\alpha\) real. Metrics: \(r=m^{(1)}/m^{(0)}\); sliced \(W_2\) (24 projections). Inference: bootstrap 95% CIs + Wilcoxon (exact for \(n{\le}16\)).
+Policies: top/bottom/rand-\(k\) then mix with \(\alpha\) real; also unranked **mix** (matched \(\alpha\), no rank filter). Metrics: \(r=m^{(1)}/m^{(0)}\); sliced \(W_2\) (24 projections). Inference: bootstrap 95% CIs + Wilcoxon (exact for \(n{\le}16\)).
 
 ## 4 Experiments
 
-### 4.1 Design (\(n{=}23\) cells)
+### 4.1 Design (\(n{=}38\) cells)
 
-\(\rho{=}5\) seeds \(0\)–\(9\); \(\rho{=}7\) seeds \(0\)–\(4\); \(\rho{=}10\) seeds \(0\)–\(7\).
+\(K{=}4\), \(G{=}5\), \(\alpha{=}0.5\), \(k_{\mathrm{frac}}{=}0.5\). Seeds: \(\rho{=}5\) uses \(0\)–\(14\) (\(0\)–\(9\) exploratory; \(10\)–\(14\) held-out); \(\rho{=}7\) uses \(0\)–\(9\); \(\rho{=}10\) uses \(0\)–\(12\).
 
 ### 4.2 Sliced \(W_2\) (primary)
 
 | \(g\) | Mean \(\Delta\) | \(d_z\) | 95% CI | \(\#>0\) | \(p\) (Holm) |
 |--|--|--|--|--|--|
-| 1 | +0.089 | 1.16 | [0.060, 0.121] | 23/23 | \(2.9{\times}10^{-5}\) (\(1.4{\times}10^{-4}\)) |
-| 2 | +0.046 | 1.04 | [0.029, 0.065] | 21/23 | 0.00015 (0.00061) |
-| 3 | +0.034 | 1.14 | [0.022, 0.045] | 21/23 | 0.00022 (0.00066) |
-| 4 | +0.021 | 0.62 | [0.007, 0.034] | 19/23 | 0.0013 (0.0027) |
-| 5 | +0.020 | 0.73 | [0.010, 0.031] | 19/23 | 0.0015 (0.0027) |
+| 1 | +0.087 | 1.16 | [0.064, 0.112] | 38/38 | \(<10^{-6}\) |
+| 2 | +0.043 | 0.96 | [0.029, 0.057] | 32/38 | \(5{\times}10^{-6}\) |
+| 3 | +0.038 | 0.98 | [0.026, 0.051] | 36/38 | \(1{\times}10^{-6}\) |
+| 4 | +0.022 | 0.49 | [0.008, 0.035] | 29/38 | 0.00029 |
+| 5 | +0.027 | 0.91 | [0.018, 0.037] | 31/37 | \(6{\times}10^{-6}\) |
 
-### 4.3 Retention (secondary; narrow regime)
+Pooled cells share \(\rho\) strata and are not independent Bernoulli trials; primary inference is the paired \(\Delta\) CI / Wilcoxon, not a binomial over cells.
+
+### 4.3 Retention (secondary; stratified)
 
 | \(\rho\) | \(n\) | bottom | rand | top | Full order |
 |--|--|--|--|--|--|
-| 5 | 10 | 0.651 | 0.366 | 0.141 | **10/10** |
-| 7 | 5 | 0.437 | 0.266 | 0.145 | **2/5** |
-| 10 | 8 | 0.329 | 0.247 | 0.164 | **3/8** |
+| 5 | 15 | 0.604 | 0.350 | 0.128 | **14/15** |
+| 7 | 10 | 0.372 | 0.248 | 0.113 | **6/10** |
+| 10 | 13 | 0.248 | 0.183 | 0.120 | **4/13** |
 
-At \(\rho{=}5\): top−rand mean \(\Delta{=}{-}0.225\), CI \([{-}0.30,{-}0.15]\), exact \(p{=}0.002\); bottom−rand \({+}0.285\), CI \([0.21,0.37]\), exact \(p{=}0.002\) (Holm \(0.0039\) within the pair).
+At \(\rho{=}5\) (all \(n{=}15\)): top−rand mean \(\Delta{=}{-}0.222\), CI \([{-}0.28,{-}0.16]\), \(p{=}0.0001\); bottom−rand \({+}0.254\), CI \([0.19,0.32]\), \(p{=}0.0001\). Held-out \(10\)–\(14\): direction replicates (CIs exclude zero; full order \(4/5\)) but exact Wilcoxon is floored at \(n{=}5\).
 
-### 4.4 Transfers
+### 4.4 Bottom-\(k\) quality cost and mix baseline
 
-8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3 (mixed). Digits-CVAE: inconclusive. CIFAR-10 tiny-UNet (\(\rho{=}5\), \(n{=}3\)): mean \(\bar r\) bottom \(>\) rand \(>\) top, but seed-wise full order \(0/3\) (preliminary/negative). **No ImageNet-scale diffusion result.**
+Mean sliced \(W_2\) at \(g{=}1\) (\(\rho{=}5\), \(n{=}15\)): bottom \(0.51\) < rand \(0.64\) < top \(0.80\). Bottom-\(k\) improves aggregate \(W_2\) while retaining minorities—it is not a “junk dump” on this metric.
+
+Unranked mix (\(\alpha{=}0.5\), no rank filter; \(\rho{=}5\), seeds \(0\)–\(4\)): mean \(r{=}0.37\), \(W_2{=}0.69\), between top and rand and worse than bottom on both metrics. This is a Gerstgrasser-style *fixed real fraction* control, not growing accumulation.
+
+### 4.5 Proxy check and transfers
+
+Denoising-MSE proxy vs exact GMM \(-\log p\) (\(\rho{=}5\), \(n{=}5\)): mean Spearman \(0.44\) (range \(0.33\)–\(0.51\)); top-\(k\) Jaccard vs exact density ranking \(0.64\) at \(k{=}N/2\). Directional but imperfect.
+
+8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3. Digits-CVAE: inconclusive. CIFAR-10 tiny-UNet (\(\rho{=}5\), \(n{=}3\)): mean \(\bar r\) bottom \(>\) rand \(>\) top, seed-wise full order \(0/3\) (preliminary/negative). **No ImageNet-scale diffusion result.**
 
 ## 5 Limitations
 
-**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale diffusion result.
+**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale / LT-benchmark result.
 
-**Researcher degrees of freedom / post-hoc revision.** Long exploratory search across many topics precedes this note (`docs/`). Within this topic, the original hypothesis was top-\(k\) *improves* \(W_2\) while secretly killing minorities (“false stability”); the pilot **falsified** that dissociation, and the claim was revised to the present stratified retention story plus an explicit \(W_2\) negative. Treat bottom>rand>top as **post-hoc / exploratory** even at \(n{=}10\), \(p{=}0.002\). The \(W_2\) negative is more trustworthy: it killed the original hypothesis and held on \(n{=}23\) cells (23/23 at \(g{=}1\)).
+**Researcher degrees of freedom / post-hoc revision.** Long exploratory search precedes this note (`docs/`). Within-topic, the original “false stability” hypothesis was falsified and the claim revised. Treat bottom>rand>top as **post-hoc / exploratory**. Mitigation: \(W_2\) primary; stratified \(\rho\); held-out seeds \(10\)–\(14\); bootstrap CIs.
+
+**Other.** No continuous \(\rho\) sweep; mix baseline is \(n{=}5\) at \(\rho{=}5\) only; no FID/precision–recall on images; no growing-accumulation or Feng/Cai-style external verifier.
 
 ## 6 Conclusion
 
-Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\). Minority retention ordering appears only in a narrow moderate-imbalance regime—not a general law.
+Top-\(k\) does not improve sliced \(W_2\) at \(g{=}1\). Minority retention ordering appears mainly in a moderate-imbalance band—not a general law.
 
 ## References
 

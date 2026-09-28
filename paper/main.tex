@@ -136,6 +136,8 @@ $g$ & Mean & Std & $d_z$ & 95\% CI & $\#\{>0\}$ & $p$ (Holm) \\
 \end{tabular}
 \end{table}
 
+Pooled cells share $\rho$ strata and are not i.i.d.\ Bernoulli trials; primary inference is the paired $\Delta$ CI / Wilcoxon over matched (seed, $\rho$) units, not a binomial over cells.
+
 \subsection{Retention (secondary; stratified)}
 \label{sec:ret}
 \begin{table}[t]
@@ -178,6 +180,18 @@ $\rho{=}10$ & bottom$-$rand & $+0.065$ & $+0.44$ & $[{-}0.00,0.15]$ & $0.204$ \\
 Held-out seeds $10$--$14$ were not used during exploratory search; they replicate the \emph{direction} (CIs exclude zero; full order $4/5$) but, at $n{=}5$, exact Wilcoxon remains floored for bottom$-$rand.
 At higher $\rho$, top still tends to underperform random, but the full three-way order is no longer reliable.
 
+\paragraph{Bottom-$k$ quality cost.}
+Mean sliced $W_2$ at $g{=}1$ ($\rho{=}5$, $n{=}15$): bottom $0.51$ $<$ rand $0.64$ $<$ top $0.80$.
+Bottom-$k$ improves aggregate $W_2$ while retaining minorities---it is not a ``junk dump'' on this metric (same ordering at $\rho{=}7,10$).
+
+\paragraph{Unranked mix baseline.}
+Matched-$\alpha$ mix (no rank filter; Gerstgrasser-style fixed real fraction, not growing accumulation) at $\rho{=}5$, seeds $0$--$4$: mean $r{=}0.37$, $W_2{=}0.69$, between top and rand and worse than bottom on both metrics.
+
+\paragraph{Proxy vs.\ exact GMM density.}
+On $g{=}0$ synthetics ($\rho{=}5$, $n{=}5$), Spearman of $s(x)$ vs.\ $-\log p_{\mathrm{GMM}}(x)$ averages $0.44$ (range $0.33$--$0.51$);
+top-$k$ Jaccard vs.\ exact density ranking averages $0.64$ at $k{=}N/2$.
+The proxy is directionally informative but imperfect.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/retention_by_rho.png}
@@ -196,10 +210,10 @@ Aggregate $W_2$ remains a poor minority monitor: top-$k$ is worse on $W_2$ at $g
 
 \section{Limitations}
 \label{sec:limit}
-\textbf{Scale.} 2D/8D GMMs only for primary claims; CIFAR tiny-UNet is appendix-only; no ImageNet UNet or DiT result.
+\textbf{Scale.} 2D/8D GMMs only for primary claims; CIFAR tiny-UNet is appendix-only; no ImageNet / CIFAR-10-LT / DiT result.
 \textbf{Process.} Documented exploratory search ($>$100 killed directions in \texttt{docs/KILL\_LOG.md}) precedes this topic; within-topic, the original false-stability hypothesis was falsified and the retention claim revised (HARKing risk).
 Mitigation: $W_2$ primary; stratified $\rho$; held-out seeds $10$--$14$ at $\rho{=}5$; bootstrap CIs.
-\textbf{Other.} $\alpha$/$k_{\mathrm{frac}}$ ablations are $n{=}2$; Holm within $W_2$ generations and within paired $\rho{=}5$ contrasts.
+\textbf{Other.} $\alpha$/$k_{\mathrm{frac}}$ ablations are $n{=}2$; mix baseline is $n{=}5$ at $\rho{=}5$ only; no growing-accumulation or external-verifier (Feng/Cai) baseline; no FID/precision--recall; no continuous $\rho$ sweep; Holm within $W_2$ generations and within paired $\rho{=}5$ contrasts.
 
 \section{Conclusion}
 Top-$k$ likelihood selection does not improve sliced $W_2$ at $g{=}1$ in this matrix.

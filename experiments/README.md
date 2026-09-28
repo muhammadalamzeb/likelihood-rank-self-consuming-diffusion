@@ -11,6 +11,7 @@ Code and logs for the likelihood-rank self-consuming DDPM study.
 | Digits-PCA transfer | `scripts/run_w2_fs_digits_pca.py` | `logs/w2_fs_digits_pca.jsonl` |
 | Digits CVAE (inconclusive) | `scripts/run_w2_fs_digits.py` | `logs/w2_fs_digits.jsonl` |
 | CIFAR-10 tiny-UNet (appendix) | `scripts/run_w2_fs_cifar.py` | `logs/w2_fs_cifar.jsonl` |
+| Proxy vs exact GMM density | `scripts/validate_likelihood_proxy.py` | `logs/w2_fs_proxy_val.jsonl` |
 | Analysis / figures | `analyze_w2_fs.py`, `analyze_w2_fs_digits_pca.py`, `make_w2_figures.py` | `analysis/` |
 
 End-to-end reproduce from the repository root:

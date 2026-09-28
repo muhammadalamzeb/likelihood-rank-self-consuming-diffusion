@@ -1,0 +1,21 @@
+{
+  "out": "experiments",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "rho": 5.0,
+  "n_data": 1500,
+  "n_eval": 1500,
+  "train_steps": 600,
+  "n_steps": 30,
+  "n_t": 6,
+  "K": 4,
+  "delta": 1.5,
+  "sigma": 0.15,
+  "k_frac": 0.5,
+  "experiment": "w2_fs_proxy_val"
+}

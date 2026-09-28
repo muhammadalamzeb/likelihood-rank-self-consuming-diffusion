@@ -1,0 +1,8 @@
+{
+  "n_seeds": 5,
+  "spearman_mean": 0.4394356691665348,
+  "spearman_std": 0.07031246415481816,
+  "spearman_min": 0.32514802006578675,
+  "top_k_jaccard_mean": 0.6394666666666667,
+  "bottom_k_jaccard_mean": 0.6394666666666667
+}
