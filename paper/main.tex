@@ -186,7 +186,7 @@ At higher $\rho$, top still tends to underperform random, but the full three-way
 \end{figure}
 
 Illustrative $\alpha$ / $k_{\mathrm{frac}}$ ablations ($n{=}2$) and $8$D GMM / Digits-PCA transfers ($n{=}3$) are in Appendix~\ref{app:extra}.
-Digits pixel-DDPM and Digits-CVAE are reported there as preliminary/negative, not as main transfer claims.
+Digits pixel-DDPM, Digits-CVAE, and CIFAR-10 tiny-UNet are reported there as preliminary/negative, not as main transfer claims.
 
 \section{Analysis: why the order weakens with $\rho$}
 \label{sec:mech}
@@ -196,7 +196,7 @@ Aggregate $W_2$ remains a poor minority monitor: top-$k$ is worse on $W_2$ at $g
 
 \section{Limitations}
 \label{sec:limit}
-\textbf{Scale.} 2D/8D GMMs only for primary claims; no CIFAR/ImageNet UNet or DiT result.
+\textbf{Scale.} 2D/8D GMMs only for primary claims; CIFAR tiny-UNet is appendix-only; no ImageNet UNet or DiT result.
 \textbf{Process.} Documented exploratory search ($>$100 killed directions in \texttt{docs/KILL\_LOG.md}) precedes this topic; within-topic, the original false-stability hypothesis was falsified and the retention claim revised (HARKing risk).
 Mitigation: $W_2$ primary; stratified $\rho$; held-out seeds $10$--$14$ at $\rho{=}5$; bootstrap CIs.
 \textbf{Other.} $\alpha$/$k_{\mathrm{frac}}$ ablations are $n{=}2$; Holm within $W_2$ generations and within paired $\rho{=}5$ contrasts.
@@ -218,6 +218,7 @@ Default rows of the two ablations are the same experimental cell.
 \paragraph{Directional transfers ($n{=}3$).}
 $8$D GMM and Digits-PCA: full order $3/3$ (exact $p$ floor $0.25$).
 \textbf{Preliminary / negative:} Digits pixel-space DDPM full order $1/3$; Digits-CVAE inconclusive.
+CIFAR-10 4-class imbalanced tiny-UNet DDPM ($\rho{=}5$, $n{=}3$ seeds, CPU, $512$ images, $400$ train steps): mean retention $\bar r$ is bottom $1.53$ $>$ rand $1.38$ $>$ top $0.93$, but seed-wise full order $0/3$ (nearest class-mean masses; mode assignment is noisy on blurry samples).
 These do not support a main-text transfer claim.
 
 \section{Reproducibility}

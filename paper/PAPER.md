@@ -59,11 +59,11 @@ At \(\rho{=}5\): top−rand mean \(\Delta{=}{-}0.225\), CI \([{-}0.30,{-}0.15]\)
 
 ### 4.4 Transfers
 
-8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3 (mixed). Digits-CVAE: inconclusive. **No ImageNet-scale diffusion result.**
+8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3 (mixed). Digits-CVAE: inconclusive. CIFAR-10 tiny-UNet (\(\rho{=}5\), \(n{=}3\)): mean \(\bar r\) bottom \(>\) rand \(>\) top, but seed-wise full order \(0/3\) (preliminary/negative). **No ImageNet-scale diffusion result.**
 
 ## 5 Limitations
 
-**Scale.** Toy GMMs / tiny Digits only; no ImageNet-scale diffusion result.
+**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale diffusion result.
 
 **Researcher degrees of freedom / post-hoc revision.** Long exploratory search across many topics precedes this note (`docs/`). Within this topic, the original hypothesis was top-\(k\) *improves* \(W_2\) while secretly killing minorities (“false stability”); the pilot **falsified** that dissociation, and the claim was revised to the present stratified retention story plus an explicit \(W_2\) negative. Treat bottom>rand>top as **post-hoc / exploratory** even at \(n{=}10\), \(p{=}0.002\). The \(W_2\) negative is more trustworthy: it killed the original hypothesis and held on \(n{=}23\) cells (23/23 at \(g{=}1\)).
 

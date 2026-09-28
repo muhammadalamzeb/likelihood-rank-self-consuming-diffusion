@@ -1,0 +1,38 @@
+{
+  "out": "experiments",
+  "data_root": "experiments\\data\\cifar10",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "rhos": [
+    5.0
+  ],
+  "policies": [
+    "top_k",
+    "rand_k",
+    "bottom_k"
+  ],
+  "generations": 1,
+  "n_data": 512,
+  "n_synth": 512,
+  "train_steps": 400,
+  "n_steps": 20,
+  "alpha_real": 0.5,
+  "k_frac": 0.5,
+  "base": 24,
+  "lr": 0.002,
+  "n_t": 4,
+  "chunk": 64,
+  "classes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "log_name": "w2_fs_cifar.jsonl",
+  "append": false,
+  "experiment": "w2_fs_cifar",
+  "device": "cpu"
+}

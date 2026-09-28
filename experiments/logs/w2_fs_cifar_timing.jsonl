@@ -1,0 +1,2 @@
+{"experiment": "w2_fs_cifar", "seed": 0, "rho": 5.0, "policy": "top_k", "generation": 0, "minority_mean": 0.22786458333333334, "majority_mass": 0.31640625, "mode_masses": [0.31640625, 0.345703125, 0.05078125, 0.287109375], "true_weights": [0.625, 0.125, 0.125, 0.125], "classes": [0, 1, 2, 3]}
+{"experiment": "w2_fs_cifar", "seed": 0, "rho": 5.0, "policy": "top_k", "generation": 1, "minority_mean": 0.0, "majority_mass": 1.0, "mode_masses": [1.0, 0.0, 0.0, 0.0], "true_weights": [0.625, 0.125, 0.125, 0.125], "classes": [0, 1, 2, 3]}

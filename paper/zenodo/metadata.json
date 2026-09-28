@@ -3,7 +3,7 @@
     "title": "Likelihood-Ranked Selection in Self-Consuming Diffusion: A W2 Negative Result and a Narrow Minority-Retention Regime",
     "upload_type": "publication",
     "publication_type": "preprint",
-    "description": "<p>Workshop-scale empirical note. <strong>Primary:</strong> top-k likelihood selection does not improve sliced W<sub>2</sub> vs random-k at generation 1 (23/23 cells; bootstrap CI excludes zero). <strong>Secondary:</strong> full bottom&gt;rand&gt;top minority retention only in a narrow regime at &rho;=5 (n=10, 10/10; exact Wilcoxon p=0.002), failing for most seeds at &rho;=7 and &rho;=10. Not shown on ImageNet-scale diffusion.</p><p><strong>Code:</strong> <a href=\"https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion\">https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion</a></p>",
+    "description": "<p>Workshop-scale empirical note. <strong>Primary:</strong> top-k likelihood selection does not improve sliced W<sub>2</sub> vs random-k at generation 1 (38/38 cells; bootstrap CI excludes zero). <strong>Secondary:</strong> full bottom&gt;rand&gt;top minority retention strongest at moderate imbalance &rho;=5 (exploratory n=10; held-out seeds 10–14). Weaker at &rho;=7 and &rho;=10. CIFAR-10 tiny-UNet is appendix preliminary only. Not shown on ImageNet-scale diffusion.</p><p><strong>Code:</strong> <a href=\"https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion\">https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion</a></p>",
     "creators": [
       {
         "name": "Alamzeb, Muhammad",
@@ -30,6 +30,6 @@
       }
     ],
     "communities": [],
-    "notes": "Workshop-scope empirical note. Primary claim: top-k does not improve sliced W2 (n=23 cells). Secondary: narrow minority-retention regime at rho=5 (n=10; exact Wilcoxon p=0.002). Not ImageNet-scale."
+    "notes": "Workshop-scope empirical note. Primary: top-k does not improve sliced W2 (n=38 cells). Secondary: narrow minority-retention regime at rho=5. CIFAR tiny-UNet appendix preliminary. Not ImageNet-scale."
   }
 }
