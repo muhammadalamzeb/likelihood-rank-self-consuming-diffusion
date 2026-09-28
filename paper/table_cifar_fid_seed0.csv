@@ -1,0 +1,7 @@
+﻿policy,generation,fid,minority_mean
+top_k,0,329.19,0.0332
+top_k,1,477.42,0.0000
+rand_k,0,329.19,0.0332
+rand_k,1,488.59,0.0000
+bottom_k,0,329.19,0.0332
+bottom_k,1,331.99,0.0651

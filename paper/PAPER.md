@@ -4,7 +4,7 @@
 **Contact:** shayankhanmahar@gmail.com  
 **DOI:** https://doi.org/10.5281/zenodo.22956890  
 **Code:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion  
-**Release:** [v1.6.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.6.0)
+**Release:** [v1.7.0](https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.7.0)
 
 ## Abstract
 
@@ -66,21 +66,23 @@ Mean sliced \(W_2\) at \(g{=}1\) (\(\rho{=}5\), \(n{=}15\)): bottom \(0.51\) < r
 
 Continuous \(\rho\) sweep (seeds \(0\)–\(4\)): full-order rate \(5/5\) at \(\rho\in\{3,4,5\}\), then \(3/5\) (\(\rho{=}6\)), \(2/5\) (\(\rho{=}7,8\)), \(1/5\) (\(\rho{=}10\)).
 
-Baselines at \(\rho{=}5\) (seeds \(0\)–\(4\)): accumulate \(r{=}0.41\); mix \(0.37\); oracle bottom/top \(0.71/0.17\) ≈ proxy bottom/top \(0.74/0.18\).
+Baselines at \(\rho{=}5\) (seeds \(0\)–\(4\)): accumulate \(r{=}0.41\); mix \(0.37\); oracle bottom/top \(0.71/0.17\) ≈ proxy \(0.74/0.18\); learned real-only verifier bottom/top \(0.74/0.17\).
+
+Precision/recall (\(k{=}5\)): top has highest precision (\(0.96\)) but worst \(W_2\); bottom trades precision (\(0.88\)) for better \(W_2\) and \(r\).
 
 ### 4.5 Proxy check and transfers
 
-Denoising-MSE proxy vs exact GMM \(-\log p\) (\(\rho{=}5\), \(n{=}5\)): mean Spearman \(0.44\) (range \(0.33\)–\(0.51\)); top-\(k\) Jaccard vs exact density ranking \(0.64\) at \(k{=}N/2\). Directional but imperfect; oracle policies still match proxy policies.
+Denoising-MSE proxy vs exact GMM \(-\log p\) (\(\rho{=}5\), \(n{=}5\)): mean Spearman \(0.44\); top-\(k\) Jaccard \(0.64\). Oracle/verifier policies match proxy.
 
-8D GMM / Digits-PCA: order 3/3 (directional, \(n{=}3\)). Digits pixel DDPM: full order 1/3. Digits-CVAE: inconclusive. CIFAR-10 tiny-UNet (\(\rho{=}5\), \(n{=}3\)): mean \(\bar r\) bottom \(>\) rand \(>\) top, seed-wise full order \(0/3\) (preliminary/negative). **No ImageNet-scale diffusion result.**
+8D GMM / Digits-PCA: order 3/3. Digits pixel DDPM: 1/3. CIFAR tiny-UNet: full order \(0/3\); seed-0 FID at \(g{=}1\): bottom \(332\) vs top \(477\) / rand \(489\). **No ImageNet-scale result.**
 
 ## 5 Limitations
 
-**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR is appendix preliminary; no ImageNet-scale / LT-benchmark / FID result.
+**Scale.** Toy GMMs / Digits / CIFAR tiny-UNet only; CIFAR FID is \(n{=}1\); no ImageNet / LT-benchmark.
 
-**Researcher degrees of freedom / post-hoc revision.** Long exploratory search precedes this note (`docs/`). Within-topic, the original “false stability” hypothesis was falsified and the claim revised. Treat bottom>rand>top as **post-hoc / exploratory**. Mitigation: \(W_2\) primary; stratified \(\rho\); held-out seeds \(10\)–\(14\); continuous \(\rho\) sweep; bootstrap CIs.
+**Researcher degrees of freedom / post-hoc revision.** Long exploratory search precedes this note. Treat bottom>rand>top as **post-hoc / exploratory**. Mitigation: \(W_2\) primary; stratified \(\rho\); held-out seeds; continuous \(\rho\) sweep; bootstrap CIs.
 
-**Other.** Accumulate/oracle baselines are \(n{=}5\) at \(\rho{=}5\); oracle uses exact GMM density (not a learned Feng/Cai probe).
+**Other.** Verifier is a real-only DDPM (not a Cai-style latent probe); baselines \(n{=}5\) at \(\rho{=}5\).
 
 ## 6 Conclusion
 

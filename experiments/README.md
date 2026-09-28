@@ -14,6 +14,8 @@ Code and logs for the likelihood-rank self-consuming DDPM study.
 | Proxy vs exact GMM density | `scripts/validate_likelihood_proxy.py` | `logs/w2_fs_proxy_val.jsonl` |
 | Continuous ρ sweep | `scripts/run_w2_false_stability.py` | `logs/w2_fs_rho_sweep.jsonl` |
 | Accumulate / oracle baselines | same runner (`accumulate`, `oracle_*`) | `logs/w2_fs_baselines.jsonl` |
+| Verifier + precision/recall | same runner (`verifier_*`) | `logs/w2_fs_verifier_pr.jsonl` |
+| CIFAR Inception FID | `scripts/run_w2_fs_cifar_fid.py` | `logs/w2_fs_cifar_fid.jsonl` |
 | Analysis / figures | `analyze_w2_fs.py`, `analyze_rho_sweep_baselines.py`, `make_w2_figures.py` | `analysis/` |
 
 End-to-end reproduce from the repository root:

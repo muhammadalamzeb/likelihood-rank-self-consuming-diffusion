@@ -168,6 +168,31 @@ def gmm_neglogpdf(X: np.ndarray, means: np.ndarray, weights: np.ndarray, sigma: 
     return -(m.squeeze(1) + np.log(np.exp(log_comp - m).sum(axis=1)))
 
 
+def knn_radii(X: np.ndarray, k: int = 5) -> np.ndarray:
+    """Distance to k-th nearest neighbor within X (exclude self)."""
+    # X: [N,D]
+    d2 = ((X[:, None, :] - X[None, :, :]) ** 2).sum(-1)
+    np.fill_diagonal(d2, np.inf)
+    k = min(k, max(1, len(X) - 1))
+    return np.partition(d2, k - 1, axis=1)[:, k - 1]
+
+
+def precision_recall(real: np.ndarray, fake: np.ndarray, k: int = 5) -> tuple[float, float]:
+    """Improved precision/recall (Kynkäänniemi et al.) in feature space (= coords for 2D GMM)."""
+    n = min(len(real), len(fake), 800)
+    real = real[:n]
+    fake = fake[:n]
+    rr = knn_radii(real, k=k)
+    ff = knn_radii(fake, k=k)
+    # precision: fake points within real manifold
+    d_fr = ((fake[:, None, :] - real[None, :, :]) ** 2).sum(-1)
+    prec = float(np.mean(d_fr.min(axis=1) <= rr[d_fr.argmin(axis=1)]))
+    # recall: real points within fake manifold
+    d_rf = ((real[:, None, :] - fake[None, :, :]) ** 2).sum(-1)
+    rec = float(np.mean(d_rf.min(axis=1) <= ff[d_rf.argmin(axis=1)]))
+    return prec, rec
+
+
 def select_policy(synth: np.ndarray, scores: np.ndarray, k: int, policy: str, rng: np.random.Generator):
     n = len(synth)
     k = min(k, n)
@@ -177,6 +202,8 @@ def select_policy(synth: np.ndarray, scores: np.ndarray, k: int, policy: str, rn
         "bottom_k": "bottom",
         "oracle_top_k": "top",
         "oracle_bottom_k": "bottom",
+        "verifier_top_k": "top",
+        "verifier_bottom_k": "bottom",
         "rand_k": "rand",
     }.get(policy, policy)
     if rank_policy == "top":
@@ -245,6 +272,10 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
     real_buf = X0.copy()
     X_hold, _, _, _ = make_gmm(args.n_data, K=args.K, delta=args.delta, rho=rho, seed=seed + 999)
     train = X0.copy()
+    verifier = None
+    if policy.startswith("verifier_"):
+        # Learned external verifier: DDPM fit only on the fixed real buffer (Feng/Cai-style external score).
+        verifier = train_ddpm(real_buf, seed=seed + 777, steps=args.train_steps, h=args.hidden)
     records = []
     for g in range(args.generations + 1):
         model = train_ddpm(train, seed=seed + 17 * g, steps=args.train_steps, h=args.hidden)
@@ -254,7 +285,8 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
         m_max = float(masses.max())
         minority_mean = float(masses[1:].mean()) if args.K > 1 else m_min
         w2 = wasserstein2_1d_proj(samp, X_hold, n_proj=24, seed=seed + g)
-        rec = {
+        prec, rec = precision_recall(X_hold, samp, k=args.pr_k)
+        rec_row = {
             "experiment": "w2_fs",
             "seed": seed,
             "rho": rho,
@@ -269,22 +301,25 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
             "mode_masses": masses.tolist(),
             "true_weights": true_w.tolist(),
             "w2_sliced": w2,
+            "precision": prec,
+            "recall": rec,
             "train_size": int(len(train)),
         }
-        records.append(rec)
+        records.append(rec_row)
         print(
             json.dumps(
                 {
-                    k: rec[k]
+                    k: rec_row[k]
                     for k in (
                         "seed",
                         "rho",
                         "policy",
                         "generation",
-                        "m_min",
                         "minority_mean",
                         "majority_mass",
                         "w2_sliced",
+                        "precision",
+                        "recall",
                         "train_size",
                     )
                 }
@@ -295,6 +330,8 @@ def run_one(seed: int, rho: float, policy: str, args) -> list[dict]:
             break
         if policy.startswith("oracle_"):
             scores = gmm_neglogpdf(samp, means, true_w, sigma=args.sigma)
+        elif policy.startswith("verifier_"):
+            scores = elbo_proxy(verifier, samp, n_t=args.n_t)
         else:
             scores = elbo_proxy(model, samp, n_t=args.n_t)
         train, real_buf = build_next_train(
@@ -331,6 +368,7 @@ def main():
     ap.add_argument("--k-frac", type=float, default=0.5)
     ap.add_argument("--hidden", type=int, default=64)
     ap.add_argument("--n-t", type=int, default=6)
+    ap.add_argument("--pr-k", type=int, default=5, help="k for improved precision/recall")
     ap.add_argument("--sigma", type=float, default=0.15, help="GMM component std for oracle scores")
     ap.add_argument(
         "--accum-cap",

@@ -1,8 +1,8 @@
 # Publication status
 
 **Author:** Muhammad Alamzeb · **Contact:** shayankhanmahar@gmail.com  
-**Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.6.0  
-**Zenodo DOI:** https://doi.org/10.5281/zenodo.22956890 → **New version** with v1.6.0 PDF still needed.
+**Release:** https://github.com/muhammadalamzeb/likelihood-rank-self-consuming-diffusion/releases/tag/v1.7.0  
+**Zenodo DOI:** https://doi.org/10.5281/zenodo.22956890 → **New version** with v1.7.0 PDF still needed.
 
 ## Checklist
 
@@ -16,6 +16,8 @@
 - [x] Bottom-k \(W_2\) cost + unranked mix baseline (ρ=5 seeds 0–4)
 - [x] Continuous ρ sweep (seeds 0–4): full order 5/5 for ρ≤5, then decays to 1/5 at ρ=10
 - [x] Accumulate + exact-density oracle baselines at ρ=5
+- [x] Learned real-only verifier + GMM precision/recall (ρ=5, n=5)
+- [x] CIFAR seed-0 Inception FID (bottom holds ~332; top/rand ~480)
 - [ ] Zenodo New version upload
 - [ ] arXiv after endorsement `Z4GDY9`
-- [ ] FID / CIFAR-10-LT / ImageNet (out of CPU scope)
+- [ ] CIFAR-10-LT / ImageNet (out of CPU scope)
